@@ -18,7 +18,7 @@ class UNL_WDN_Assessment
     protected function getSpider()
     {
         $plogger          = new UNL_WDN_Assessment_PageLogger($this);
-        $downloader       = new Spider_Downloader();
+        $downloader       = new UNL_WDN_Assessment_PageDownloader();
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser);
         
