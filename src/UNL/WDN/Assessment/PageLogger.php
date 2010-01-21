@@ -1,5 +1,4 @@
 <?php
-<?php
 class UNL_WDN_Assessment_PageLogger extends Spider_LoggerAbstract
 {
 
