@@ -95,7 +95,11 @@ class Spider
             
             foreach ($subUris as $subUri) {
                 if (!array_key_exists($subUri, $this->visited)) {
-                    $this->spiderPage($baseUri, $subUri, $depth + 1);
+                    try {
+                        $this->spiderPage($baseUri, $subUri, $depth + 1);
+                    } catch(Exception $e) {
+                        echo "The page, ".$uri.' linked to a page that could not be accessed: ' . $subUri.'<br />';
+                    }
                 }
             }
         }
