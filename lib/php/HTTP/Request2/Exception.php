@@ -44,7 +44,6 @@
 /**
  * Base class for exceptions in PEAR
  */
-require_once 'PEAR/Exception.php';
 
 /**
  * Exception class for HTTP_Request2 package
@@ -56,7 +55,7 @@ require_once 'PEAR/Exception.php';
  * @package    HTTP_Request2
  * @version    Release: 0.5.1
  */
-class HTTP_Request2_Exception extends PEAR_Exception
+class HTTP_Request2_Exception extends Exception
 {
 }
 ?>
