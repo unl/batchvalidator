@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>Spider</name>
+ <channel>pearhub.org</channel>
+ <summary>Package Spider summary.
+</summary>
+ <description>
+Package detailed description here (found in README)
+</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>saltybeagle@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-01-21</date>
+ <time>08:57:07</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package PEAR2_Spider release notes for version 0.1.0.
+
+Package PEAR2_Spider API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="php" name="src/Spider/UriIterator.php" md5sum="8f47d38de045dfe754a9c197b0845af2"/>
+   <file role="php" name="src/Spider/UriFilterInterface.php" md5sum="dcace02f51e3c1f12005b3765a97ccc0"/>
+   <file role="php" name="src/Spider/TidyParser.php" md5sum="989764252f60b4d0c0a4a4cc4c296254"/>
+   <file role="php" name="src/Spider/StyleSheetLogger.php" md5sum="4e323ae9f3129deb4aa519129055d9af"/>
+   <file role="php" name="src/Spider/ParserInterface.php" md5sum="140add631a24ee19cc974e5d190fb526"/>
+   <file role="php" name="src/Spider/Parser.php" md5sum="ce6879e89e1f082ff44821ceb4c429bf"/>
+   <file role="php" name="src/Spider/PageLogger.php" md5sum="f05cc3d2e54fa03e143546ec0a84eb73"/>
+   <file role="php" name="src/Spider/MailtoFilter.php" md5sum="3c116ba7fc28fc47fa4a523212f0363a"/>
+   <file role="php" name="src/Spider/LoggerAbstract.php" md5sum="c26904afb26b2ee2866c18f130aa0afb"/>
+   <file role="php" name="src/Spider/Logger.php" md5sum="e40d93bb8399c2f7dd1d9ccc7d654516"/>
+   <file role="php" name="src/Spider/JavaScriptLogger.php" md5sum="2a17632c40359e9215d64426d89abd6c"/>
+   <file role="php" name="src/Spider/Downloader.php" md5sum="8388b6feeb60b8c433c7151547106804"/>
+   <file role="php" name="src/Spider/DbLogger.php" md5sum="985aa51e4c93e76b6848c1e7060c1d1a"/>
+   <file role="php" name="src/Spider/AnchorFilter.php" md5sum="033b1ae3ea8fee40076f728b4a95fd2b"/>
+   <file role="php" name="src/Spider.php" md5sum="219c9dd9003e1f06a3843da1777f6aa9"/>
+   <file role="doc" name="examples/results.db" md5sum="8967b7f9bf5fedf351c02cd76e6e0e8b"/>
+   <file role="doc" name="examples/batch_validator.php" md5sum="87bdb9b37fc5ff22e3d32ee2f2147093"/>
+   <file role="doc" name="examples/basic.php" md5sum="ae8b39ff256de45d662b9114cbf2d9df"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>
