@@ -11,21 +11,23 @@ class UNL_WDN_Assessment
         $this->db      = $db;
     }
     
-    function runValidation()
+    function reValidate()
     {
-        $validator        = new Services_W3C_HTMLValidator();
-        $validator->validator_uri = 'http://validator.unl.edu/check';
-        $logger           = new UNL_WDN_Assessment_ValidationLogger($validator, $this);
+        $this->removeEntries();
+        
+        $plogger          = new UNL_WDN_Assessment_PageLogger($this);
+        $vlogger          = new UNL_WDN_Assessment_ValidationLogger($this);
         $downloader       = new Spider_Downloader();
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser);
         
-        $spider->addLogger($logger);
+        $spider->addLogger($plogger);
+        $spider->addLogger($vlogger);
         $spider->addUriFilter('Spider_AnchorFilter');
         $spider->addUriFilter('Spider_MailtoFilter');
         $spider->addUriFilter('UNL_WDN_Assessment_FileExtensionFilter');
-        
-        $spider->spider('http://www.unl.edu/fwc/');
+
+        $spider->spider($this->baseUri);
     }
     
     function removeEntries()
@@ -50,5 +52,12 @@ class UNL_WDN_Assessment
             $result = 'false';
         }
         $sth->execute(array($result, $this->baseUri, $uri));
+    }
+    
+    function getSubPages()
+    {
+        $sth = $this->db->prepare('SELECT * FROM assessment WHERE baseurl = ?;');
+        $sth->execute(array($this->baseUri));
+        return $sth->fetchAll();
     }
 }
