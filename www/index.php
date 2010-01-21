@@ -9,14 +9,17 @@ if (isset($_GET['uri'])) {
     $assessment = new UNL_WDN_Assessment($uri, $db);
     if (isset($_GET['revalidate'])) {
         $assessment->reValidate();
+    } elseif (isset($_GET['invalid'])) {
+        $assessment->checkInvalid();
     }
 }
 
 ?>
-<h1>Welcome to the batch validator</h1>
+<h1>Welcome to the new batch validator</h1>
 <form method="GET" action="">
 <input type="text" name="uri" value="<?php echo $uri; ?>" />
 Revalidate all? <input type="checkbox" name="revalidate" />
+Revalidate invalid? <input type="checkbox" name="invalid" />
 <input type="submit" name="submit" /></form>
 
 <?php
