@@ -11,6 +11,8 @@ if (isset($_GET['uri'])) {
         $assessment->reValidate();
     } elseif (isset($_GET['invalid'])) {
         $assessment->checkInvalid();
+    } else {
+        $assessment->logPages();
     }
 }
 

@@ -95,11 +95,7 @@ class Spider
             
             foreach ($subUris as $subUri) {
                 if (!array_key_exists($subUri, $this->visited)) {
-                    try {
-                        $this->spiderPage($baseUri, $subUri, $depth + 1);
-                    } catch(Exception $e) {
-                        throw new Exception($baseUri . ' linked to a page that does not exist!' .$subUri, 404, $e);
-                    }
+                    $this->spiderPage($baseUri, $subUri, $depth + 1);
                 }
             }
         }
@@ -120,7 +116,7 @@ class Spider
         }
 
         $nodes = $xpath->query(
-            "//xhtml:a[@href]/@href"
+            "//xhtml:a[@href]/@href | //a[@href]/@href"
         );
 
         foreach ($nodes as $node) {

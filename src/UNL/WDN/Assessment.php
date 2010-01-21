@@ -11,20 +11,30 @@ class UNL_WDN_Assessment
         $this->db      = $db;
     }
     
-    function checkInvalid()
+    /**
+     * 
+     * @return Spider
+     */
+    protected function getSpider()
     {
         $plogger          = new UNL_WDN_Assessment_PageLogger($this);
-        $vlogger          = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
         $downloader       = new Spider_Downloader();
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser);
         
-        $spider->addLogger($plogger);
-        $spider->addLogger($vlogger);
         $spider->addUriFilter('Spider_AnchorFilter');
         $spider->addUriFilter('Spider_MailtoFilter');
         $spider->addUriFilter('UNL_WDN_Assessment_FileExtensionFilter');
-
+        $spider->addLogger($plogger);
+        return $spider;
+    }
+    
+    function checkInvalid()
+    {
+        
+        $vlogger = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
+        $spider  = $this->getSpider();
+        $spider->addLogger($vlogger);
         $spider->spider($this->baseUri);
     }
     
@@ -32,18 +42,15 @@ class UNL_WDN_Assessment
     {
         $this->removeEntries();
         
-        $plogger          = new UNL_WDN_Assessment_PageLogger($this);
-        $vlogger          = new UNL_WDN_Assessment_ValidationLogger($this);
-        $downloader       = new Spider_Downloader();
-        $parser           = new Spider_Parser();
-        $spider           = new Spider($downloader, $parser);
-        
-        $spider->addLogger($plogger);
+        $vlogger = new UNL_WDN_Assessment_ValidationLogger($this);
+        $spider  = $this->getSpider();
         $spider->addLogger($vlogger);
-        $spider->addUriFilter('Spider_AnchorFilter');
-        $spider->addUriFilter('Spider_MailtoFilter');
-        $spider->addUriFilter('UNL_WDN_Assessment_FileExtensionFilter');
-
+        $spider->spider($this->baseUri);
+    }
+    
+    function logPages()
+    {
+        $spider = $this->getSpider();
         $spider->spider($this->baseUri);
     }
     
