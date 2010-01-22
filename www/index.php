@@ -3,7 +3,8 @@
 require_once 'config.inc.php';
 
 $uri = '';
-if (isset($_GET['uri'])) {
+if (isset($_GET['uri'])
+    && preg_match('/https?:\/\//', $_GET['uri'])) {
     $uri = htmlentities($_GET['uri'], ENT_QUOTES);
 }
 ?>
@@ -30,7 +31,7 @@ if (!empty($uri)) {
         $assessment->checkInvalid();
     } else {
         if (isset($_GET['rescan'])) {
-            $assessment->removeEntries();
+            //$assessment->removeEntries();
         }
         $assessment->logPages();
     }
