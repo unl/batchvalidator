@@ -17,6 +17,7 @@ if (isset($_GET['uri'])
                 <li><label class="element">Revalidate all?</label><div class="element"><input type="checkbox" name="revalidate" /></div></li>
                 <li><label class="element">Revalidate invalid?</label><div class="element"><input type="checkbox" name="invalid" /></div></li>
                 <li><label class="element">Rescan links?</label><div class="element"><input type="checkbox" name="rescan" /></div></li>
+                <li><label class="element">Check external links?</label><div class="element"><input type="checkbox" name="linkcheck" /></div></li>
             </ol>
         </fieldset>
     <input type="submit" name="submit" />
@@ -29,6 +30,8 @@ if (!empty($uri)) {
         $assessment->reValidate();
     } elseif (isset($_GET['invalid'])) {
         $assessment->checkInvalid();
+    } elseif (isset($_GET['linkcheck'])) {
+        $assessment->checkLinks();
     } else {
         if (isset($_GET['rescan'])) {
             //$assessment->removeEntries();

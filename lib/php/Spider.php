@@ -130,7 +130,7 @@ class Spider
             if (substr($uri, 0, 7) != 'mailto:'
                 && substr($uri, 0, 11) != 'javascript:') {
             
-                $uri = $this->absolutePath($uri, $baseUri);
+                $uri = self::absolutePath($uri, $baseUri);
                 
                 if (!empty($uri)) {
                     if (strncmp($baseUri, $uri, strlen($baseUri)) === 0) {
@@ -150,8 +150,14 @@ class Spider
         return new Spider_UriIterator($uris);
     }
     
-    public function absolutePath($relativeUri, $baseUri)
+    public static function absolutePath($relativeUri, $baseUri)
     {
+
+        if (filter_var($relativeUri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
+            // URL is already absolute
+            return $relativeUri;
+        }
+        
         $new_base_url = $baseUri;
         $base_url_parts = parse_url($baseUri);
         
@@ -161,13 +167,11 @@ class Spider
         }
         
         $new_txt = '';
-
-        if (!filter_var($relativeUri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
-             if (substr($relativeUri, 0, 1) == '/') {
-                 $new_base_url = $base_url_parts['scheme'].'://'.$base_url_parts['host'];
-             }
-             $new_txt .= $new_base_url;
+        
+        if (substr($relativeUri, 0, 1) == '/') {
+            $new_base_url = $base_url_parts['scheme'].'://'.$base_url_parts['host'];
         }
+        $new_txt .= $new_base_url;
         
         $absoluteUri = $new_txt.$relativeUri;
         

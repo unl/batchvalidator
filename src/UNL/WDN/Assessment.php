@@ -60,6 +60,14 @@ class UNL_WDN_Assessment
         $spider->spider($this->baseUri);
     }
     
+    function checkLinks()
+    {
+        $checker = new UNL_WDN_Assessment_LinkChecker($this);
+        $spider = $this->getSpider();
+        $spider->addLogger($checker);
+        $spider->spider($this->baseUri);
+    }
+    
     function removeEntries()
     {
         $sth = $this->db->prepare('DELETE FROM assessment WHERE baseurl = ?');
