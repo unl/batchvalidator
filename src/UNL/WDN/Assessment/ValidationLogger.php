@@ -21,7 +21,7 @@ class UNL_WDN_Assessment_ValidationLogger extends Spider_LoggerAbstract
         $this->assessment = $assessment;
     }
     
-    function log($uri, DOMXPath $xpath)
+    function log($uri, $depth, DOMXPath $xpath)
     {
         $r = $this->validator->validate($uri);
         $this->assessment->setValidationResult($uri, $r->isValid());

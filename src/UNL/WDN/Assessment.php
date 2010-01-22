@@ -33,8 +33,10 @@ class UNL_WDN_Assessment
     {
         
         $vlogger = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
+        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider  = $this->getSpider();
         $spider->addLogger($vlogger);
+        $spider->addLogger($slogger);
         $spider->spider($this->baseUri);
     }
     
@@ -43,14 +45,18 @@ class UNL_WDN_Assessment
         $this->removeEntries();
         
         $vlogger = new UNL_WDN_Assessment_ValidationLogger($this);
+        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider  = $this->getSpider();
         $spider->addLogger($vlogger);
+        $spider->addLogger($slogger);
         $spider->spider($this->baseUri);
     }
     
     function logPages()
     {
+        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider = $this->getSpider();
+        $spider->addLogger($slogger);
         $spider->spider($this->baseUri);
     }
     
@@ -62,8 +68,8 @@ class UNL_WDN_Assessment
     
     function addUri($uri)
     {
-        $sth = $this->db->prepare('INSERT INTO assessment (baseurl, url, timestamp) VALUES (?, ?, ?);');
-        $sth->execute(array($this->baseUri, $uri, date('Y-m-d H:i:s')));
+        $sth = $this->db->prepare('INSERT INTO assessment (baseurl, url, valid, timestamp) VALUES (?, ?, ?, ?);');
+        $sth->execute(array($this->baseUri, $uri, 'unknown', date('Y-m-d H:i:s')));
         
     }
     
@@ -87,12 +93,17 @@ class UNL_WDN_Assessment
     
     function pageWasValid($uri)
     {
-        $sth = $this->db->prepare('SELECT valid FROM assessment WHERE baseurl = ? AND url = ?;');
-        $sth->execute(array($this->baseUri, $uri));
-        $result = $sth->fetch();
-        if ($result['valid'] == 'true') {
+        if ($this->getValidityStatus($uri) == 'true') {
             return true;
         }
         return false;
+    }
+    
+    function getValidityStatus($uri)
+    {
+        $sth = $this->db->prepare('SELECT valid FROM assessment WHERE baseurl = ? AND url = ?;');
+        $sth->execute(array($this->baseUri, $uri));
+        $result = $sth->fetch();
+        return $result['valid'];
     }
 }

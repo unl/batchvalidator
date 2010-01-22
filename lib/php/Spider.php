@@ -82,7 +82,7 @@ class Spider
         $xpath   = $this->parser->parse($content, $uri);
 
         foreach ($this->loggers as $logger) {
-            $logger->log($uri, $xpath);
+            $logger->log($uri, $depth, $xpath);
         }
 
         // spider sub-pages
@@ -98,7 +98,7 @@ class Spider
                     try {
                         $this->spiderPage($baseUri, $subUri, $depth + 1);
                     } catch(Exception $e) {
-                        echo "The page, ".$uri.' linked to a page that could not be accessed: ' . $subUri.'<br />';
+                        echo "\nThe page, ".$uri.' linked to a page that could not be accessed: ' . $subUri.PHP_EOL;
                     }
                 }
             }
@@ -124,19 +124,28 @@ class Spider
         );
 
         foreach ($nodes as $node) {
-            $uri = $this->absolutePath((string)$node->nodeValue, $baseUri);
             
-            if (!empty($uri)) {
-                if (strncmp($baseUri, $uri, strlen($baseUri)) === 0) {
-                    $uris[] = $uri;
-                } elseif (
-                       $uri != '.'
-                    && preg_match('!^(https?|ftp)://!i', $uri) === 0
-                ) {
-                    $uris[] = $baseHref . $uri;
+            $uri = trim((string)$node->nodeValue);
+            
+            if (substr($uri, 0, 7) != 'mailto:'
+                && substr($uri, 0, 11) != 'javascript:') {
+            
+                $uri = $this->absolutePath($uri, $baseUri);
+                
+                if (!empty($uri)) {
+                    if (strncmp($baseUri, $uri, strlen($baseUri)) === 0) {
+                        $uris[] = $uri;
+                    } elseif (
+                           $uri != '.'
+                        && preg_match('!^(https?|ftp)://!i', $uri) === 0
+                    ) {
+                        $uris[] = $baseHref . $uri;
+                    }
                 }
             }
         }
+        
+        sort($uris);
 
         return new Spider_UriIterator($uris);
     }
@@ -152,7 +161,7 @@ class Spider
         }
         
         $new_txt = '';
-    
+
         if (!filter_var($relativeUri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
              if (substr($relativeUri, 0, 1) == '/') {
                  $new_base_url = $base_url_parts['scheme'].'://'.$base_url_parts['host'];
@@ -161,6 +170,9 @@ class Spider
         }
         
         $absoluteUri = $new_txt.$relativeUri;
+        
+        // Convert /dir/../ into /
+        //$absoluteUri = preg_replace('/[^\/]\/[^\/]+\/\.\.\//', '/', $absoluteUri);
         
         return $absoluteUri;
     }

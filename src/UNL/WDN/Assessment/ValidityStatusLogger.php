@@ -1,5 +1,5 @@
 <?php
-class UNL_WDN_Assessment_PageLogger extends Spider_LoggerAbstract
+class UNL_WDN_Assessment_ValidityStatusLogger extends Spider_LoggerAbstract
 {
 
     /**
@@ -15,8 +15,6 @@ class UNL_WDN_Assessment_PageLogger extends Spider_LoggerAbstract
     
     function log($uri, $depth, DOMXPath $xpath)
     {
-        flush();
-        echo PHP_EOL.'|'.str_repeat('-', $depth).$uri;
-        $this->assessment->addUri($uri);
+        echo ' '.$this->assessment->getValidityStatus($uri);
     }
 }
