@@ -72,10 +72,10 @@ if (isset($_GET['uri'])
                         <legend>Batch Validator</legend>
                         <ol>
                             <li><label for="name" class="element"><span class="required">*</span>URL</label><div class="element"><input type="text" name="uri" value="<?php echo $uri; ?>" size="80" /></div></li>
-                            <li><label class="element">Revalidate all?</label><div class="element"><input type="checkbox" name="revalidate" /></div></li>
-                            <li><label class="element">Revalidate invalid?</label><div class="element"><input type="checkbox" name="invalid" /></div></li>
-                            <li><label class="element">Rescan links?</label><div class="element"><input type="checkbox" name="rescan" /></div></li>
-                            <li><label class="element">Check external links?</label><div class="element"><input type="checkbox" name="linkcheck" /></div></li>
+                            <li><label class="element"></label><div class="element"><input type="radio" name="action" value="revalidate" /><label>Revalidate all</label>
+                            <input type="radio" name="action" value="invalid" /><label>Revalidate invalid</label>
+                            <input type="radio" name="action" value="rescan" /><label>Rescan links</label>
+                            <input type="radio" name="action" value="linkcheck" /><label>Check external links</label></div></li>
                         </ol>
                     </fieldset>
                     <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
@@ -85,17 +85,27 @@ if (isset($_GET['uri'])
                 <?php 
                 if (!empty($uri)) {
                     $assessment = new UNL_WDN_Assessment($uri, $db);
-                    if (isset($_GET['revalidate'])) {
-                        $assessment->reValidate();
-                    } elseif (isset($_GET['invalid'])) {
-                        $assessment->checkInvalid();
-                    } elseif (isset($_GET['linkcheck'])) {
-                        $assessment->checkLinks();
-                    } else {
-                        if (isset($_GET['rescan'])) {
-                            //$assessment->removeEntries();
-                        }
-                        $assessment->logPages();
+                    $action = 'rescan';
+                    
+                    if (isset($_GET['action'])) {
+                        $action = $_GET['action'];
+                    }
+                    
+                    switch ($action) {
+                        case 'revalidate':
+                            $assessment->reValidate();
+                            break;
+                        case 'invalid':
+                            $assessment->checkInvalid();
+                            break;
+                        case 'linkcheck':
+                            $assessment->checkLinks();
+                            break;
+                        case 'remove':
+                            $assessment->removeEntries();
+                        case 'rescan':
+                        default:
+                            $assessment->logPages();
                     }
                 }
                 
