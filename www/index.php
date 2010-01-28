@@ -31,7 +31,7 @@ if (isset($_GET['uri'])
 <?php virtual('/wdn/templates_3.0/includes/browserspecifics.html'); ?>
 <?php virtual('/wdn/templates_3.0/includes/metanfavico.html'); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>UNL | Department | New Page</title>
+<title>UNL | WDN | Batch Validator</title>
 <!-- InstanceEndEditable --><!-- InstanceBeginEditable name="head" -->
 <link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/forms.css" />
 <!-- InstanceEndEditable -->
