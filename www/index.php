@@ -4,8 +4,21 @@ require_once 'config.inc.php';
 
 $uri = '';
 if (isset($_GET['uri'])
-    && preg_match('/https?:\/\//', $_GET['uri'])) {
+    && preg_match('/https?:\/\//', $_GET['uri'])
+    && filter_var($_GET['uri'], FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
     $uri = htmlentities($_GET['uri'], ENT_QUOTES);
+    $ch = curl_init($uri);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_LOW_SPEED_LIMIT, 10);
+    curl_setopt($ch, CURLOPT_LOW_SPEED_TIME, 5);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_exec($ch);
+    $new_uri = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+    if ($new_uri !== $uri) {
+        header('Location: ?uri='.urlencode($new_uri));
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -83,6 +96,7 @@ if (isset($_GET['uri'])
             <div class="clear">
                 <pre>
                 <?php
+                
                 if (!empty($uri)) {
                     $parts = parse_url($uri);
                     if (!isset($parts['path'])) {
