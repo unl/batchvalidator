@@ -82,7 +82,15 @@ if (isset($_GET['uri'])
             </form>
             <div class="clear">
                 <pre>
-                <?php 
+                <?php
+                if (!empty($uri)) {
+                    $parts = parse_url($uri);
+                    if (!isset($parts['path'])) {
+                        echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t your mother ever teach you what a web address is?</h2>';
+                        unset($uri);
+                    }
+                }
+                
                 if (!empty($uri)) {
                     $assessment = new UNL_WDN_Assessment($uri, $db);
                     $action = 'rescan';
