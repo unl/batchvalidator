@@ -84,11 +84,24 @@ if (isset($_GET['uri'])
                     <fieldset>
                         <legend>Batch Validator</legend>
                         <ol>
-                            <li><label for="name" class="element"><span class="required">*</span>URL</label><div class="element"><input type="text" name="uri" value="<?php echo $uri; ?>" size="80" /></div></li>
-                            <li><label class="element"></label><div class="element"><input type="radio" name="action" value="revalidate" /><label>Revalidate all</label>
-                            <input type="radio" name="action" value="invalid" /><label>Revalidate invalid</label>
-                            <input type="radio" name="action" value="rescan" /><label>Rescan links</label>
-                            <input type="radio" name="action" value="linkcheck" /><label>Check external links</label></div></li>
+                            <li>
+                            	<label for="name" class="element">
+                            		<span class="required">*</span>
+                            		URL
+                            	</label>
+                            	<input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
+                            </li>
+                            <li>
+	                        	<fieldset>
+	                       		<legend>What should be validated?</legend>
+		                        	<label for="action_all">
+		                        		<input id="action_all" type="radio" name="action" value="revalidate" />Revalidate all
+		                        	</label>
+                            		<label for="action_invalid"><input id="action_invalid" type="radio" name="action" value="invalid" />Revalidate invalid</label>
+                            		<label for="action_links"><input id="action_links" type="radio" name="action" value="rescan" />Rescan links</label>
+                            		<label for="action_external"><input id="action_external" type="radio" name="action" value="linkcheck" />Check external links</label>
+	                        	</fieldset>
+	                        </li>
                         </ol>
                     </fieldset>
                     <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
