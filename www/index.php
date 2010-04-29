@@ -47,6 +47,8 @@ if (isset($_GET['uri'])
 <title>UNL | WDN | Batch Validator</title>
 <!-- InstanceEndEditable --><!-- InstanceBeginEditable name="head" -->
 <link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/forms.css" />
+<link rel="stylesheet" type="text/css" href="batchval.css" />
+<script type="text/javascript" src="batchval.js"></script>
 <!-- InstanceEndEditable -->
 </head>
 <body class="fixed">
@@ -80,6 +82,7 @@ if (isset($_GET['uri'])
         <div id="maincontent">
             <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
             <!-- InstanceBeginEditable name="maincontentarea" -->
+            <div class="three_col left">
             <form method="get" action="" class="cool">
                     <fieldset>
                         <legend>Batch Validator</legend>
@@ -106,8 +109,12 @@ if (isset($_GET['uri'])
                     </fieldset>
                     <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
             </form>
+            </div>
+            <div class="col right">
+                <p class="submit"><a href="#" onclick="validateInvalid(); return false;">Validate Invalid</a></p>
+                <p class="submit"><a href="#" onclick="validateAll(); return false;">Validate All</a></p>
+            </div>
             <div class="clear">
-                <pre>
                 <?php
                 
                 if (!empty($uri)) {
@@ -143,18 +150,7 @@ if (isset($_GET['uri'])
                             $assessment->logPages();
                     }
                 }
-                
-                //if (isset($assessment)) {
-                //    if ($subPages = $assessment->getSubPages()) {
-                //        echo '<ul>';
-                //        foreach ($subPages as $page) {
-                //            echo '<li class="'.$page['valid'].'">'.$page['url']. ' valid = '.$page['valid'].'</li>';
-                //        }
-                //        echo '</ul>';
-                //    }
-                //}
                 ?>
-                </pre>
             </div>
             <!-- InstanceEndEditable -->
             <div class="clear"></div>

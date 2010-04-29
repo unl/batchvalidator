@@ -45,18 +45,18 @@ class UNL_WDN_Assessment
         $this->removeEntries();
         
         $vlogger = new UNL_WDN_Assessment_ValidationLogger($this);
-        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
+        //$slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider  = $this->getSpider();
         $spider->addLogger($vlogger);
-        $spider->addLogger($slogger);
+        //$spider->addLogger($slogger);
         $spider->spider($this->baseUri);
     }
     
     function logPages()
     {
-        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
+        //$slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider = $this->getSpider();
-        $spider->addLogger($slogger);
+        //$spider->addLogger($slogger);
         $spider->spider($this->baseUri);
     }
     

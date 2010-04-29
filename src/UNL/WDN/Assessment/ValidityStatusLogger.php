@@ -15,6 +15,7 @@ class UNL_WDN_Assessment_ValidityStatusLogger extends Spider_LoggerAbstract
     
     function log($uri, $depth, DOMXPath $xpath)
     {
-        echo ' '.$this->assessment->getValidityStatus($uri);
+        $status = $this->assessment->getValidityStatus($uri);
+        echo '<span id="validity_'.md5($uri).'" class=" validity '.$status.'">'.$status.'</span>'.PHP_EOL;
     }
 }
