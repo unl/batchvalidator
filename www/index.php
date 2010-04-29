@@ -49,6 +49,7 @@ if (isset($_GET['uri'])
 <link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/forms.css" />
 <link rel="stylesheet" type="text/css" href="batchval.css" />
 <script type="text/javascript" src="batchval.js"></script>
+<script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 <!-- InstanceEndEditable -->
 </head>
 <body class="fixed">

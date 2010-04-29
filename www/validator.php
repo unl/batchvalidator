@@ -7,4 +7,7 @@ if (!isset($_GET['u'])) {
 $v = new Services_W3C_HTMLValidator();
 $result = $v->validate($_GET['u']);
 
+$assessment = new UNL_WDN_Assessment($_GET['base'], $db);
+$assessment->setValidationResult($_GET['u'], $result->isValid());
+
 echo json_encode($result);

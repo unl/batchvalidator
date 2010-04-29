@@ -6,8 +6,11 @@ function validateAll()
 		
 		var uriDiv = WDN.jQuery(this).parent();
 		
-		checkValidity(uri, uriDiv);
+		WDN.jQuery('body').queue('validation', function() {
+			checkValidity(uri, uriDiv)
+		});
 	});
+	WDN.jQuery('body').dequeue('validation');
 }
 
 function validateInvalid()
@@ -18,8 +21,11 @@ function validateInvalid()
 		
 		var uriDiv = WDN.jQuery(this).parent();
 		
-		checkValidity(uri, uriDiv);
+		WDN.jQuery('body').queue('validation', function() {
+			checkValidity(uri, uriDiv)
+		});
 	});
+	WDN.jQuery('body').dequeue('validation');
 }
 
 function checkValidity(uri, uriDiv)
@@ -31,14 +37,18 @@ function checkValidity(uri, uriDiv)
 	uriDiv.append('<img class="loading" src="/wdn/templates_3.0/css/header/images/colorbox/loading.gif" />');
 	
 	// Fetch the validator results in JSON format.
-	WDN.get('validator.php?u='+escape(uri), null, function(result) {
+	WDN.get('validator.php?base='+baseURI+'&u='+escape(uri), null, function(result) {
 		handleJSONResult(result, uriDiv);
 	}, 'json');
 }
 
 function handleJSONResult(result, uriDiv)
 {
+	WDN.log(result);
 	uriDiv.children('.loading').remove();
+	
+	// Advance the queue
+	WDN.jQuery('body').dequeue('validation');
 	
 	if (result.validity) {
 		// It is valid, say no more!
