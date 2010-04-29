@@ -15,7 +15,7 @@ function validateAll()
 
 function validateInvalid()
 {
-	WDN.jQuery('.uri:not(.true)').each(function(){
+	WDN.jQuery('.false .uri').each(function(){
 		// Grab the URI
 		var uri = WDN.jQuery(this).html();
 		
