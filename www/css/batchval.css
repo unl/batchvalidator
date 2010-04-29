@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+.true span, .false span {
+	background:url('images/trueFalse.png') no-repeat 0 0;
+}
+.false span{
+	background-position:0 -35px;
+}
+.false {
+	background-color:rgba(228, 0, 0, 0.2);
+	border:1px solid #ac0302;
+}
+.false+.false{margin-top:-1px;}
+
+div[class^="depth"] {
+	padding:2px 5px 2px 0px;
+}
+div.depth_2 {
+	padding-left:25px;	
+}
+div.depth_3 {
+	padding-left:50px;	
+}
+div.depth_4 {
+	padding-left:75px;	
+}
+div.depth_5 {
+	padding-left:100px;	
+}
+div.depth_6 {
+	padding-left:125px;	
+}
+div.depth_7 {
+	padding-left:150px;	
+}
+div.depth_8 {
+	padding-left:175px;	
+}
+div.depth_9 {
+	padding-left:200px;	
+}
+div.depth_10 {
+	padding-left:225px;	
+}
+div.depth_11 {
+	padding-left:250px;	
+}
+div.depth_12 {
+	padding-left:275px;	
+}
+div.depth_13 {
+	padding-left:300px;	
+}
+div[class^="depth"] span {
+	display:block;
+	padding:5px 5px 5px 27px;
+}
+div[class^="depth"]:hover {
+	outline:1px solid #65d0d7;
+}

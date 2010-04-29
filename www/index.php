@@ -46,8 +46,8 @@ if (isset($_GET['uri'])
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>UNL | WDN | Batch Validator</title>
 <!-- InstanceEndEditable --><!-- InstanceBeginEditable name="head" -->
-<link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/forms.css" />
-<link rel="stylesheet" type="text/css" href="batchval.css" />
+<link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/zenform.css" />
+<link rel="stylesheet" type="text/css" href="css/batchval.css" />
 <script type="text/javascript" src="batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 <!-- InstanceEndEditable -->
@@ -84,7 +84,7 @@ if (isset($_GET['uri'])
             <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
             <!-- InstanceBeginEditable name="maincontentarea" -->
             <div class="three_col left">
-            <form method="get" action="" class="cool">
+            <form method="get" action="" class="zenform primary">
                     <fieldset>
                         <legend>Batch Validator</legend>
                         <ol>
