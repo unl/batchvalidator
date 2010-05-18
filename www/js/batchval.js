@@ -28,9 +28,10 @@ function validateInvalid()
 
 function checkValidity(uri, uriDiv)
 {
-	uriDiv.removeClass('true false')
+	// uriDiv.removeClass('true false');
+	uriDiv.addClass('validating');
 	// Tell the user we're loading the result
-	uriDiv.append('<img class="loading" src="/wdn/templates_3.0/css/header/images/colorbox/loading.gif" />');
+	// uriDiv.append('<img class="loading" src="/wdn/templates_3.0/css/header/images/colorbox/loading.gif" />');
 	// Fetch the validator results in JSON format.
 	WDN.get('validator.php?base='+baseURI+'&u='+escape(uri), null, function(result) {
 		handleJSONResult(result, uriDiv);
@@ -40,7 +41,7 @@ function checkValidity(uri, uriDiv)
 function handleJSONResult(result, uriDiv)
 {
 	WDN.log(result);
-	uriDiv.children('.loading').remove();
+	uriDiv.removeClass('validating');
 	
 	// Advance the queue
 	WDN.jQuery('body').dequeue('validation');
