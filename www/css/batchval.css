@@ -5,6 +5,12 @@
 .false span{
 	background-position:0 -35px;
 }
+.validating.false span {
+	background:url('images/loadingFalse.gif') no-repeat 0 0;
+}
+.validating.true span {
+    background:url('images/loadingTrue.gif') no-repeat 0 0;
+}
 .false {
 	background-color:rgba(228, 0, 0, 0.2);
 	border:1px solid #ac0302;

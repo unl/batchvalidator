@@ -48,7 +48,7 @@ if (isset($_GET['uri'])
 <!-- InstanceEndEditable --><!-- InstanceBeginEditable name="head" -->
 <link rel="stylesheet" type="text/css" href="/wdn/templates_3.0/css/content/zenform.css" />
 <link rel="stylesheet" type="text/css" href="css/batchval.css" />
-<script type="text/javascript" src="batchval.js"></script>
+<script type="text/javascript" src="js/batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 <!-- InstanceEndEditable -->
 </head>
@@ -98,12 +98,24 @@ if (isset($_GET['uri'])
                             <li>
 	                        	<fieldset>
 	                       		<legend>What should be validated?</legend>
-		                        	<label for="action_all">
-		                        		<input id="action_all" type="radio" name="action" value="revalidate" />Revalidate all
-		                        	</label>
-                            		<label for="action_invalid"><input id="action_invalid" type="radio" name="action" value="invalid" />Revalidate invalid</label>
-                            		<label for="action_links"><input id="action_links" type="radio" name="action" value="rescan" />Rescan links</label>
-                            		<label for="action_external"><input id="action_external" type="radio" name="action" value="linkcheck" />Check external links</label>
+		                        	<ol>
+		                        	 <li>
+		                        		<input id="action_all" type="radio" name="action" value="revalidate" />
+		                        		<label for="action_all">Revalidate all</label>
+		                        	 </li>
+		                        	 <li>
+                            		<input id="action_invalid" type="radio" name="action" value="invalid" />
+                            		<label for="action_invalid">Revalidate invalid</label>
+                            		 </li>
+                            		<li>
+                            		<input id="action_links" type="radio" name="action" value="rescan" />
+                            		<label for="action_links">Rescan links</label>
+                            		 </li>
+                            		<li>
+                            		<input id="action_external" type="radio" name="action" value="linkcheck" />
+                            		<label for="action_external">Check external links</label>
+                            		 </li>
+	                        	  </ol>
 	                        	</fieldset>
 	                        </li>
                         </ol>
