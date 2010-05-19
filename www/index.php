@@ -77,16 +77,16 @@ if (isset($_GET['uri'])
     </div>
     <div id="wdn_content_wrapper">
         <div id="titlegraphic"><!-- InstanceBeginEditable name="titlegraphic" -->
-            <h1>Welcome to the new batch validator</h1>
+            <h1>Batch Validator</h1>
             <!-- InstanceEndEditable --></div>
         <div id="pagetitle"><!-- InstanceBeginEditable name="pagetitle" --> <!-- InstanceEndEditable --></div>
         <div id="maincontent">
             <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
             <!-- InstanceBeginEditable name="maincontentarea" -->
-            <div class="three_col left">
-            <form method="get" action="" class="zenform primary">
+            <h2>New and Improved!</h2>
+            <form method="get" action="" class="zenform primary" style="width:930px;margin-top:10px;">
                     <fieldset>
-                        <legend>Batch Validator</legend>
+                        <legend>Submit your site for validation</legend>
                         <ol>
                             <li>
                             	<label for="name" class="element">
@@ -101,19 +101,19 @@ if (isset($_GET['uri'])
 		                        	<ol>
 		                        	 <li>
 		                        		<input id="action_all" type="radio" name="action" value="revalidate" />
-		                        		<label for="action_all">Revalidate all</label>
+		                        		<label for="action_all">All pages</label>
 		                        	 </li>
 		                        	 <li>
                             		<input id="action_invalid" type="radio" name="action" value="invalid" />
-                            		<label for="action_invalid">Revalidate invalid</label>
+                            		<label for="action_invalid">Only pages previously identified as invalid <span class="helper">Based on a prior batch validation scan</span></label>
                             		 </li>
                             		<li>
                             		<input id="action_links" type="radio" name="action" value="rescan" />
-                            		<label for="action_links">Rescan links</label>
+                            		<label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
                             		 </li>
                             		<li>
                             		<input id="action_external" type="radio" name="action" value="linkcheck" />
-                            		<label for="action_external">Check external links</label>
+                            		<label for="action_external">Check external links <span class="helper">What does this do?</span></label>
                             		 </li>
 	                        	  </ol>
 	                        	</fieldset>
@@ -122,11 +122,7 @@ if (isset($_GET['uri'])
                     </fieldset>
                     <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
             </form>
-            </div>
-            <div class="col right">
-                <p class="submit"><a href="#" onclick="validateInvalid(); return false;">Validate Invalid</a></p>
-                <p class="submit"><a href="#" onclick="validateAll(); return false;">Validate All</a></p>
-            </div>
+            <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#">Invalid Pages</a> | <a href="#">All Pages</a></span></h3>
             <div class="clear">
                 <?php
                 

@@ -1,6 +1,9 @@
 @CHARSET "UTF-8";
-.true span, .false span {
+.true span, .false span, .unknown span {
 	background:url('images/trueFalse.png') no-repeat 0 0;
+}
+.unknown span {
+	background-position:0 -64px;
 }
 .false span{
 	background-position:0 -35px;
@@ -62,4 +65,9 @@ div[class^="depth"] span {
 }
 div[class^="depth"]:hover {
 	outline:1px solid #65d0d7;
+}
+#summaryTitle span {
+    float:right;
+    font-size:0.6em;
+    margin-top:7px;
 }
