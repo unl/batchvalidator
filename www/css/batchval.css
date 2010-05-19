@@ -11,7 +11,7 @@
 .validating.false span {
 	background:url('images/loadingFalse.gif') no-repeat 0 0;
 }
-.validating.true span {
+.validating.true span, .validating.unknown span {
     background:url('images/loadingTrue.gif') no-repeat 0 0;
 }
 .false {
@@ -62,6 +62,16 @@ div.depth_13 {
 div[class^="depth"] span {
 	display:block;
 	padding:5px 5px 5px 27px;
+}
+div[class^="depth"] span a {
+    margin-left:15px;	
+}
+a.errors, a.warnings {
+    background: url('images/errorWarning.png') no-repeat 0 0;
+    padding: 1px 0 2px 19px;
+}
+a.errors {
+    background-position: 0 -17px;	
 }
 div[class^="depth"]:hover {
 	outline:1px solid #65d0d7;

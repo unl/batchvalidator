@@ -36,10 +36,7 @@ function validateInvalid() {
 
 function checkValidity(uri, uriDiv)
 {
-	// uriDiv.removeClass('true false');
 	uriDiv.addClass('validating');
-	// Tell the user we're loading the result
-	// uriDiv.append('<img class="loading" src="/wdn/templates_3.0/css/header/images/colorbox/loading.gif" />');
 	// Fetch the validator results in JSON format.
 	WDN.get('validator.php?base='+baseURI+'&u='+escape(uri), null, function(result) {
 		handleJSONResult(result, uriDiv);
@@ -56,10 +53,14 @@ function handleJSONResult(result, uriDiv)
 	
 	if (result.validity) {
 		// It is valid, say no more!
+		uriDiv.removeClass('unknown false');
 		uriDiv.addClass('true');
+		
 		return;
 	}
-
+	
+	uriDiv.removeClass('unknown true');
 	uriDiv.addClass('false');
+	uriDiv.children('span').append("<a href='#' class='errors'>"+result.errors.length+" Error(s)</a> <a href='#' class='warnings'>"+result.warnings.length+" Warning(s)</a>");
 
 }
