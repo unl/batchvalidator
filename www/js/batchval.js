@@ -1,3 +1,8 @@
+WDN.jQuery(document).ready(function(){
+	
+	
+})
+
 function validateAll()
 {
 	WDN.jQuery('.uri').each(function(){
@@ -13,8 +18,11 @@ function validateAll()
 	WDN.jQuery('body').dequeue('validation');
 }
 
-function validateInvalid()
-{
+function validateInvalid() {
+	//scroll to first Invalid
+	var falseDiv = WDN.jQuery(".false:first").offset();
+	window.scroll(0, falseDiv.top);
+
 	WDN.jQuery('.false .uri').each(function(){
 		// Grab the URI
 		var uri = WDN.jQuery(this).html();

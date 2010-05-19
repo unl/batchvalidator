@@ -122,14 +122,14 @@ if (isset($_GET['uri'])
                     </fieldset>
                     <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
             </form>
-            <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#">Invalid Pages</a> | <a href="#">All Pages</a></span></h3>
+            <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>
             <div class="clear">
                 <?php
                 
                 if (!empty($uri)) {
                     $parts = parse_url($uri);
                     if (!isset($parts['path'])) {
-                        echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t your mother ever teach you what a web address is?</h2>';
+                        echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t saltybeagle ever teach you what a web address is?</h2>';
                         unset($uri);
                     }
                 }
