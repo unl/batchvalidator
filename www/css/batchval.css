@@ -73,6 +73,12 @@ a.errors, a.warnings {
 a.errors {
     background-position: 0 -17px;	
 }
+div.errorDetails {
+    background:#fff;
+    padding:5px;
+    border:#f6f6f6;	
+}
+#maincontent .details {display:none;}
 div[class^="depth"]:hover {
 	outline:1px solid #65d0d7;
 }
