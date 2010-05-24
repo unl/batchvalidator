@@ -83,7 +83,6 @@ if (isset($_GET['uri'])
         <div id="maincontent">
             <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
             <!-- InstanceBeginEditable name="maincontentarea" -->
-            <h2>New and Improved!</h2>
             <form method="get" action="" class="zenform primary" style="width:930px;margin-top:10px;">
                     <fieldset>
                         <legend>Submit your site for validation</legend>
@@ -95,6 +94,7 @@ if (isset($_GET['uri'])
                             	</label>
                             	<input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
                             </li>
+                            <!-- 
                             <li>
 	                        	<fieldset>
 	                       		<legend>What should be validated?</legend>
@@ -118,12 +118,14 @@ if (isset($_GET['uri'])
 	                        	  </ol>
 	                        	</fieldset>
 	                        </li>
+	                        -->
                         </ol>
                     </fieldset>
-                    <p class="submit"><input type="submit" id="submit" name="submit" value="Submit" /></p>
+                    <a href="#" id="submitTest">Test</a>
+                    <input type="submit" id="submit" name="submit" value="Submit" />
             </form>
             <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>
-            <div class="clear">
+            <div class="clear" id="summaryResults">
                 <?php
                 
                 if (!empty($uri)) {
@@ -160,6 +162,16 @@ if (isset($_GET['uri'])
                     }
                 }
                 ?>
+            </div>
+            <div id="progressReport">
+	           <h3>We're churning through your site now</h3>
+	           <p>Here is what we've found so far:</p>
+	           <ul>
+	               <li id="validatedPages"><span class="number">0</span>Pages</li>
+                   <li id="validatedErrors"><span class="number">0</span>Errors</li>
+                   <li id="validatedWarnings"><span class="number">0</span>Warnings</li>
+	           </ul>
+            
             </div>
             <!-- InstanceEndEditable -->
             <div class="clear"></div>

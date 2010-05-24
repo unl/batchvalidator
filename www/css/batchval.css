@@ -87,3 +87,38 @@ div[class^="depth"]:hover {
     font-size:0.6em;
     margin-top:7px;
 }
+#progressReport, #summaryTitle, #summaryResults {display:none;}
+/*
+
+Colorbox styles
+
+*/
+#colorbox h3 {
+    font-size:2.4em;
+    color:#909090;
+    font-weight:normal;
+    letter-spacing:-1px;
+    margin: 10px 0;
+    text-transform:capitalize;
+}
+#colorbox #progressReport {display:block;}
+#colorbox #progressReport ul {
+    list-style:none;
+    background:#FEF5D6;
+    padding:0 0 10px 0;
+    boder-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+#colorbox #progressReport ul li {
+    display:inline-block;
+    width:183px;
+    text-align:center;
+    font-size:1.2em;
+}
+#colorbox #progressReport ul li span.number {
+    display:block;
+    font-size:8em;
+    font-weight:bold;
+    padding:55px 0px 39px 0;
+}

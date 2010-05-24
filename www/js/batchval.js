@@ -1,6 +1,12 @@
 WDN.jQuery(document).ready(function(){
-	
-	
+	WDN.jQuery('.false .uri').each(function() {
+		//WDN.jQuery(this).append('<a onclick="checkValidity()">What\'s Wrong?</a>');
+		
+	});
+	if (window.location.search.substring(1)) { //if we don't have a querystring, hide the results on page load
+		WDN.jQuery('#summaryResults, #summaryTitle').show();
+	}
+	WDN.jQuery('#submitTest').colorbox({inline: true, href:'#progressReport', width:'600px', height:'310px'})
 })
 
 function validateAll()
@@ -60,6 +66,7 @@ function handleJSONResult(result, uriDiv)
 	}
 	
 	uriDiv.removeClass('unknown true');
+	uriDiv.children('.details').remove();
 	uriDiv.addClass('false');
 	uriDiv.children('span').append('<a href="#" class="errors" onclick="showResults(\''+uriDiv.attr("id")+'\'); return false;">'+result.errors.length+' Error(s)</a> <a href="#" class="errors" onclick="showResults(\''+uriDiv.attr("id")+'\'); return false;">'+result.warnings.length+' Warning(s)</a>');
 	uriDiv.append("<div class='details'></div>");
