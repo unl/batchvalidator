@@ -27,9 +27,11 @@ function validateAll()
 function validateInvalid() {
 	//scroll to first Invalid
 	var falseDiv = WDN.jQuery(".false:first").offset();
-	window.scroll(0, falseDiv.top);
+	if (falseDiv) {
+		window.scroll(0, falseDiv.top);
+	}
 
-	WDN.jQuery('.false .uri').each(function(){
+	WDN.jQuery('.false .uri, .unknown .uri').each(function(){
 		// Grab the URI
 		var uri = WDN.jQuery(this).html();
 		var uriDiv = WDN.jQuery(this).parent();
