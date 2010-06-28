@@ -113,8 +113,13 @@ if (isset($_GET['uri'])
                             		 </li>
                             		-->
                             		<li>
-                            		<input id="action_external" type="radio" name="action" value="linkcheck" />
-                            		<label for="action_external">Check external links <span class="helper">What does this do?</span></label>
+                            		<?php if ($_GET['action'] = 'linkcheck') {
+                            		  echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
+                            		} else {
+                            			echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
+                            		}?>
+                            		
+                            		<label for="action_external">Check links <span class="helper">Validate that each of links go to where they are supposed to.</span></label>
                             		 </li>
 	                        	  </ol>
 	                        	</fieldset>
