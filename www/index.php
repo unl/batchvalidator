@@ -94,11 +94,11 @@ if (isset($_GET['uri'])
                             	</label>
                             	<input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
                             </li>
-                            <!-- 
                             <li>
 	                        	<fieldset>
-	                       		<legend>What should be validated?</legend>
+	                       		<legend>Additional options:</legend>
 		                        	<ol>
+		                        	<!--
 		                        	 <li>
 		                        		<input id="action_all" type="radio" name="action" value="revalidate" />
 		                        		<label for="action_all">All pages</label>
@@ -111,6 +111,7 @@ if (isset($_GET['uri'])
                             		<input id="action_links" type="radio" name="action" value="rescan" />
                             		<label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
                             		 </li>
+                            		-->
                             		<li>
                             		<input id="action_external" type="radio" name="action" value="linkcheck" />
                             		<label for="action_external">Check external links <span class="helper">What does this do?</span></label>
@@ -118,10 +119,8 @@ if (isset($_GET['uri'])
 	                        	  </ol>
 	                        	</fieldset>
 	                        </li>
-	                        -->
                         </ol>
                     </fieldset>
-                    <a href="#" id="submitTest">Test</a>
                     <input type="submit" id="submit" name="submit" value="Submit" />
             </form>
             <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>

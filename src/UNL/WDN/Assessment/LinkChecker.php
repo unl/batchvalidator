@@ -49,12 +49,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                     curl_close($finishedCurl);
                 } else {
                     self::$checked[$info['url']] = false;
-                    echo PHP_EOL.str_repeat(' ', $depth) . " ->{$info['url']} ";
-                    if ($info['http_code'] != 0) {
-                        echo "returned a {$info['http_code']}";
-                    } else {
-                        echo 'timed out';
-                    }
+                    $this->logLinkError($info, $depth);
                     continue;
                 }
 
@@ -102,6 +97,28 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         
         if (!$this->checked[$link]) {
             echo PHP_EOL.str_repeat(' ', $depth) . " ->$link is a broken link";
+        }
+    }
+
+    protected function logLinkError($info, $depth)
+    {
+        echo PHP_EOL.str_repeat(' ', $depth) . " ->{$info['url']} ";
+        if ($info['http_code'] != 0) {
+            echo "returned a {$info['http_code']}.";
+            switch ($info['http_code']) {
+                case '404':
+                    echo ' This is broken and should be fixed!';
+                    break;
+                case '301':
+                    echo ' This should be checked.';
+                    break;
+                case '302':
+                    echo ' This is probably OK.';
+                    break;
+            }
+            echo '<br />';
+        } else {
+            echo 'timed out';
         }
     }
 }
