@@ -197,7 +197,7 @@ if (isset($_GET['uri'])
                 <strong>University Communications</strong><br />
                 Internet and Interactive Media<br />
                 WICK 17<br />
-                Lincoln NE 68583-0218</p>
+                Lincoln, NE 68583-0218</p>
                 <!-- InstanceEndEditable --></div>
             <div class="footer_col">
                 <?php virtual('/wdn/templates_3.0/includes/socialmediashare.html'); ?>
