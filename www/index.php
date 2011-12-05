@@ -88,42 +88,42 @@ if (isset($_GET['uri'])
                         <legend>Submit your site for validation</legend>
                         <ol>
                             <li>
-                            	<label for="name" class="element">
-                            		<span class="required">*</span>
-                            		URL
-                            	</label>
-                            	<input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
+                                <label for="name" class="element">
+                                    <span class="required">*</span>
+                                    URL
+                                </label>
+                                <input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
                             </li>
                             <li>
-	                        	<fieldset>
-	                       		<legend>Additional options:</legend>
-		                        	<ol>
-		                        	<!--
-		                        	 <li>
-		                        		<input id="action_all" type="radio" name="action" value="revalidate" />
-		                        		<label for="action_all">All pages</label>
-		                        	 </li>
-		                        	 <li>
-                            		<input id="action_invalid" type="radio" name="action" value="invalid" />
-                            		<label for="action_invalid">Only pages previously identified as invalid <span class="helper">Based on a prior batch validation scan</span></label>
-                            		 </li>
-                            		<li>
-                            		<input id="action_links" type="radio" name="action" value="rescan" />
-                            		<label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
-                            		 </li>
-                            		-->
-                            		<li>
-                            		<?php if (isset($_GET['action']) && ($_GET['action'] = 'linkcheck')) {
-                            		  echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
-                            		} else {
-                            			echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
-                            		}?>
-                            		
-                            		<label for="action_external">Check links <span class="helper">Run a simple check on external URLs to see if they're missing (404)</span></label>
-                            		 </li>
-	                        	  </ol>
-	                        	</fieldset>
-	                        </li>
+                                <fieldset>
+                                   <legend>Additional options:</legend>
+                                    <ol>
+                                    <!--
+                                     <li>
+                                        <input id="action_all" type="radio" name="action" value="revalidate" />
+                                        <label for="action_all">All pages</label>
+                                     </li>
+                                     <li>
+                                    <input id="action_invalid" type="radio" name="action" value="invalid" />
+                                    <label for="action_invalid">Only pages previously identified as invalid <span class="helper">Based on a prior batch validation scan</span></label>
+                                     </li>
+                                    <li>
+                                    <input id="action_links" type="radio" name="action" value="rescan" />
+                                    <label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
+                                     </li>
+                                    -->
+                                    <li>
+                                    <?php if (isset($_GET['action']) && ($_GET['action'] = 'linkcheck')) {
+                                      echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
+                                    } else {
+                                        echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
+                                    }?>
+                                    
+                                    <label for="action_external">Check links <span class="helper">Run a simple check on external URLs to see if they're missing (404)</span></label>
+                                     </li>
+                                  </ol>
+                                </fieldset>
+                            </li>
                         </ol>
                     </fieldset>
                     <input type="submit" id="submit" name="submit" value="Submit" />
@@ -168,13 +168,13 @@ if (isset($_GET['uri'])
                 ?>
             </div>
             <div id="progressReport">
-	           <h3>We're churning through your site now</h3>
-	           <p>Here is what we've found so far:</p>
-	           <ul>
-	               <li id="validatedPages"><span class="number">0</span>Pages</li>
+               <h3>We're churning through your site now</h3>
+               <p>Here is what we've found so far:</p>
+               <ul>
+                   <li id="validatedPages"><span class="number">0</span>Pages</li>
                    <li id="validatedErrors"><span class="number">0</span>Errors</li>
                    <li id="validatedWarnings"><span class="number">0</span>Warnings</li>
-	           </ul>
+               </ul>
             
             </div>
             <!-- InstanceEndEditable -->
