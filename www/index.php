@@ -119,7 +119,7 @@ if (isset($_GET['uri'])
                             			echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
                             		}?>
                             		
-                            		<label for="action_external">Check links <span class="helper">Validate that each of your links go to where they are supposed to.</span></label>
+                            		<label for="action_external">Check links <span class="helper">Run a simple check on external URLs to see if they're missing (404)</span></label>
                             		 </li>
 	                        	  </ol>
 	                        	</fieldset>
