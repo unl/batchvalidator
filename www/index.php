@@ -20,6 +20,11 @@ if (isset($_GET['uri'])
         exit();
     }
 }
+
+if (!isset($template_path)) {
+    $template_path = $_SERVER['DOCUMENT_ROOT'];
+}
+
 ?>
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="ie iem7"><![endif]-->
@@ -29,7 +34,7 @@ if (isset($_GET['uri'])
 <!--[if (gte IE 9)|(gt IEMobile 7) ]><html class="ie" lang="en"><![endif]-->
 <!--[if !(IEMobile) | !(IE)]><!--><html lang="en"><!-- InstanceBegin template="/Templates/php.fixed.dwt.php" codeOutsideHTMLIsLocked="false" --><!--<![endif]-->
 <head>
-<?php virtual("/wdn/templates_3.1/includes/metanfavico.html"); ?>
+<?php include($template_path . "/wdn/templates_3.1/includes/metanfavico.html"); ?>
 <!--
     Membership and regular participation in the UNL Web Developer Network
     is required to use the UNL templates. Visit the WDN site at
@@ -44,7 +49,7 @@ if (isset($_GET['uri'])
 
     $Id: php.fixed.dwt.php | ebd6eef8f48e609f4e2fe9c1d6432991649298e7 | Tue Mar 6 14:38:44 2012 -0600 | Brett Bieber  $
 -->
-<?php virtual("/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
+<?php include($template_path . "/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Batch Validator | University of Nebraska&ndash;Lincoln</title>
 <!-- InstanceEndEditable -->
@@ -67,8 +72,8 @@ if (isset($_GET['uri'])
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
             <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->The Title of My Site<!-- InstanceEndEditable --></span>
-            <?php virtual("/wdn/templates_3.1/includes/idm.html"); ?>
-            <?php virtual("/wdn/templates_3.1/includes/wdnTools.html"); ?>
+            <?php include($template_path . "/wdn/templates_3.1/includes/idm.html"); ?>
+            <?php include($template_path . "/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
         <div id="wdn_navigation_bar">
             <nav id="breadcrumbs">
@@ -196,14 +201,14 @@ if (isset($_GET['uri'])
             </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>
-                <?php virtual("/wdn/templates_3.1/includes/noscript.html"); ?>
+                <?php include($template_path . "/wdn/templates_3.1/includes/noscript.html"); ?>
                 <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
             </div>
         </div>
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-                <?php virtual("/wdn/templates_3.1/includes/feedback.html"); ?>
+                <?php include($template_path . "/wdn/templates_3.1/includes/feedback.html"); ?>
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->
@@ -220,7 +225,7 @@ if (isset($_GET['uri'])
                 Lincoln, NE 68583-0218</p>
                 <!-- InstanceEndEditable --></div>
             <div class="footer_col" id="wdn_footer_share">
-                <?php virtual("/wdn/templates_3.1/includes/socialmediashare.html"); ?>
+                <?php include($template_path . "/wdn/templates_3.1/includes/socialmediashare.html"); ?>
             </div>
             <!-- InstanceBeginEditable name="optionalfooter" -->
             <!-- InstanceEndEditable -->
@@ -229,9 +234,9 @@ if (isset($_GET['uri'])
                     <!-- InstanceBeginEditable name="footercontent" -->
                     <?php file_get_contents('http://wdn.unl.edu/sharedcode/footer.html'); ?>
                     <!-- InstanceEndEditable -->
-                    <?php virtual("/wdn/templates_3.1/includes/wdn.html"); ?>
+                    <?php include($template_path . "/wdn/templates_3.1/includes/wdn.html"); ?>
                 </div>
-                <?php virtual("/wdn/templates_3.1/includes/logos.html"); ?>
+                <?php include($template_path . "/wdn/templates_3.1/includes/logos.html"); ?>
             </div>
         </footer>
     </div>
