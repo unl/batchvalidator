@@ -6,7 +6,9 @@ WDN.jQuery(document).ready(function(){
 	if (window.location.search.substring(1)) { //if we don't have a querystring, hide the results on page load
 		WDN.jQuery('#summaryResults, #summaryTitle').show();
 	}
-	WDN.jQuery('#submitTest').colorbox({inline: true, href:'#progressReport', width:'600px', height:'310px'})
+    WDN.initializePlugin('modal', [function() {
+        WDN.jQuery('#submitTest').colorbox({inline: true, href:'#progressReport', width:'600px', height:'310px'})
+    }]);
 })
 
 function validateAll()
@@ -82,5 +84,7 @@ function handleJSONResult(result, uriDiv)
 	}
 }
 function showResults(errorDiv) {
-	WDN.jQuery('#'+errorDiv).colorbox({inline:true, maxWidth:'940px', height:'60%', href:'#'+errorDiv+" .details"});
+    WDN.initializePlugin('modal', [function() {
+	    WDN.jQuery('#'+errorDiv).colorbox({inline:true, maxWidth:'940px', height:'60%', href:'#'+errorDiv+" .details"});
+    }]);
 }
