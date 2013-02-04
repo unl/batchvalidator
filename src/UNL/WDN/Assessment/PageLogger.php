@@ -15,8 +15,13 @@ class UNL_WDN_Assessment_PageLogger extends Spider_LoggerAbstract
     
     function log($uri, $depth, DOMXPath $xpath)
     {
-        $this->assessment->addUri($uri);
-        echo PHP_EOL.'<div id="uri_'.md5($uri).'" class="depth_'.$depth.' '.$this->assessment->getValidityStatus($uri).'">
+        $status = $this->assessment->getValidityStatus($uri);
+        
+        if (empty($status)) {
+            $status = "unknown";
+        }
+        
+        echo PHP_EOL.'<div id="uri_'.md5($uri).'" class="depth_'.$depth.' '.$status.'">
         <span class="uri">'.$uri.'</span>
         </div>'.PHP_EOL;
     }
