@@ -15,28 +15,39 @@ class UNL_WDN_Assessment
      * 
      * @return Spider
      */
-    protected function getSpider()
+    protected function getSpider($loggers = array(), $filters = array())
     {
         $plogger          = new UNL_WDN_Assessment_PageLogger($this);
         $downloader       = new Spider_Downloader();
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser);
         
+        foreach ($loggers as $logger) {
+            $spider->addLogger($logger);
+        }
+
+        foreach ($filters as $filter) {
+            $spider->addUriFilter($filter);
+        }
+        
+        //Add default filters
         $spider->addUriFilter('Spider_AnchorFilter');
         $spider->addUriFilter('Spider_MailtoFilter');
         $spider->addUriFilter('UNL_WDN_Assessment_FileExtensionFilter');
+        
+        //We will always want to display the page logger after the other loggers have executed.
         $spider->addLogger($plogger);
+        
         return $spider;
     }
     
     function checkInvalid()
     {
-        
         $vlogger = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
         $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
-        $spider  = $this->getSpider();
-        $spider->addLogger($vlogger);
-        $spider->addLogger($slogger);
+        
+        $spider  = $this->getSpider(array($vlogger, $slogger));
+        
         $spider->spider($this->baseUri);
     }
     
@@ -45,26 +56,25 @@ class UNL_WDN_Assessment
         $this->removeEntries();
         
         $vlogger = new UNL_WDN_Assessment_ValidationLogger($this);
-        //$slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
-        $spider  = $this->getSpider();
-        $spider->addLogger($vlogger);
-        //$spider->addLogger($slogger);
+        
+        $spider  = $this->getSpider(array($vlogger));
+        
         $spider->spider($this->baseUri);
     }
     
     function logPages()
     {
-        //$slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         $spider = $this->getSpider();
-        //$spider->addLogger($slogger);
+        
         $spider->spider($this->baseUri);
     }
     
     function checkLinks()
     {
         $checker = new UNL_WDN_Assessment_LinkChecker($this);
-        $spider = $this->getSpider();
-        $spider->addLogger($checker);
+        
+        $spider = $this->getSpider(array($checker));
+        
         $spider->spider($this->baseUri);
     }
     
