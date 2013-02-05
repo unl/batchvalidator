@@ -135,7 +135,7 @@ if (!isset($template_path)) {
                                      </li>
                                     -->
                                     <li>
-                                    <?php if (isset($_GET['action']) && ($_GET['action'] = 'linkcheck')) {
+                                    <?php if (isset($_GET['action']) && ($_GET['action'] == 'linkcheck')) {
                                       echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
                                     } else {
                                         echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
