@@ -93,6 +93,12 @@ class UNL_WDN_Assessment
     
     function setValidationResult($uri, $result)
     {
+        //Add the uri if it doesn't already exist.
+        $currentResult = $this->getValidityStatus($_GET['u']);
+        if (empty($currentResult)) {
+            $this->addUri($uri);
+        }
+        
         $sth = $this->db->prepare('UPDATE assessment SET valid = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
         if ($result) {
             $result = 'true';
