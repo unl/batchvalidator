@@ -94,7 +94,7 @@ class UNL_WDN_Assessment
     function setValidationResult($uri, $result)
     {
         //Add the uri if it doesn't already exist.
-        $currentResult = $this->getValidityStatus($_GET['u']);
+        $currentResult = $this->getValidityStatus($uri);
         if (empty($currentResult)) {
             $this->addUri($uri);
         }
