@@ -27,6 +27,12 @@ class UNL_WDN_Assessment_ValidationLogger extends Spider_LoggerAbstract
         
         $r = $this->validator->validate($uri);
         
-        $this->assessment->setValidationResult($uri, $r->isValid());
+        $result = $r->isValid();
+        
+        if (!$result && empty($r->errors)) {
+            $result = 'unknown';
+        }
+        
+        $this->assessment->setValidationResult($uri, $result);
     }
 }
