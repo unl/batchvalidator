@@ -100,11 +100,15 @@ class UNL_WDN_Assessment
         }
         
         $sth = $this->db->prepare('UPDATE assessment SET valid = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
-        if ($result) {
-            $result = 'true';
-        } else {
-            $result = 'false';
+        
+        if (is_bool($result)) {
+            if ($result) {
+                $result = 'true';
+            } else {
+                $result = 'false';
+            }
         }
+        
         $sth->execute(array($result, date('Y-m-d H:i:s'), $this->baseUri, $uri));
     }
     
