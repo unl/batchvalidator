@@ -108,10 +108,10 @@ if (!isset($template_path)) {
                 <form method="get" action="" class="wdn-form single">
                     <fieldset class="main-focus">
                         <legend class="intro-action">Scan your site for validation</legend>
-                        <label for="name" class="element">
+                        <label for="uri" class="element">
                             Enter your site URL <span class="helper-text">Simply use your homepage</span>
                         </label>
-                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
+                        <input type="url" name="uri" id="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
                         <input type="submit" id="submit" name="submit" value="Scan" />
                     </fieldset>
                 </form>
@@ -127,7 +127,7 @@ if (!isset($template_path)) {
                             <li>
                                 <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
                             </li>
-                        </p>
+                        </ul>
                         </div>
                         <div class="bp2-wdn-col-one-fourth">
                             <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
@@ -217,44 +217,40 @@ if (!isset($template_path)) {
                         </tbody>
                     </table>
                 </section>
-            <div class="clear" id="summaryResults">
-                <?php
-                
-                if (!empty($uri)) {
-                    $parts = parse_url($uri);
-                    if (!isset($parts['path'])) {
-                        echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t saltybeagle ever teach you what a web address is?</h2>';
-                        unset($uri);
+                <div class="clear" id="summaryResults">
+                    <?php
+
+                    if (!empty($uri)) {
+                        $parts = parse_url($uri);
+                        if (!isset($parts['path'])) {
+                            echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t saltybeagle ever teach you what a web address is?</h2>';
+                            unset($uri);
+                        }
                     }
-                }
-                
-                if (!empty($uri)) {
-                    $assessment = new UNL_WDN_Assessment($uri, $db);
-                    $action = 'rescan';
-                    
-                    if (isset($_GET['action'])) {
-                        $action = $_GET['action'];
+
+                    if (!empty($uri)) {
+                        $assessment = new UNL_WDN_Assessment($uri, $db);
+                        $action = 'rescan';
+
+                        if (isset($_GET['action'])) {
+                            $action = $_GET['action'];
+                        }
+
+                        switch ($action) {
+                            case 'check':
+                                $assessment->check();
+                                break;
+                            default:
+                        }
+
+                        ?>
+                        <script type='text/javascript'>
+                            var WDN_CHECKER_DATA = JSON.parse('<?php echo $assessment->getJSONstats(); ?>');
+                        </script>
+                        <?php
                     }
-                    
-                    switch ($action) {
-                        case 'revalidate':
-                            $assessment->reValidate();
-                            break;
-                        case 'invalid':
-                            $assessment->checkInvalid();
-                            break;
-                        case 'linkcheck':
-                            $assessment->checkLinks();
-                            break;
-                        case 'remove':
-                            $assessment->removeEntries();
-                        case 'rescan':
-                        default:
-                            $assessment->logPages();
-                    }
-                }
-                ?>
-            </div>
+                    ?>
+                </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>
                 <?php include($template_path . "/wdn/templates_3.1/includes/noscript.html"); ?>
