@@ -1,0 +1,70 @@
+
+#maincontent {
+
+    * {
+        .box-sizing(border-box);
+    }
+    
+    .wdn-form {
+        .clear-fix();
+
+        &.single { //It's a single form, so don't make it feel squished
+            padding: 3em 0;
+
+        }
+
+        ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .intro-action {
+            display: none;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2em;
+            color: lighten(@baseText, 10%);
+            padding-left: 0.5em;
+            font-weight: bold;
+
+            .helper-text {
+                font-size: 0.7em;
+                font-weight: normal;
+                color: darken(@colorTriad, 15%);
+
+            }
+        }
+
+        input {
+            font-size: 1.2em;
+            padding: 0.5em;
+            float: left;
+        }
+        input[type=url] {
+            width: 80%;
+            border-radius: 3px;
+            color: lighten(@baseText, 15%);
+            border: 1px solid #d1d1d1;
+        }
+
+        input[type=submit] {
+            width:18%;
+            margin-left: 2%;
+            .linear-gradient(@colorComplementary, @shadowComplementary);
+            border-radius: 3px;
+            border: 1px solid @shadowComplementary;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 1px 0 1px darken(@shadowComplementary, 15%);
+            cursor: pointer;
+
+            &:hover {
+                .linear-gradient(@highlightComplementary, @shadowComplementary);
+            }
+        }
+    }
+
+}
