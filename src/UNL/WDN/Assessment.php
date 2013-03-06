@@ -196,15 +196,10 @@ class UNL_WDN_Assessment
             
             $stats['pages'][$i]['bad_links'] = array();
             
-            $ii = 0;
             foreach ($this->getBadLinksForPage($page['url']) as $link) {
-                $stats['pages'][$i]['bad_links'][$ii] = array();
-                $stats['pages'][$i]['bad_links'][$ii]['link'] = $link['link_url'];
-                $stats['pages'][$i]['bad_links'][$ii]['code'] = $link['code'];
+                $stats['pages'][$i]['bad_links'][$link['code']][] = $link['link_url'];
 
                 $stats['total_bad_links']++;
-                
-                $ii++;
             }
             
             $i++;
