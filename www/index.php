@@ -51,12 +51,12 @@ if (!isset($template_path)) {
 -->
 <?php include($template_path . "/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Batch Validator | University of Nebraska&ndash;Lincoln</title>
+<title>Site Checker | Web Developer Network | University of Nebraska&ndash;Lincoln</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
-<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/zenform.css" />
-<link rel="stylesheet" type="text/css" href="css/batchval.css" />
+<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/grid-v3.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 <script type="text/javascript" src="js/batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 
@@ -64,18 +64,18 @@ if (!isset($template_path)) {
 <!-- InstanceParam name="class" type="text" value="fixed" -->
 </head>
 <body class="fixed" data-version="3.1">
-    <nav class="skipnav">
+    <nav class="skipnav" role="navigation">
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
     <div id="wdn_wrapper">
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->The Title of My Site<!-- InstanceEndEditable --></span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Site Checker<!-- InstanceEndEditable --></span>
             <?php include($template_path . "/wdn/templates_3.1/includes/idm.html"); ?>
             <?php include($template_path . "/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
-        <div id="wdn_navigation_bar">
+        <div id="wdn_navigation_bar" role="navigation">
             <nav id="breadcrumbs">
                 <!-- WDN: see glossary item 'breadcrumbs' -->
                 <h3 class="wdn_list_descriptor hidden">Breadcrumbs</h3>
@@ -83,7 +83,7 @@ if (!isset($template_path)) {
                 <ul>
                     <li class="first"><a href="http://www.unl.edu/">UNL</a></li>
                     <li><a href="http://wdn.unl.edu/"><abbr title="Web Developer Network">WDN</abbr></a></li>
-                    <li>Batch Validator</li>
+                    <li>Site Checker</li>
                 </ul>
                 <!-- InstanceEndEditable -->
             </nav>
@@ -96,61 +96,129 @@ if (!isset($template_path)) {
                 </nav>
             </div>
         </div>
-        <div id="wdn_content_wrapper">
-            <div id="pagetitle">
+        <div id="wdn_content_wrapper" role="main">
+            <div id="pagetitle" style="display:none;">
                 <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1>Batch Validator</h1>
+                <h1>Site Validator</h1>
                 <!-- InstanceEndEditable -->
             </div>
-            <div id="maincontent" role="main">
+            <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="" class="zenform primary" style="width:930px;margin-top:10px;">
-                    <fieldset>
-                        <legend>Submit your site for validation</legend>
-                        <ol>
-                            <li>
-                                <label for="name" class="element">
-                                    <span class="required">*</span>
-                                    URL
-                                </label>
-                                <input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
-                            </li>
-                            <li>
-                                <fieldset>
-                                   <legend>Additional options:</legend>
-                                    <ol>
-                                    <!--
-                                     <li>
-                                        <input id="action_all" type="radio" name="action" value="revalidate" />
-                                        <label for="action_all">All pages</label>
-                                     </li>
-                                     <li>
-                                    <input id="action_invalid" type="radio" name="action" value="invalid" />
-                                    <label for="action_invalid">Only pages previously identified as invalid <span class="helper">Based on a prior batch validation scan</span></label>
-                                     </li>
-                                    <li>
-                                    <input id="action_links" type="radio" name="action" value="rescan" />
-                                    <label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
-                                     </li>
-                                    -->
-                                    <li>
-                                    <?php if (isset($_GET['action']) && ($_GET['action'] == 'linkcheck')) {
-                                      echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
-                                    } else {
-                                        echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
-                                    }?>
-                                    
-                                    <label for="action_external">Check links <span class="helper">Run a simple check on external URLs to see if they're missing (404)</span></label>
-                                     </li>
-                                  </ol>
-                                </fieldset>
-                            </li>
-                        </ol>
+                <form method="get" action="" class="wdn-form single">
+                    <fieldset class="main-focus">
+                        <legend class="intro-action">Scan your site for validation</legend>
+                        <label for="name" class="element">
+                            Enter your site URL <span class="helper-text">Simply use your homepage</span>
+                        </label>
+                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
+                        <input type="submit" id="submit" name="submit" value="Scan" />
                     </fieldset>
-                    <input type="submit" id="submit" name="submit" value="Submit" />
-            </form>
-            <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>
+                </form>
+                <section id="validator-results-setup" class="report-view">
+                    <h2 class="report-title">Summary of Scan</h2>
+                    <div class="wdn-grid-set">
+                        <div class="wdn-col-three-fourths">
+                        <h3>Site Information</h3>
+                        <ul class="structure-list">
+                            <li>
+                                <span class="item-label">Site title:</span> <span id="site-title"></span>
+                            </li>
+                            <li>
+                                <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
+                            </li>
+                        </p>
+                        </div>
+                        <div class="wdn-col-one-fourth">
+                            <h3>Revalidate</h3>
+                            <a href="#" id="validateInvalid" class="wdn-button">Invalid Pages</a>
+                            <a href="#" id="validateAll" class="wdn-button">All Pages</a>
+                        </div>
+                    </div>
+                    <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
+                        <div class="wdn-col" id="valid-pages">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    pages
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-errors">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    HTML errors
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-html">
+                            <div class="visual-island error">
+                                <span class="dashboard-value">
+                                    0%
+                                </span>
+                                <span class="dashboard-metric">
+                                    current HTML
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-dependents">
+                            <div class="visual-island error">
+                                <span class="dashboard-value">
+                                    0%
+                                </span>
+                                <span class="dashboard-metric">
+                                    current dependents
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-links">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    Bad links
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="wdn_responsive_table" id="validator-results">
+                        <caption>Results for your viewing pleasure</caption>
+                        <thead>
+                            <tr>
+                                <th id="validator-page">Page</th>
+                                <th id="validator-html">HTML Validity</th>
+                                <th id="validator-current-html">Current HTML</th>
+                                <th id="validator-current-dependents">Current Dependents</th>
+                                <th id="validator-404">Bad Links</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th id="page-01">
+                                    /resources
+                                </th>
+                                <td headers="page-01 validator-html" data-header="HTML Validity">
+
+                                </td>
+                                <td headers="page-01 validator-current-html" data-header="Current HTML">
+
+                                </td>
+                                <td headers="page-01 validator-current-dependents" data-header="Current Dependents">
+
+                                </td>
+                                <td headers="page-01 validator-404" data-header="Bad Links">
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
             <div class="clear" id="summaryResults">
                 <?php
                 
@@ -189,23 +257,13 @@ if (!isset($template_path)) {
                 }
                 ?>
             </div>
-            <div id="progressReport">
-               <h3>We're churning through your site now</h3>
-               <p>Here is what we've found so far:</p>
-               <ul>
-                   <li id="validatedPages"><span class="number">0</span>Pages</li>
-                   <li id="validatedErrors"><span class="number">0</span>Errors</li>
-                   <li id="validatedWarnings"><span class="number">0</span>Warnings</li>
-               </ul>
-            
-            </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>
                 <?php include($template_path . "/wdn/templates_3.1/includes/noscript.html"); ?>
                 <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
             </div>
         </div>
-        <footer id="footer">
+        <footer id="footer" role="contentinfo">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
                 <?php include($template_path . "/wdn/templates_3.1/includes/feedback.html"); ?>
