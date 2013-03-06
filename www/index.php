@@ -55,7 +55,7 @@ if (!isset($template_path)) {
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
-<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/grid-v3.css" />
+<link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <script type="text/javascript" src="js/batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
@@ -118,7 +118,7 @@ if (!isset($template_path)) {
                 <section id="validator-results-setup" class="report-view">
                     <h2 class="report-title">Summary of Scan</h2>
                     <div class="wdn-grid-set">
-                        <div class="wdn-col-three-fourths">
+                        <div class="bp2-wdn-col-three-fourths">
                         <h3>Site Information</h3>
                         <ul class="structure-list">
                             <li>
@@ -129,10 +129,8 @@ if (!isset($template_path)) {
                             </li>
                         </p>
                         </div>
-                        <div class="wdn-col-one-fourth">
-                            <h3>Revalidate</h3>
-                            <a href="#" id="validateInvalid" class="wdn-button">Invalid Pages</a>
-                            <a href="#" id="validateAll" class="wdn-button">All Pages</a>
+                        <div class="bp2-wdn-col-one-fourth">
+                            <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
                         </div>
                     </div>
                     <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
