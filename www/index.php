@@ -64,7 +64,7 @@ if (!isset($template_path)) {
 <!-- InstanceParam name="class" type="text" value="fixed" -->
 </head>
 <body class="fixed" data-version="3.1">
-    <nav class="skipnav">
+    <nav class="skipnav" role="navigation">
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
     <div id="wdn_wrapper">
@@ -75,7 +75,7 @@ if (!isset($template_path)) {
             <?php include($template_path . "/wdn/templates_3.1/includes/idm.html"); ?>
             <?php include($template_path . "/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
-        <div id="wdn_navigation_bar">
+        <div id="wdn_navigation_bar" role="navigation">
             <nav id="breadcrumbs">
                 <!-- WDN: see glossary item 'breadcrumbs' -->
                 <h3 class="wdn_list_descriptor hidden">Breadcrumbs</h3>
@@ -96,29 +96,28 @@ if (!isset($template_path)) {
                 </nav>
             </div>
         </div>
-        <div id="wdn_content_wrapper">
+        <div id="wdn_content_wrapper" role="main">
             <div id="pagetitle" style="display:none;">
                 <!-- InstanceBeginEditable name="pagetitle" -->
                 <h1>Batch Validator</h1>
                 <!-- InstanceEndEditable -->
             </div>
-            <div id="maincontent" role="main">
+            <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="">
+                <form method="get" action="" class="wdn-form">
                     <fieldset>
-                        <legend>Submit your site for validation</legend>
+                        <legend>Scan your site for validation</legend>
                         <ol>
                             <li>
                                 <label for="name" class="element">
-                                    <span class="required">*</span>
-                                    URL
+                                    Site URL <span class="helpertext">Just use your homepage</span>
                                 </label>
-                                <input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
+                                <input type="text" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
                             </li>
                         </ol>
                     </fieldset>
-                    <input type="submit" id="submit" name="submit" value="Submit" />
+                    <input type="submit" id="submit" name="submit" value="Scan" />
             </form>
             <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>
             <div class="clear" id="summaryResults">
@@ -175,7 +174,7 @@ if (!isset($template_path)) {
                 <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
             </div>
         </div>
-        <footer id="footer">
+        <footer id="footer" role="contentinfo">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
                 <?php include($template_path . "/wdn/templates_3.1/includes/feedback.html"); ?>
