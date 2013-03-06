@@ -131,14 +131,8 @@ if (!isset($template_path)) {
                         </div>
                         <div class="wdn-col-one-fourth">
                             <h3>Revalidate</h3>
-                            <ul class="structure-list">
-                                <li>
-                                    <a href="#" id="validateInvalid">Invalid Pages</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="validateAll">All Pages</a>
-                                </li>
-                            </ul>
+                            <a href="#" id="validateInvalid" class="wdn-button">Invalid Pages</a>
+                            <a href="#" id="validateAll" class="wdn-button">All Pages</a>
                         </div>
                     </div>
                     <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
