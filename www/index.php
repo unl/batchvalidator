@@ -118,7 +118,7 @@ if (!isset($template_path)) {
                 <section id="validator-results-setup" class="report-view">
                     <h2 class="report-title">Summary of Scan</h2>
                     <div class="wdn-grid-set">
-                        <div class="wdn-col-three-fourths">
+                        <div class="bp2-wdn-col-three-fourths">
                         <h3>Site Information</h3>
                         <ul class="structure-list">
                             <li>
@@ -129,7 +129,7 @@ if (!isset($template_path)) {
                             </li>
                         </p>
                         </div>
-                        <div class="wdn-col-one-fourth">
+                        <div class="bp2-wdn-col-one-fourth">
                             <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
                         </div>
                     </div>
