@@ -2,6 +2,17 @@
 class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
 {
     protected static $checked = array();
+
+    /**
+     *
+     * @var UNL_WDN_Assessment
+     */
+    public $assessment;
+
+    function __construct(UNL_WDN_Assessment $assessment)
+    {
+        $this->assessment = $assessment;
+    }
     
     public function log($uri, $depth, DOMXPath $xpath)
     {
@@ -49,7 +60,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                     curl_close($finishedCurl);
                 } else {
                     self::$checked[$info['url']] = false;
-                    $this->logLinkError($info, $depth);
+                    $this->addLink($info['url'], $info['http_code'], $uri);
                     continue;
                 }
 
@@ -78,47 +89,13 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         return $links;
     }
 
-    protected function checkLink($uri, $link, $depth)
+    function addLink($link, $code, $uri)
     {
-        $link = spider::absolutePath($link, $uri);
-        
-        if (!filter_var($link, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
-            echo PHP_EOL.'Will not check '.$link;
-            return false;
+        if (!in_array($code, array(404, 301))) {
+            return;
         }
         
-        if (!array_key_exists($link, $this->checked)) {
-            if ($contents = @file_get_contents($link)) {
-                $this->checked[$link] = true;
-            } else {
-                $this->checked[$link] = false;
-            }
-        }
-        
-        if (!$this->checked[$link]) {
-            echo PHP_EOL.str_repeat(' ', $depth) . " ->$link is a broken link";
-        }
-    }
-
-    protected function logLinkError($info, $depth)
-    {
-        echo PHP_EOL.str_repeat(' ', $depth) . " ->{$info['url']} ";
-        if ($info['http_code'] != 0) {
-            echo "returned a {$info['http_code']}.";
-            switch ($info['http_code']) {
-                case '404':
-                    echo ' This is broken and should be fixed!';
-                    break;
-                case '301':
-                    echo ' This should be checked.';
-                    break;
-                case '302':
-                    echo ' This is probably OK.';
-                    break;
-            }
-            echo '<br />';
-        } else {
-            echo 'timed out';
-        }
+        $sth = $this->assessment->db->prepare('INSERT INTO url_has_badlinks (baseurl, url, link_url, code, timestamp) VALUES (?, ?, ?, ?, ?);');
+        $sth->execute(array($this->assessment->baseUri, $uri, $link, $code, date('Y-m-d H:i:s')));
     }
 }
