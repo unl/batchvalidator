@@ -51,7 +51,7 @@ if (!isset($template_path)) {
 -->
 <?php include($template_path . "/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Site Validator | Web Developer Network | University of Nebraska&ndash;Lincoln</title>
+<title>Site Checker | Web Developer Network | University of Nebraska&ndash;Lincoln</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
@@ -71,7 +71,7 @@ if (!isset($template_path)) {
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Site Validator<!-- InstanceEndEditable --></span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Site Checker<!-- InstanceEndEditable --></span>
             <?php include($template_path . "/wdn/templates_3.1/includes/idm.html"); ?>
             <?php include($template_path . "/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
@@ -83,7 +83,7 @@ if (!isset($template_path)) {
                 <ul>
                     <li class="first"><a href="http://www.unl.edu/">UNL</a></li>
                     <li><a href="http://wdn.unl.edu/"><abbr title="Web Developer Network">WDN</abbr></a></li>
-                    <li>Site Validator</li>
+                    <li>Site Checker</li>
                 </ul>
                 <!-- InstanceEndEditable -->
             </nav>
