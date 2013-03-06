@@ -111,4 +111,34 @@ class UNL_WDN_Assessment
         $result = $sth->fetch();
         return $result['valid'];
     }
+
+    function getTitle()
+    {
+        $page = @file_get_contents($this->baseUri);
+        
+        if (strlen($page)) {
+            $results = array();
+            
+            preg_match("/\<title\>(.*)\<\/title\>/", $page, $results);
+            
+            if (isset($results[1])) {
+                return $results[1];
+            }
+        }
+        
+        return "unknown";
+    }
+    
+    function getLastScanDate()
+    {
+        $sth = $this->db->prepare('SELECT MAX(timestamp) as scan_date FROM assessment WHERE baseurl = ?');
+        $sth->execute(array($this->baseUri));
+        $result = $sth->fetch();
+        
+        if (isset($result['scan_date'])) {
+            return $result['scan_date'];
+        }
+        
+        return false;
+    }
 }
