@@ -17,8 +17,7 @@ class UNL_WDN_Assessment
      */
     protected function getSpider($loggers = array(), $filters = array())
     {
-        $plogger          = new UNL_WDN_Assessment_PageLogger($this);
-        $downloader       = new Spider_Downloader();
+        $downloader       = new Spider_Downloader();    
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser);
         
@@ -35,9 +34,6 @@ class UNL_WDN_Assessment
         $spider->addUriFilter('Spider_MailtoFilter');
         $spider->addUriFilter('UNL_WDN_Assessment_FileExtensionFilter');
         
-        //We will always want to display the page logger after the other loggers have executed.
-        $spider->addLogger($plogger);
-        
         return $spider;
     }
     
@@ -50,66 +46,35 @@ class UNL_WDN_Assessment
         
         $spider->spider($this->baseUri);
     }
+
+    /**
+     * Will recheck all metrics for every page
+     * (save results to DB)
+     */
+    function check()
+    {
+        $this->removeEntries();
+
+        $uriLogger = new UNL_WDN_Assessment_URILogger($this);
+        $validationLogger = new UNL_WDN_Assessment_ValidationLogger($this);
+        $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger();
+        $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger();
+        $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);
+
+        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker));
+
+        $spider->spider($this->baseUri);
+    }
     
     function reValidate()
     {
-        $this->removeEntries();
         
-        $vlogger = new UNL_WDN_Assessment_ValidationLogger($this);
-        
-        $spider  = $this->getSpider(array($vlogger));
-        
-        $spider->spider($this->baseUri);
-    }
-    
-    function logPages()
-    {
-        $spider = $this->getSpider();
-        
-        $spider->spider($this->baseUri);
-    }
-    
-    function checkLinks()
-    {
-        $checker = new UNL_WDN_Assessment_LinkChecker($this);
-        
-        $spider = $this->getSpider(array($checker));
-        
-        $spider->spider($this->baseUri);
     }
     
     function removeEntries()
     {
         $sth = $this->db->prepare('DELETE FROM assessment WHERE baseurl = ?');
         $sth->execute(array($this->baseUri));
-    }
-    
-    function addUri($uri)
-    {
-        $sth = $this->db->prepare('INSERT INTO assessment (baseurl, url, valid, timestamp) VALUES (?, ?, ?, ?);');
-        $sth->execute(array($this->baseUri, $uri, 'unknown', date('Y-m-d H:i:s')));
-        
-    }
-    
-    function setValidationResult($uri, $result)
-    {
-        //Add the uri if it doesn't already exist.
-        $currentResult = $this->getValidityStatus($uri);
-        if (empty($currentResult)) {
-            $this->addUri($uri);
-        }
-        
-        $sth = $this->db->prepare('UPDATE assessment SET valid = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
-        
-        if (is_bool($result)) {
-            if ($result) {
-                $result = 'true';
-            } else {
-                $result = 'false';
-            }
-        }
-        
-        $sth->execute(array($result, date('Y-m-d H:i:s'), $this->baseUri, $uri));
     }
     
     function getSubPages()
@@ -121,7 +86,7 @@ class UNL_WDN_Assessment
     
     function pageWasValid($uri)
     {
-        if ($this->getValidityStatus($uri) == 'true') {
+        if ($this->getValidityStatus($uri) == '0') {
             return true;
         }
         return false;
