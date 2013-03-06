@@ -1,11 +1,22 @@
 <?php
 class UNL_WDN_Assessment_TemplateDEPLogger extends Spider_LoggerAbstract
 {
+    /**
+     *
+     * @var UNL_WDN_Assessment
+     */
+    public $assessment;
+
+    function __construct(UNL_WDN_Assessment $assessment)
+    {
+        $this->assessment = $assessment;
+    }
+    
     public function log($uri, $depth, DOMXPath $xpath)
     {
         $version = $this->getDEPVersion($xpath);
-
-        echo "<div>DEP Version: " . $version . "</div>";
+        
+        $this->setDepVersion($uri, $version);
     }
 
     public function getDEPVersion(DOMXPath $xpath)
@@ -31,5 +42,12 @@ class UNL_WDN_Assessment_TemplateDEPLogger extends Spider_LoggerAbstract
         }
 
         return $matches[1];
+    }
+
+    function setDepVersion($uri, $result)
+    {
+        $sth = $this->assessment->db->prepare('UPDATE assessment SET template_dep = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
+
+        $sth->execute(array($result, date('Y-m-d H:i:s'), $this->assessment->baseUri, $uri));
     }
 }

@@ -57,8 +57,8 @@ class UNL_WDN_Assessment
 
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
         $validationLogger = new UNL_WDN_Assessment_ValidationLogger($this);
-        $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger();
-        $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger();
+        $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger($this);
+        $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger($this);
         $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);
 
         $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker));
