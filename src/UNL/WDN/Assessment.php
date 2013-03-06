@@ -141,4 +141,77 @@ class UNL_WDN_Assessment
         
         return false;
     }
+    
+    public static function getCurrentTemplateVersions()
+    {
+        if (!$json = file_get_contents(dirname(__FILE__) . "/../../../tmp/templateversions.json")) {
+            throw new Exception("tmp/templateversions.json does not exist.  Please run scripts/getLatestTemplateVersions.php");
+        }
+        
+        return json_decode($json, true);
+    }
+    
+    function getJSONstats()
+    {
+        $versions = self::getCurrentTemplateVersions();
+        
+        $stats = array();
+        $stats['site_title'] = $this->getTitle();
+        $stats['last_scan'] = $this->getLastScanDate();
+        $stats['total_pages'] = 0;
+        $stats['total_html_errors'] = 0;
+        $stats['total_bad_links'] = 0;
+        $stats['total_current_template_html'] = 0;
+        $stats['total_current_template_dep'] = 0;
+        $stats['current_template_html'] = $versions['html'];
+        $stats['current_template_dep'] = $versions['dep'];
+        
+        $stats['pages'] = array();
+        
+        $i = 0;
+        foreach ($this->getSubPages() as $page) {
+            $stats['pages'][$i]['page'] = $page['url'];
+            
+            $stats['pages'][$i]['html_errors'] = $page['valid'];
+            
+            if ($page['valid'] != 'unknown') {
+                $stats['total_html_errors'] += $page['valid'];
+            }
+            
+            $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
+            $stats['pages'][$i]['template_html']['current'] = false;
+            
+            if ($page['template_html'] != 'unknown' && $page['template_html'] == $versions['html']) {
+                $stats['total_current_template_html']++;
+                $stats['pages'][$i]['template_html']['current'] = true;
+            }
+            
+            $stats['pages'][$i]['template_dep']['version'] = $page['template_dep'];
+            $stats['pages'][$i]['template_dep']['current'] = false;
+
+            if ($page['template_dep'] != 'unknown' && $page['template_dep'] == $versions['dep']) {
+                $stats['total_current_template_dep']++;
+                $stats['pages'][$i]['template_dep']['current'] = true;
+            }
+            
+            $stats['pages'][$i]['bad_links'] = array();
+            
+            $ii = 0;
+            foreach ($this->getBadLinksForPage($page['url']) as $link) {
+                $stats['pages'][$i]['bad_links'][$ii] = array();
+                $stats['pages'][$i]['bad_links'][$ii]['link'] = $link['link_url'];
+                $stats['pages'][$i]['bad_links'][$ii]['code'] = $link['code'];
+
+                $stats['total_bad_links']++;
+                
+                $ii++;
+            }
+            
+            $i++;
+        }
+
+        $stats['total_pages'] = $i-1;
+        
+        return json_encode($stats);
+    }
 }
