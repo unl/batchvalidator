@@ -16,7 +16,8 @@ Then, to build the `main.css` file:
 #### Sublime Text 2 Build
 1. Use the `(less2css)[https://github.com/timdouglas/sublime-less2css]` Build Process
 2. Local Sublime Text 2 Settings (via "Preferences" -> "Package Settings" -> "Less2Css" -> "Settings - User")
-    
+
+```
     {
       "lessBaseDir": "./www/less",
       "outputDir": "./www/css",
@@ -25,3 +26,4 @@ Then, to build the `main.css` file:
       "showErrorWithWindow": true,
       "main_file": "main.less"
     }
+```
