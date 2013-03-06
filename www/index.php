@@ -51,7 +51,7 @@ if (!isset($template_path)) {
 -->
 <?php include($template_path . "/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Batch Validator | University of Nebraska&ndash;Lincoln</title>
+<title>Site Validator | Web Developer Network | University of Nebraska&ndash;Lincoln</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
@@ -71,7 +71,7 @@ if (!isset($template_path)) {
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->The Title of My Site<!-- InstanceEndEditable --></span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Site Validator<!-- InstanceEndEditable --></span>
             <?php include($template_path . "/wdn/templates_3.1/includes/idm.html"); ?>
             <?php include($template_path . "/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
@@ -83,7 +83,7 @@ if (!isset($template_path)) {
                 <ul>
                     <li class="first"><a href="http://www.unl.edu/">UNL</a></li>
                     <li><a href="http://wdn.unl.edu/"><abbr title="Web Developer Network">WDN</abbr></a></li>
-                    <li>Batch Validator</li>
+                    <li>Site Validator</li>
                 </ul>
                 <!-- InstanceEndEditable -->
             </nav>
@@ -97,7 +97,7 @@ if (!isset($template_path)) {
             </div>
         </div>
         <div id="wdn_content_wrapper">
-            <div id="pagetitle">
+            <div id="pagetitle" style="display:none;">
                 <!-- InstanceBeginEditable name="pagetitle" -->
                 <h1>Batch Validator</h1>
                 <!-- InstanceEndEditable -->
@@ -105,7 +105,7 @@ if (!isset($template_path)) {
             <div id="maincontent" role="main">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="" class="zenform primary" style="width:930px;margin-top:10px;">
+                <form method="get" action="">
                     <fieldset>
                         <legend>Submit your site for validation</legend>
                         <ol>
@@ -115,36 +115,6 @@ if (!isset($template_path)) {
                                     URL
                                 </label>
                                 <input type="text" name="uri" value="<?php echo $uri; ?>" size="80" />
-                            </li>
-                            <li>
-                                <fieldset>
-                                   <legend>Additional options:</legend>
-                                    <ol>
-                                    <!--
-                                     <li>
-                                        <input id="action_all" type="radio" name="action" value="revalidate" />
-                                        <label for="action_all">All pages</label>
-                                     </li>
-                                     <li>
-                                    <input id="action_invalid" type="radio" name="action" value="invalid" />
-                                    <label for="action_invalid">Only pages previously identified as invalid <span class="helper">Based on a prior batch validation scan</span></label>
-                                     </li>
-                                    <li>
-                                    <input id="action_links" type="radio" name="action" value="rescan" />
-                                    <label for="action_links">Rescan links <span class="helper">What does this do?</span></label>
-                                     </li>
-                                    -->
-                                    <li>
-                                    <?php if (isset($_GET['action']) && ($_GET['action'] == 'linkcheck')) {
-                                      echo '<input id="action_external" type="radio" name="action" value="linkcheck" checked="checked" />';
-                                    } else {
-                                        echo '<input id="action_external" type="radio" name="action" value="linkcheck" />';
-                                    }?>
-                                    
-                                    <label for="action_external">Check links <span class="helper">Run a simple check on external URLs to see if they're missing (404)</span></label>
-                                     </li>
-                                  </ol>
-                                </fieldset>
                             </li>
                         </ol>
                     </fieldset>
