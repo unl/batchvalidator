@@ -55,7 +55,7 @@ if (!isset($template_path)) {
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
-<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/grid-v3.css" />
+<link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <script type="text/javascript" src="js/batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
