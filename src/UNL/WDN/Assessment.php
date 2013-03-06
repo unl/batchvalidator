@@ -73,7 +73,12 @@ class UNL_WDN_Assessment
     
     function removeEntries()
     {
+        //Remove assessment entries
         $sth = $this->db->prepare('DELETE FROM assessment WHERE baseurl = ?');
+        $sth->execute(array($this->baseUri));
+        
+        //remove url_has_badlinks entries
+        $sth = $this->db->prepare('DELETE FROM url_has_badlinks WHERE baseurl = ?');
         $sth->execute(array($this->baseUri));
     }
     
@@ -81,6 +86,13 @@ class UNL_WDN_Assessment
     {
         $sth = $this->db->prepare('SELECT * FROM assessment WHERE baseurl = ?;');
         $sth->execute(array($this->baseUri));
+        return $sth->fetchAll();
+    }
+    
+    function getBadLinksForPage($url)
+    {
+        $sth = $this->db->prepare('SELECT * FROM url_has_badlinks WHERE url = ?;');
+        $sth->execute(array($url));
         return $sth->fetchAll();
     }
     
