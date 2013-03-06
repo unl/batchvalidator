@@ -55,8 +55,8 @@ if (!isset($template_path)) {
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
-<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/zenform.css" />
-<link rel="stylesheet" type="text/css" href="css/batchval.css" />
+<link rel="stylesheet" type="text/css" href="/wdn/templates_3.1/css/content/grid-v3.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 <script type="text/javascript" src="js/batchval.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 
@@ -99,27 +99,131 @@ if (!isset($template_path)) {
         <div id="wdn_content_wrapper" role="main">
             <div id="pagetitle" style="display:none;">
                 <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1>Batch Validator</h1>
+                <h1>Site Validator</h1>
                 <!-- InstanceEndEditable -->
             </div>
             <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="" class="wdn-form">
-                    <fieldset>
-                        <legend>Scan your site for validation</legend>
-                        <ol>
-                            <li>
-                                <label for="name" class="element">
-                                    Site URL <span class="helpertext">Just use your homepage</span>
-                                </label>
-                                <input type="text" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
-                            </li>
-                        </ol>
+                <form method="get" action="" class="wdn-form single">
+                    <fieldset class="main-focus">
+                        <legend class="intro-action">Scan your site for validation</legend>
+                        <label for="name" class="element">
+                            Enter your site URL <span class="helper-text">Simply use your homepage</span>
+                        </label>
+                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
+                        <input type="submit" id="submit" name="submit" value="Scan" />
                     </fieldset>
-                    <input type="submit" id="submit" name="submit" value="Scan" />
-            </form>
-            <h3 id="summaryTitle" class="sec_header">Summary of Scan <span>Revalidate: <a href="#" id="validateInvalid" onclick="validateInvalid(); return false">Invalid Pages</a> | <a href="#" id="validateAll" onclick="validateAll(); return false">All Pages</a></span></h3>
+                </form>
+                <section id="validator-results-setup" class="report-view">
+                    <h2 class="report-title">Summary of Scan</h2>
+                    <div class="wdn-grid-set">
+                        <div class="wdn-col-three-fourths">
+                        <h3>Site Information</h3>
+                        <ul class="structure-list">
+                            <li>
+                                <span class="item-label">Site title:</span> <span id="site-title"></span>
+                            </li>
+                            <li>
+                                <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
+                            </li>
+                        </p>
+                        </div>
+                        <div class="wdn-col-one-fourth">
+                            <h3>Revalidate</h3>
+                            <ul class="structure-list">
+                                <li>
+                                    <a href="#" id="validateInvalid">Invalid Pages</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="validateAll">All Pages</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
+                        <div class="wdn-col" id="valid-pages">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    pages
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-errors">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    HTML errors
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-html">
+                            <div class="visual-island error">
+                                <span class="dashboard-value">
+                                    0%
+                                </span>
+                                <span class="dashboard-metric">
+                                    current HTML
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-dependents">
+                            <div class="visual-island error">
+                                <span class="dashboard-value">
+                                    0%
+                                </span>
+                                <span class="dashboard-metric">
+                                    current dependents
+                                </span>
+                            </div>
+                        </div>
+                        <div class="wdn-col" id="valid-links">
+                            <div class="visual-island">
+                                <span class="dashboard-value">
+                                    0
+                                </span>
+                                <span class="dashboard-metric">
+                                    Bad links
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="wdn_responsive_table" id="validator-results">
+                        <thead>
+                            <tr>
+                                <th id="validator-page">Page</th>
+                                <th id="validator-html">HTML Validity</th>
+                                <th id="validator-current-html">Current HTML</th>
+                                <th id="validator-current-dependents">Current Dependents</th>
+                                <th id="validator-404">Bad Links</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th id="page-01">
+                                    /resources
+                                </th>
+                                <td headers="page-01 validator-html" data-header="HTML Validity">
+
+                                </td>
+                                <td headers="page-01 validator-current-html" data-header="Current HTML">
+
+                                </td>
+                                <td headers="page-01 validator-current-dependents" data-header="Current Dependents">
+
+                                </td>
+                                <td headers="page-01 validator-404" data-header="Bad Links">
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
             <div class="clear" id="summaryResults">
                 <?php
                 
@@ -157,16 +261,6 @@ if (!isset($template_path)) {
                     }
                 }
                 ?>
-            </div>
-            <div id="progressReport">
-               <h3>We're churning through your site now</h3>
-               <p>Here is what we've found so far:</p>
-               <ul>
-                   <li id="validatedPages"><span class="number">0</span>Pages</li>
-                   <li id="validatedErrors"><span class="number">0</span>Errors</li>
-                   <li id="validatedWarnings"><span class="number">0</span>Warnings</li>
-               </ul>
-            
             </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>
