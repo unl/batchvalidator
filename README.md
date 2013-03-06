@@ -15,6 +15,6 @@ WDN Template _mixins are required:
       "outputDir": "./www/css",
       "minify": true,
       "autoCompile": true,
-      "showErrorWithWindow": false,
-      "main_file": false
+      "showErrorWithWindow": true,
+      "main_file": "main.less"
     }
