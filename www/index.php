@@ -194,6 +194,7 @@ if (!isset($template_path)) {
                         </div>
                     </div>
                     <table class="wdn_responsive_table" id="validator-results">
+                        <caption>Results for your viewing pleasure</caption>
                         <thead>
                             <tr>
                                 <th id="validator-page">Page</th>
