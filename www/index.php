@@ -57,7 +57,8 @@ if (!isset($template_path)) {
 <!-- Place optional header elements here -->
 <link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<script type="text/javascript" src="js/batchval.js"></script>
+<script type="text/javascript" src="js/lib/handlebars-1.0.0-rc3.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 
 <!-- InstanceEndEditable -->
@@ -105,118 +106,120 @@ if (!isset($template_path)) {
             <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="" class="wdn-form single">
+                <form method="get" action="" class="wdn-form single" id="validator-form">
                     <fieldset class="main-focus">
                         <legend class="intro-action">Scan your site for validation</legend>
-                        <label for="name" class="element">
+                        <label for="uri" class="element">
                             Enter your site URL <span class="helper-text">Simply use your homepage</span>
                         </label>
-                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
+                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" id="uri" />
                         <input type="submit" id="submit" name="submit" value="Scan" />
                     </fieldset>
                 </form>
-                <section id="validator-results-setup" class="report-view">
-                    <h2 class="report-title">Summary of Scan</h2>
-                    <div class="wdn-grid-set">
-                        <div class="bp2-wdn-col-three-fourths">
-                        <h3>Site Information</h3>
-                        <ul class="structure-list">
-                            <li>
-                                <span class="item-label">Site title:</span> <span id="site-title"></span>
-                            </li>
-                            <li>
-                                <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
-                            </li>
-                        </p>
-                        </div>
-                        <div class="bp2-wdn-col-one-fourth">
-                            <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
-                        </div>
-                    </div>
-                    <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
-                        <div class="wdn-col" id="valid-pages">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    pages
-                                </span>
+                <script id="temp-validator-results" type="x-handlebars-template">
+                    <section id="validator-results-setup" class="report-view">
+                        <h2 class="report-title">Summary of Scan</h2>
+                        <div class="wdn-grid-set">
+                            <div class="bp2-wdn-col-three-fourths">
+                            <h3>Site Information</h3>
+                            <ul class="structure-list">
+                                <li>
+                                    <span class="item-label">Site title:</span> <span id="site-title"></span>
+                                </li>
+                                <li>
+                                    <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
+                                </li>
+                            </p>
+                            </div>
+                            <div class="bp2-wdn-col-one-fourth">
+                                <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
                             </div>
                         </div>
-                        <div class="wdn-col" id="valid-errors">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    HTML errors
-                                </span>
+                        <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
+                            <div class="wdn-col" id="valid-pages">
+                                <div class="visual-island">
+                                    <span class="dashboard-value">
+                                        0
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        pages
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-errors">
+                                <div class="visual-island">
+                                    <span class="dashboard-value">
+                                        0
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        HTML errors
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-html">
+                                <div class="visual-island error">
+                                    <span class="dashboard-value">
+                                        0%
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        current HTML
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-dependents">
+                                <div class="visual-island error">
+                                    <span class="dashboard-value">
+                                        0%
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        current dependents
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-links">
+                                <div class="visual-island">
+                                    <span class="dashboard-value">
+                                        0
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        Bad links
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="wdn-col" id="valid-html">
-                            <div class="visual-island error">
-                                <span class="dashboard-value">
-                                    0%
-                                </span>
-                                <span class="dashboard-metric">
-                                    current HTML
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-dependents">
-                            <div class="visual-island error">
-                                <span class="dashboard-value">
-                                    0%
-                                </span>
-                                <span class="dashboard-metric">
-                                    current dependents
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-links">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    Bad links
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="wdn_responsive_table" id="validator-results">
-                        <caption>Results for your viewing pleasure</caption>
-                        <thead>
-                            <tr>
-                                <th id="validator-page">Page</th>
-                                <th id="validator-html">HTML Validity</th>
-                                <th id="validator-current-html">Current HTML</th>
-                                <th id="validator-current-dependents">Current Dependents</th>
-                                <th id="validator-404">Bad Links</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th id="page-01">
-                                    /resources
-                                </th>
-                                <td headers="page-01 validator-html" data-header="HTML Validity">
+                        <table class="wdn_responsive_table" id="validator-results">
+                            <caption>Results for your viewing pleasure</caption>
+                            <thead>
+                                <tr>
+                                    <th id="validator-page">Page</th>
+                                    <th id="validator-html">HTML Validity</th>
+                                    <th id="validator-current-html">Current HTML</th>
+                                    <th id="validator-current-dependents">Current Dependents</th>
+                                    <th id="validator-404">Bad Links</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th id="page-01">
+                                        /resources
+                                    </th>
+                                    <td headers="page-01 validator-html" data-header="HTML Validity">
 
-                                </td>
-                                <td headers="page-01 validator-current-html" data-header="Current HTML">
+                                    </td>
+                                    <td headers="page-01 validator-current-html" data-header="Current HTML">
 
-                                </td>
-                                <td headers="page-01 validator-current-dependents" data-header="Current Dependents">
+                                    </td>
+                                    <td headers="page-01 validator-current-dependents" data-header="Current Dependents">
 
-                                </td>
-                                <td headers="page-01 validator-404" data-header="Bad Links">
+                                    </td>
+                                    <td headers="page-01 validator-404" data-header="Bad Links">
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </script>
             <div class="clear" id="summaryResults">
                 <?php
                 
