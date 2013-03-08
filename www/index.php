@@ -232,8 +232,8 @@ if (!isset($template_path)) {
                         $assessment = new UNL_WDN_Assessment($uri, $db);
                         $action = 'display';
 
-                        if (isset($_GET['action'])) {
-                            $action = $_GET['action'];
+                        if (isset($_POST['action'])) {
+                            $action = $_POST['action'];
                         }
 
                         switch ($action) {
