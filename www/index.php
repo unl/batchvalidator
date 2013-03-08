@@ -230,7 +230,7 @@ if (!isset($template_path)) {
 
                     if (!empty($uri)) {
                         $assessment = new UNL_WDN_Assessment($uri, $db);
-                        $action = 'rescan';
+                        $action = 'display';
 
                         if (isset($_GET['action'])) {
                             $action = $_GET['action'];
