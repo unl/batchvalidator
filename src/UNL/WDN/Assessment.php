@@ -205,7 +205,7 @@ class UNL_WDN_Assessment
             $i++;
         }
 
-        $stats['total_pages'] = $i-1;
+        $stats['total_pages'] = $i;
         
         return json_encode($stats);
     }
