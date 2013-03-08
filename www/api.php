@@ -10,4 +10,10 @@ if (!isset($_GET['uri'])) {
 
 $assessment = new UNL_WDN_Assessment($_GET['uri'], $db);
 
+//Allow rechecking
+if (isset($_POST['action']) && $_POST['action'] == 'check') {
+    $assessment->check();
+}
+
+//Always display results
 echo $assessment->getJSONstats();
