@@ -1,6 +1,6 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
-        var validatorForm = $("#validator-form"), uri;
+        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), uri;
 
         return {
 
@@ -19,15 +19,17 @@ WDN.loadJQuery(function() {
             },
 
             loadSummaryTemplate : function (data) {
-                var summaryTemplate = Handelbars.compile($("#temp-validator-results").html()),
+                var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
                 render = summaryTemplate(data),
-                output = validatorForm.after(render).fadeIn(700);
+                output = wrapper.html(render).fadeIn(700);
             }
         }
 
     }(WDN.jQuery));
 
     validator.initialize();
+});
+
 // Handlebars helpers
 Handlebars.registerHelper('percentage', function (current, total) {
     var percentage = Math.round(current/total * 100);
