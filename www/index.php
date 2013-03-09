@@ -113,12 +113,12 @@ if (!isset($template_path)) {
                             Enter your site URL <span class="helper-text">Simply use your homepage</span>
                         </label>
                         <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" id="uri" />
-                        <input type="submit" id="submit" name="submit" value="Scan" />
+                        <input type="submit" id="submit" name="submit" value="Check" />
                     </fieldset>
                 </form>
                 <script id="temp-validator-results" type="x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
-                        <h2 class="report-title">Summary of Scan</h2>
+                        <h2 class="report-title">Summary of Check</h2>
                         <div class="wdn-grid-set">
                             <div class="bp2-wdn-col-three-fourths">
                             <h3>Site Information</h3>
@@ -127,7 +127,7 @@ if (!isset($template_path)) {
                                     <span class="item-label">Site title:</span> <span id="site-title"></span>
                                 </li>
                                 <li>
-                                    <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
+                                    <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
                                 </li>
                             </p>
                             </div>
