@@ -13,6 +13,13 @@ To build CSS files, you must have LESS installed:
 Then, to build the `main.css` file:
 `lessc www/less/main.less www/css/main.css --compress`
 
+## Javascript
+Compression and mangling handled with uglify:
+`npm install uglify-js -g`
+
+Combine, compress and mangle:
+`uglifyjs www/js/lib/handlebars-1.0.0-rc3.js www/js/main.js -o www/js/main.min.js -c -m`
+
 #### Sublime Text 2 Build
 1. Use the `(less2css)[https://github.com/timdouglas/sublime-less2css]` Build Process
 2. Local Sublime Text 2 Settings (via "Preferences" -> "Package Settings" -> "Less2Css" -> "Settings - User")
