@@ -16,12 +16,8 @@ WDN.loadJQuery(function() {
                 })
                 validatorForm.submit(function () {
                     event.preventDefault();
-                    if (url_check.test(the_url.val())) {
-                        uri = $("#uri").val();
-                        validator.initialQuery();
-                    } else {
-                        the_url.after('Ugh, that is not a URL.');
-                    }
+                    uri = $("#uri").val();
+                    validator.initialQuery();
                 });
                 wrapper.on('begin', validator.beginQueue);
             },
