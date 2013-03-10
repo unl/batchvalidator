@@ -202,7 +202,7 @@ if (!isset($template_path)) {
                             </thead>
                             <tbody>
                                 {{#each pages}}
-                                <tr data-page="{{page}}">
+                                <tr data-page="{{page}}" class="trigger-row">
                                     <th id="page-01" class="side-col">
                                         {{strip_site page}}
                                     </th>

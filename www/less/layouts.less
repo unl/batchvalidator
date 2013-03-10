@@ -26,6 +26,27 @@
         .side-col {
             text-align: left;
         }
+
+        .trigger-row {
+
+            &:hover {
+                cursor: pointer;
+
+                th {
+                    background-color: darken(@highlightTriad, 5%);
+                    text-shadow: 1px 1px 1px lighten(@highlightTriad, 10%);
+                }
+
+                td {
+                    background-color: @highlightTriad;
+
+                    &.error {
+                        color: #b70302;
+                        text-shadow: 1px 1px 1px lighten(@highlightTriad, 15%);
+                    }
+                }
+            };
+        }
     }
 
     #scan-wrapper {
