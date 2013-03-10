@@ -57,8 +57,7 @@ if (!isset($template_path)) {
 <!-- Place optional header elements here -->
 <link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<script type="text/javascript" src="js/lib/handlebars-1.0.0-rc3.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 
 <!-- InstanceEndEditable -->
