@@ -1,20 +1,40 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
-        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), uri;
+        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
+        loader = $('.loader'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
 
             initialize : function () {
+                var the_url = $("#uri");
+                the_url.keyup(function () {
+                    if (url_check.test(this.value)) {
+                        $("#submit").removeAttr('disabled');
+                    } else {
+                        $("#submit").attr('disabled', '');
+                    }
+                })
                 validatorForm.submit(function () {
                     event.preventDefault();
-                    uri = $("#uri").val();
-                    validator.query();
-                })
+                    if (url_check.test(the_url.val())) {
+                        uri = $("#uri").val();
+                        validator.initialQuery();
+                    } else {
+                        the_url.after('Ugh, that is not a URL.');
+                    }
+                });
+                wrapper.on('begin', validator.beginQueue);
             },
 
-            query : function () {
-                $.getJSON("api.php?uri="+encodeURIComponent(uri), function (data) {
-                    validator.loadSummaryTemplate(data);
+            initialQuery : function () {
+                $.getJSON(api_url+encodeURIComponent(uri), function (data) {
+                    if (data.last_scan) {
+                        validator.loadSummaryTemplate(data);
+                    } else { // This site hasn't been scanned, so start the queue
+                        validator.loadSummaryTemplate(data); // Show the barebones as an underlay.
+                        wrapper.trigger('begin'); // Start the queue
+                        validator.subsequentQuery(); // POST the queue to get it going
+                    }
                 });
             },
 
@@ -22,7 +42,31 @@ WDN.loadJQuery(function() {
                 var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
                 render = summaryTemplate(data),
                 output = wrapper.html(render).fadeIn(700);
-            }
+                $('html, body').animate({
+                    scrollTop: wrapper.offset().top - 15
+                }, 500);
+                $('.recheck-button').click(function(event) {
+                    event.preventDefault();
+                    wrapper.trigger('begin'); // Start the queue
+                    validator.subsequentQuery(); // POST the queue to get it going
+                });
+            },
+
+            subsequentQuery : function () {
+                $.post(api_url + encodeURIComponent(uri), 'action=check', function(data) {
+                    validator.loadSummaryTemplate(data);
+                }, "json");
+            },
+
+            beginQueue : function () {
+                $('#validator-results-setup').css({"opacity" : 0.05});
+                loader.clone().appendTo(wrapper).show();
+                $('html, body').animate({
+                    scrollTop: wrapper.offset().top - 15
+                }, 500);
+            },
+
+
         }
 
     }(WDN.jQuery));

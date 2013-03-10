@@ -113,7 +113,7 @@ if (!isset($template_path)) {
                             Enter your site URL <span class="helper-text">Simply use your homepage</span>
                         </label>
                         <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" id="uri" />
-                        <input type="submit" id="submit" name="submit" value="Check" />
+                        <input type="submit" id="submit" name="submit" value="Check" disabled />
                     </fieldset>
                 </form>
                 <div id="scan-wrapper">
@@ -135,7 +135,7 @@ if (!isset($template_path)) {
                             </p>
                             </div>
                             <div class="bp2-wdn-col-one-fourth">
-                                <a href="#" id="validateAll" class="wdn-button large-button">Recheck Pages</a>
+                                <!--<a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>-->
                             </div>
                         </div>
                         <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
@@ -229,8 +229,30 @@ if (!isset($template_path)) {
                                 {{/each}}
                             </tbody>
                         </table>
+                        <div class="footer">
+                            <div class="wdn-grid-set">
+                                <div class="bp2-wdn-col-three-fourths">
+                                <ul class="structure-list">
+                                    <li>
+                                        <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
+                                    </li>
+                                </p>
+                                </div>
+                                <div class="bp2-wdn-col-one-fourth">
+                                    <a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </script>
+                <div class="loader hidden">
+                    <p class="action-title">Site check! 1. 2. 3.</p>
+                    <p>Your site is being checked; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <div class="wdn-spinner">
+                        <div class="circle"></div>
+                        <div class="circle1"></div>
+                    </div>
+                </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>
                 <?php include($template_path . "/wdn/templates_3.1/includes/noscript.html"); ?>

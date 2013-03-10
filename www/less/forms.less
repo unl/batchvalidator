@@ -64,6 +64,13 @@
             &:hover {
                 .linear-gradient(@highlightComplementary, @shadowComplementary);
             }
+
+            &[disabled] {
+                .linear-gradient(#eee, #ccc);
+                text-shadow: 1px 0 1px darken(#ccc, 15%);
+                border-color: #ccc;
+                cursor: not-allowed;
+            }
         }
     }
 
