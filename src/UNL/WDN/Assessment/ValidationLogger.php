@@ -36,7 +36,7 @@ class UNL_WDN_Assessment_ValidationLogger extends Spider_LoggerAbstract
             )
         );
 
-        if (!$headers = get_headers(self::$validator_uri . "?uri=" . urlencode($uri), 1)) {
+        if (!$headers = @get_headers(self::$validator_uri . "?uri=" . urlencode($uri), 1)) {
             return false;
         }
         
