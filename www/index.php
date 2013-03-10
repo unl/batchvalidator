@@ -57,7 +57,7 @@ if (!isset($template_path)) {
 <!-- Place optional header elements here -->
 <link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<script type="text/javascript" src="js/batchval.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
 <script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
 
 <!-- InstanceEndEditable -->
@@ -105,151 +105,152 @@ if (!isset($template_path)) {
             <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
-                <form method="get" action="" class="wdn-form single">
+                <form method="get" action="#" class="wdn-form single" id="validator-form">
                     <fieldset class="main-focus">
                         <legend class="intro-action">Scan your site for validation</legend>
                         <label for="uri" class="element">
                             Enter your site URL <span class="helper-text">Simply use your homepage</span>
                         </label>
-                        <input type="url" name="uri" id="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" />
-                        <input type="submit" id="submit" name="submit" value="Scan" />
+                        <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" id="uri" />
+                        <input type="submit" id="submit" name="submit" value="Check" disabled />
                     </fieldset>
                 </form>
-                <section id="validator-results-setup" class="report-view">
-                    <h2 class="report-title">Summary of Scan</h2>
-                    <div class="wdn-grid-set">
-                        <div class="bp2-wdn-col-three-fourths">
-                        <h3>Site Information</h3>
-                        <ul class="structure-list">
-                            <li>
-                                <span class="item-label">Site title:</span> <span id="site-title"></span>
-                            </li>
-                            <li>
-                                <span class="item-label">Date of last scan:</span> <time id="last-scan-date"></time>
-                            </li>
-                        </ul>
+                <div id="scan-wrapper">
+
+                </div>
+                <script id="temp-validator-results" type="text/x-handlebars-template">
+                    <section id="validator-results-setup" class="report-view">
+                        <h2 class="report-title">Summary of Check</h2>
+                        <div class="wdn-grid-set">
+                            <div class="bp2-wdn-col-three-fourths">
+                            <h3>Site Information</h3>
+                            <ul class="structure-list">
+                                <li>
+                                    <span class="item-label">Site title:</span> <span id="site-title">{{{site_title}}}</span>
+                                </li>
+                                <li>
+                                    <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
+                                </li>
+                            </p>
+                            </div>
+                            <div class="bp2-wdn-col-one-fourth">
+                                <!--<a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>-->
+                            </div>
                         </div>
-                        <div class="bp2-wdn-col-one-fourth">
-                            <a href="#" id="validateAll" class="wdn-button large-button">Revalidate Pages</a>
+                        <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
+                            <div class="wdn-col" id="valid-pages">
+                                <div class="visual-island">
+                                    <span class="dashboard-value">
+                                        {{total_pages}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        pages
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-errors">
+                                <div class="visual-island {{error_total total_html_errors}}">
+                                    <span class="dashboard-value">
+                                        {{total_html_errors}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        HTML errors
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-html">
+                                <div class="visual-island {{error_percentage total_current_template_html total_pages}}">
+                                    <span class="dashboard-value">
+                                        {{percentage total_current_template_html total_pages}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        current HTML
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-dependents">
+                                <div class="visual-island {{error_percentage total_current_template_dep total_pages}}">
+                                    <span class="dashboard-value">
+                                        {{percentage total_current_template_dep total_pages}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        current dependents
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="valid-links">
+                                <div class="visual-island {{error_total total_bad_links}}">
+                                    <span class="dashboard-value">
+                                        {{total_bad_links}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        Bad links
+                                    </span>
+                                </div>
+                            </div>
                         </div>
+                        <table class="wdn_responsive_table" id="validator-results">
+                            <caption>Results for your viewing pleasure</caption>
+                            <thead>
+                                <tr>
+                                    <th id="validator-page">Page</th>
+                                    <th id="validator-html">HTML Errors</th>
+                                    <th id="validator-current-html">Current HTML</th>
+                                    <th id="validator-current-dependents">Current Dependents</th>
+                                    <th id="validator-404">Bad Links</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each pages}}
+                                <tr data-page="{{page}}">
+                                    <th id="page-01" class="side-col">
+                                        {{strip_site page}}
+                                    </th>
+                                    <td headers="page-01 validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
+                                        {{html_errors}}
+                                    </td>
+                                    <td headers="page-01 validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
+                                        {{{format_boolean template_html.current}}}
+                                    </td>
+                                    <td headers="page-01 validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
+                                        {{{format_boolean template_dep.current}}}
+                                    </td>
+                                    {{#if bad_links}}
+                                        <td headers="page-01 validator-404" data-header="Bad Links" class="error">
+                                            {{links bad_links}}
+                                        </td>
+                                    {{else}}
+                                        <td headers="page-01 validator-404" data-header="Bad Links">
+                                            0
+                                        </td>
+                                    {{/if}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <div class="footer">
+                            <div class="wdn-grid-set">
+                                <div class="bp2-wdn-col-three-fourths">
+                                <ul class="structure-list">
+                                    <li>
+                                        <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
+                                    </li>
+                                </p>
+                                </div>
+                                <div class="bp2-wdn-col-one-fourth">
+                                    <a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </script>
+                <div class="loader hidden">
+                    <p class="action-title">Site check! 1. 2. 3.</p>
+                    <p>Your site is being checked; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <div class="wdn-spinner">
+                        <div class="circle"></div>
+                        <div class="circle1"></div>
                     </div>
-                    <div class="wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
-                        <div class="wdn-col" id="valid-pages">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    pages
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-errors">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    HTML errors
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-html">
-                            <div class="visual-island error">
-                                <span class="dashboard-value">
-                                    0%
-                                </span>
-                                <span class="dashboard-metric">
-                                    current HTML
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-dependents">
-                            <div class="visual-island error">
-                                <span class="dashboard-value">
-                                    0%
-                                </span>
-                                <span class="dashboard-metric">
-                                    current dependents
-                                </span>
-                            </div>
-                        </div>
-                        <div class="wdn-col" id="valid-links">
-                            <div class="visual-island">
-                                <span class="dashboard-value">
-                                    0
-                                </span>
-                                <span class="dashboard-metric">
-                                    Bad links
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="wdn_responsive_table" id="validator-results">
-                        <caption>Results for your viewing pleasure</caption>
-                        <thead>
-                            <tr>
-                                <th id="validator-page">Page</th>
-                                <th id="validator-html">HTML Validity</th>
-                                <th id="validator-current-html">Current HTML</th>
-                                <th id="validator-current-dependents">Current Dependents</th>
-                                <th id="validator-404">Bad Links</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th id="page-01">
-                                    /resources
-                                </th>
-                                <td headers="page-01 validator-html" data-header="HTML Validity">
-
-                                </td>
-                                <td headers="page-01 validator-current-html" data-header="Current HTML">
-
-                                </td>
-                                <td headers="page-01 validator-current-dependents" data-header="Current Dependents">
-
-                                </td>
-                                <td headers="page-01 validator-404" data-header="Bad Links">
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <div class="clear" id="summaryResults">
-                    <?php
-
-                    if (!empty($uri)) {
-                        $parts = parse_url($uri);
-                        if (!isset($parts['path'])) {
-                            echo '<h2>tsk tsk. A trailing slash is always required. Didn\'t saltybeagle ever teach you what a web address is?</h2>';
-                            unset($uri);
-                        }
-                    }
-
-                    if (!empty($uri)) {
-                        $assessment = new UNL_WDN_Assessment($uri, $db);
-                        $action = 'display';
-
-                        if (isset($_POST['action'])) {
-                            $action = $_POST['action'];
-                        }
-
-                        switch ($action) {
-                            case 'check':
-                                $assessment->check();
-                                break;
-                            default:
-                        }
-
-                        ?>
-                        <script type='text/javascript'>
-                            var WDN_CHECKER_DATA = JSON.parse('<?php echo $assessment->getJSONstats(); ?>');
-                        </script>
-                        <?php
-                    }
-                    ?>
                 </div>
                 <!-- InstanceEndEditable -->
                 <div class="clear"></div>

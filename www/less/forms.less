@@ -44,14 +44,14 @@
             float: left;
         }
         input[type=url] {
-            width: 80%;
+            width: 76%;
             border-radius: 3px;
             color: lighten(@baseText, 15%);
             border: 1px solid #d1d1d1;
         }
 
         input[type=submit] {
-            width:18%;
+            width:22%;
             margin-left: 2%;
             .linear-gradient(@colorComplementary, @shadowComplementary);
             border-radius: 3px;
@@ -63,6 +63,13 @@
 
             &:hover {
                 .linear-gradient(@highlightComplementary, @shadowComplementary);
+            }
+
+            &[disabled] {
+                .linear-gradient(#eee, #ccc);
+                text-shadow: 1px 0 1px darken(#ccc, 15%);
+                border-color: #ccc;
+                cursor: not-allowed;
             }
         }
     }
