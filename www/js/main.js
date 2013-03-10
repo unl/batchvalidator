@@ -29,7 +29,6 @@ WDN.loadJQuery(function() {
                     } else { // This site hasn't been scanned, so start the queue
                         validator.loadSummaryTemplate(data); // Show the barebones as an underlay.
                         wrapper.trigger('begin'); // Start the queue
-                        validator.subsequentQuery(); // POST the queue to get it going
                     }
                 });
             },
@@ -44,7 +43,6 @@ WDN.loadJQuery(function() {
                 $('.recheck-button').click(function(event) {
                     event.preventDefault();
                     wrapper.trigger('begin'); // Start the queue
-                    validator.subsequentQuery(); // POST the queue to get it going
                 });
             },
 
@@ -55,14 +53,13 @@ WDN.loadJQuery(function() {
             },
 
             beginQueue : function () {
+                validator.subsequentQuery(); // POST the queue to get it going
                 $('#validator-results-setup').css({"opacity" : 0.05});
                 loader.clone().appendTo(wrapper).show();
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
-            },
-
-
+            }
         }
 
     }(WDN.jQuery));
