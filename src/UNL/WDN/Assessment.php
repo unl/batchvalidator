@@ -42,9 +42,8 @@ class UNL_WDN_Assessment
     function checkInvalid()
     {
         $vlogger = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
-        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         
-        $spider  = $this->getSpider(array($vlogger, $slogger));
+        $spider  = $this->getSpider(array($vlogger));
         
         $spider->spider($this->baseUri);
     }
