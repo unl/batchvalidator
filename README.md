@@ -28,7 +28,7 @@ make
 That's all.
 
 #### Sublime Text 2 Build
-1. Use the `(less2css)[https://github.com/timdouglas/sublime-less2css]` Build Process
+1. Use the (`less2css`)[https://github.com/timdouglas/sublime-less2css] Build Process
 2. Local Sublime Text 2 Settings (via "Preferences" -> "Package Settings" -> "Less2Css" -> "Settings - User")
 
 ```
