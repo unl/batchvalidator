@@ -3,6 +3,8 @@ class UNL_WDN_Assessment
 {
     public $baseUri;
     
+    public static $htmlValidatorURI = "http://validator.unl.edu/check";
+    
     public $db;
     
     function __construct($baseUri, $db)
