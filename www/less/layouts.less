@@ -15,7 +15,7 @@
         display: inline-block;
     }
 
-    #scan-wrapper {
+    #scan-wrapper, .html-errors-wrapper {
         position: relative;
     }
 
@@ -23,5 +23,29 @@
         margin: 0;
         padding: 0;
         list-style: none;
+    }
+
+    .report-list {
+        
+        code {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding:0.25em;
+            display: block;
+            margin: 0.5em;
+        }
+
+        li {
+            font-weight: normal;
+            margin-bottom: 1em;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            font-weight: bold;
+        }
+    }
+
+    .html-errors-wrapper {
+        min-height: 135px; // make room for spinner.
     }
 }
