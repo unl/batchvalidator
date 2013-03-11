@@ -19,7 +19,7 @@
 #maincontent caption{margin-top:1em;padding:0.5em 0;}
 #maincontent .loader{position:absolute;top:0;width:100%;}
 #maincontent .footer{margin-top:1em;border-top:1px solid #d3d3d3;padding-top:1em;}
-#maincontent .shader{background-color:#e2eff6;overflow:hidden;border-bottom:1px solid #a7cee5;border-left:3px solid #a7cee5;padding:0.5em 1.5em;}#maincontent .shader .row{margin-top:1em;}
+#maincontent .shader{background-color:#e2eff6;overflow:hidden;border-left:3px solid #a7cee5;padding:0.5em 1.5em;}#maincontent .shader .row{margin-top:1em;}
 #maincontent .structure-list{margin:0;padding:0;list-style:none;}#maincontent .structure-list li{padding:0.5em 0;}
 #maincontent .wdn-button{margin:0 0 0.25em 0;display:inline-block;}
 #maincontent #scan-wrapper{position:relative;}
