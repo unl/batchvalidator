@@ -1,5 +1,5 @@
 <?php
-class UNL_WDN_Assessment_ValidationLogger extends Spider_LoggerAbstract
+class UNL_WDN_Assessment_HTMLValidationLogger extends Spider_LoggerAbstract
 {
     public static $validator_uri = "http://validator.unl.edu/check";
     

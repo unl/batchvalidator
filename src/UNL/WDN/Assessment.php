@@ -3,6 +3,8 @@ class UNL_WDN_Assessment
 {
     public $baseUri;
     
+    public static $htmlValidatorURI = "http://validator.unl.edu/check";
+    
     public $db;
     
     function __construct($baseUri, $db)
@@ -40,9 +42,8 @@ class UNL_WDN_Assessment
     function checkInvalid()
     {
         $vlogger = new UNL_WDN_Assessment_ValidateInvalidLogger($this);
-        $slogger = new UNL_WDN_Assessment_ValidityStatusLogger($this);
         
-        $spider  = $this->getSpider(array($vlogger, $slogger));
+        $spider  = $this->getSpider(array($vlogger));
         
         $spider->spider($this->baseUri);
     }
@@ -56,7 +57,7 @@ class UNL_WDN_Assessment
         $this->removeEntries();
 
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
-        $validationLogger = new UNL_WDN_Assessment_ValidationLogger($this);
+        $validationLogger = new UNL_WDN_Assessment_HTMLValidationLogger($this);
         $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger($this);
         $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger($this);
         $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);
@@ -64,11 +65,6 @@ class UNL_WDN_Assessment
         $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker));
 
         $spider->spider($this->baseUri);
-    }
-    
-    function reValidate()
-    {
-        
     }
     
     function removeEntries()
