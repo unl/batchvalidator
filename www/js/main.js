@@ -14,7 +14,7 @@ WDN.loadJQuery(function() {
                         $("#submit").attr('disabled', '');
                     }
                 })
-                validatorForm.submit(function () {
+                validatorForm.on('submit' , function (event) {
                     event.preventDefault();
                     uri = $("#uri").val();
                     validator.initialQuery();
