@@ -44,7 +44,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                     curl_setopt($curl[$link], CURLOPT_LOW_SPEED_LIMIT, 10);
                     curl_setopt($curl[$link], CURLOPT_LOW_SPEED_TIME, 5);
                     curl_setopt($curl[$link], CURLOPT_FOLLOWLOCATION, false);
-                    curl_setopt($curl[$link], CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2) Gecko/20100115 Firefox/3.6');
+                    curl_setopt($curl[$link], CURLOPT_USERAGENT, UNL_WDN_Assessment::$spiderUserAgent);
                     curl_multi_add_handle($mcurl, $curl[$link]);
                     $activeRequests++;
                 }

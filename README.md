@@ -1,5 +1,18 @@
 # UNL Site Validator
 
+## Install
+To install, run the script `scripts/install.php` via command line
+
+Example - normal install
+```
+php scriptions/install.php
+```
+
+Example - Force install (replace tables)
+```
+php scriptions/install.php -f
+```
+
 ## A Note on LESS/CSS
 All CSS is created with the LESS pre-processor. Do not modify the CSS files, as they will be overwritten by the LESS builds.
 
@@ -43,6 +56,8 @@ GET http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F
 
 ### GET page html errors
 Will return a list of HTML errors for a given page within a site.
+
+When the page is checked with this method, the API will recheck that page for HTML errors, update the DB with the new error count and return the errors in JSON format.
 
 Additional required GET arguments:
 * `action=html_errors`
