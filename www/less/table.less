@@ -1,0 +1,48 @@
+#maincontent {
+    .wdn_responsive_table {
+        font-size: 100%;
+        overflow: hidden;
+
+        td {
+            font-weight: bold;
+        }
+
+        .justified, .justified td {
+            text-align: left;
+        }
+
+        .trigger-row {
+
+            &:hover {
+                cursor: pointer;
+
+                th {
+                    background-color: darken(@highlightTriad, 5%);
+                    text-shadow: 1px 1px 1px lighten(@highlightTriad, 10%);
+                }
+
+                td {
+                    background-color: @highlightTriad;
+
+                    &.error {
+                        color: #b70302;
+                        text-shadow: 1px 1px 1px lighten(@highlightTriad, 15%);
+                    }
+                }
+            };
+        }
+
+        tr:not(.expansion-row):nth-of-type(odd) {
+            background: rgba(222,222,222,0.4);
+        }
+
+        .expansion-row {
+            background-color: transparent;
+            display: none;
+        }
+        .expansion-container {
+            background-color: rgba(255,255,255,0.5);
+            .box-shadow(inset, 0px, 0px, 20px, -4px, #666);
+        }
+    }
+}

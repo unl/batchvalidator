@@ -15,20 +15,37 @@
         display: inline-block;
     }
 
-    .wdn_responsive_table {
-        font-size: 100%;
-        overflow: hidden;
+    #scan-wrapper, .html-errors-wrapper {
+        position: relative;
+    }
 
-        td {
-            font-weight: bold;
+    .item-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .report-list {
+        
+        code {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding:0.25em;
+            display: block;
+            margin: 0.5em;
         }
 
-        .side-col {
-            text-align: left;
+        li {
+            font-weight: normal;
+            margin-bottom: 1em;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            font-weight: bold;
         }
     }
 
-    #scan-wrapper {
-        position: relative;
+    .html-errors-wrapper {
+        min-height: 135px; // make room for spinner.
     }
 }
