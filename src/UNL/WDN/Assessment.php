@@ -68,11 +68,6 @@ class UNL_WDN_Assessment
         $spider->spider($this->baseUri);
     }
     
-    function reValidate()
-    {
-        
-    }
-    
     function removeEntries()
     {
         //Remove assessment entries
