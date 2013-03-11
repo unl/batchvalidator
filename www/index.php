@@ -203,24 +203,24 @@ if (!isset($template_path)) {
                             <tbody>
                                 {{#each pages}}
                                 <tr data-page="{{page}}" class="trigger-row">
-                                    <th id="page-01" class="justified">
+                                    <th id="page-{{@index}}" class="justified">
                                         {{strip_site page}}
                                     </th>
-                                    <td headers="page-01 validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
+                                    <td headers="page-{{@index}} validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
                                         {{html_errors}}
                                     </td>
-                                    <td headers="page-01 validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
+                                    <td headers="page-{{@index}} validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
                                         {{{format_boolean template_html.current}}}
                                     </td>
-                                    <td headers="page-01 validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
+                                    <td headers="page-{{@index}} validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
                                         {{{format_boolean template_dep.current}}}
                                     </td>
                                     {{#if bad_links}}
-                                        <td headers="page-01 validator-404" data-header="Bad Links" class="error">
+                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links" class="error">
                                             {{links bad_links}}
                                         </td>
                                     {{else}}
-                                        <td headers="page-01 validator-404" data-header="Bad Links">
+                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links">
                                             0
                                         </td>
                                     {{/if}}
@@ -228,10 +228,10 @@ if (!isset($template_path)) {
                                 <tr class="expansion-row justified">
                                     <td colspan=5 data-header="Page-level Details" class="expansion-container">
                                         <div class="wdn-grid-set">
-                                            <div class="wdn-col-three-fifths page-validator-results">
+                                            <div class="bp2-wdn-col-three-fifths page-validator-results">
                                                 Here are all the HTML errors. Good luck!
                                             </div>
-                                            <div class="wdn-col-two-fifths page-bad-links">
+                                            <div class="bp2-wdn-col-two-fifths page-bad-links">
                                                 <div class="shader">
                                                     <span class="title">Bad Links</span>
                                                 {{#if bad_links}}
