@@ -1,7 +1,7 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
         var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
-        loader = $('.loader'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
+        loader = $('.loader').not('.mini'), mini_loader = $('.loader.mini'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
 
@@ -46,7 +46,10 @@ WDN.loadJQuery(function() {
                     wrapper.trigger('begin'); // Start the queue
                 });
                 $('#validator-results tr[data-page]').click(function (event) {
-                    $(this).next('.expansion-row').toggle(500);
+                    var current_tr = $(this);
+                    var next_tr = current_tr.next('.expansion-row');
+                    validator.beginHTMLValidation(current_tr, next_tr);
+                    validator.showSubRow(next_tr);
                 });
             },
 
@@ -63,6 +66,29 @@ WDN.loadJQuery(function() {
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
+            },
+
+            showSubRow : function (next_tr) {
+                next_tr.slideDown(400);
+            },
+
+            beginHTMLValidation : function (tr, tr_next) {
+                var error_wrapper = tr_next.find('.html-errors-wrapper');
+                // show a spinner
+                mini_loader.clone().appendTo(error_wrapper).show();
+                validator.getHTMLValidationResults(tr.attr('data-page'), error_wrapper);
+            },
+
+            getHTMLValidationResults : function (page, wrapper) {
+                $.getJSON(api_url + encodeURIComponent(uri) + '&page=' + encodeURIComponent(page) + '&action=html_errors', function (data) {
+                    validator.showHTMLValidationResults(data, wrapper);
+                });
+            },
+
+            showHTMLValidationResults : function (data, wrapper) {
+                var summaryTemplate = Handlebars.compile($("#temp-html-validator-results").html()),
+                render = summaryTemplate(data),
+                output = wrapper.html(render).fadeIn(700);
             }
         }
 
@@ -82,7 +108,7 @@ Handlebars.registerHelper('percentage', function (current, total) {
 
 Handlebars.registerHelper('strip_site', function (page) {
     var site = WDN.jQuery("#uri").val();
-    return page.replace(site, "");
+    return page.replace(site, "/");
 });
 
 Handlebars.registerHelper('format_boolean', function (marker) {
