@@ -58,7 +58,7 @@ class UNL_WDN_Assessment_HTMLValidationLogger extends Spider_LoggerAbstract
 
     function setValidationResult($uri, $result)
     {
-        $sth = $this->assessment->db->prepare('UPDATE assessment SET valid = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
+        $sth = $this->assessment->db->prepare('UPDATE assessment SET html_errors = ?, timestamp = ? WHERE baseurl = ? AND url = ?;');
 
         $sth->execute(array($result, date('Y-m-d H:i:s'), $this->assessment->baseUri, $uri));
     }

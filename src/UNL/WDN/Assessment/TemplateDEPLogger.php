@@ -16,6 +16,10 @@ class UNL_WDN_Assessment_TemplateDEPLogger extends Spider_LoggerAbstract
     {
         $version = $this->getDEPVersion($xpath);
         
+        if (!$version) {
+            $version = 'unknown';
+        }
+        
         $this->setDepVersion($uri, $version);
     }
 
