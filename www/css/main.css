@@ -19,11 +19,16 @@
 #maincontent caption{margin-top:1em;padding:0.5em 0;}
 #maincontent .loader{position:absolute;top:0;width:100%;}
 #maincontent .footer{margin-top:1em;border-top:1px solid #d3d3d3;padding-top:1em;}
-#maincontent .shader{background-color:#e2eff6;overflow:hidden;border-left:3px solid #a7cee5;padding:0.5em 1.5em;}#maincontent .shader .row{margin-top:1em;}
+#maincontent .shader{background-color:#e2eff6;overflow:hidden;border-right:3px solid #a7cee5;padding:0.5em 1.5em;}#maincontent .shader .row{margin-top:1em;}
+#maincontent .shader.even{background-color:transparent;border:none;}
 #maincontent .structure-list{margin:0;padding:0;list-style:none;}#maincontent .structure-list li{padding:0.5em 0;}
 #maincontent .wdn-button{margin:0 0 0.25em 0;display:inline-block;}
-#maincontent #scan-wrapper{position:relative;}
+#maincontent #scan-wrapper,#maincontent .html-errors-wrapper{position:relative;}
 #maincontent .item-list{margin:0;padding:0;list-style:none;}
+#maincontent .report-list code{background-color:rgba(255, 255, 255, 0.3);padding:0.25em;display:block;margin:0.5em;}
+#maincontent .report-list li{font-weight:normal;margin-bottom:1em;border-bottom:1px solid rgba(0, 0, 0, 0.3);}
+#maincontent .report-list .message{font-weight:bold;}
+#maincontent .html-errors-wrapper{min-height:135px;}
 #maincontent .wdn-button{border-radius:3px 3px 3px 3px;text-align:center;background:#eeeeee;background:-moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #cccccc));background:-webkit-linear-gradient(top, #eeeeee 0%, #cccccc 100%);background:-o-linear-gradient(top, #eeeeee 0%, #cccccc 100%);background:-ms-linear-gradient(top, #eeeeee 0%, #cccccc 100%);background:linear-gradient(top, #eeeeee 0%, #cccccc 100%);border:1px solid #ccc;text-shadow:1px 0 1px #a6a6a6;padding:0.4em 1em;text-decoration:none;text-transform:uppercase;font-weight:bold;font-size:1em;color:#202020;}#maincontent .wdn-button.triad{background:#b2dbf4;background:-moz-linear-gradient(top, #b2dbf4 0%, #94b6cb 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #b2dbf4), color-stop(100%, #94b6cb));background:-webkit-linear-gradient(top, #b2dbf4 0%, #94b6cb 100%);background:-o-linear-gradient(top, #b2dbf4 0%, #94b6cb 100%);background:-ms-linear-gradient(top, #b2dbf4 0%, #94b6cb 100%);background:linear-gradient(top, #b2dbf4 0%, #94b6cb 100%);border-color:#94b6cb;text-shadow:1px 0 1px #e9f0f4;}
 #maincontent .large-button{width:100%;display:block;padding:1em;font-size:1.2em;}
 @impact Font;
