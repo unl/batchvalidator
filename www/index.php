@@ -295,9 +295,29 @@ if (!isset($template_path)) {
                         </div>
                     </section>
                 </script>
+                <script id="temp-html-validator-results" type="text/x-handlebars-template">
+                    {{#if errors}}
+                        <ul class="item-list report-list">
+                            {{#each errors}}
+                                <li>
+                                    Line {{line}}, column {{col}}: <span class="message">{{message}}</span> <br />
+                                    <code>{{{source}}}</code>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{else}}
+                        <p>Awesome, no errors on the page!</p>
+                    {{/if}}
+                </script>
                 <div class="loader hidden">
                     <p class="action-title">Site check! 1. 2. 3.</p>
-                    <p>Your site is being checked; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <p>We're checking; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <div class="wdn-spinner">
+                        <div class="circle"></div>
+                        <div class="circle1"></div>
+                    </div>
+                </div>
+                <div class="loader mini hidden">
                     <div class="wdn-spinner">
                         <div class="circle"></div>
                         <div class="circle1"></div>
