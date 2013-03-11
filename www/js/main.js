@@ -40,9 +40,13 @@ WDN.loadJQuery(function() {
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
+                // Bind events to elements inside summary
                 $('.recheck-button').click(function(event) {
                     event.preventDefault();
                     wrapper.trigger('begin'); // Start the queue
+                });
+                $('#validator-results tr[data-page]').click(function (event) {
+                    $(this).next('.expansion-row').toggle(500);
                 });
             },
 

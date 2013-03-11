@@ -120,7 +120,7 @@ if (!isset($template_path)) {
                 </div>
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
-                        <h2 class="report-title">Summary of Check</h2>
+                        <h2 class="report-title title">Summary of Check</h2>
                         <div class="wdn-grid-set">
                             <div class="bp2-wdn-col-three-fourths">
                             <h3>Site Information</h3>
@@ -227,20 +227,21 @@ if (!isset($template_path)) {
                                 </tr>
                                 <tr class="expansion-row justified">
                                     <td colspan=5 data-header="Page-level Details" class="expansion-container">
-                                        <span class="title">Page-Level Details</span>
                                         <div class="wdn-grid-set">
                                             <div class="wdn-col-three-fifths page-validator-results">
                                                 Here are all the HTML errors. Good luck!
                                             </div>
                                             <div class="wdn-col-two-fifths page-bad-links">
+                                                <div class="shader">
+                                                    <span class="title">Bad Links</span>
                                                 {{#if bad_links}}
                                                     {{#if bad_links.[301]}}
-                                                    <div class="wdn-grid-set">
+                                                    <div class="wdn-grid-set row">
                                                         <div class="wdn-col-one-fourth">
                                                             <span class="dashboard-value secondary">301</span>
                                                         </div>
                                                         <div class="wdn-col-three-fourths">
-                                                            <ul>
+                                                            <ul class="item-list">
                                                                 {{#each bad_links.[301]}}
                                                                 <li>{{this}}</li>
                                                                 {{/each}}
@@ -249,12 +250,12 @@ if (!isset($template_path)) {
                                                     </div>
                                                     {{/if}}
                                                     {{#if bad_links.[404]}}
-                                                    <div class="wdn-grid-set">
+                                                    <div class="wdn-grid-set row">
                                                         <div class="wdn-col-one-fourth">
                                                             <span class="dashboard-value secondary">404</span>
                                                         </div>
                                                         <div class="wdn-col-three-fourths">
-                                                            <ul>
+                                                            <ul class="item-list">
                                                                 {{#each bad_links.[404]}}
                                                                 <li>{{this}}</li>
                                                                 {{/each}}
@@ -262,7 +263,10 @@ if (!isset($template_path)) {
                                                         </div>
                                                     </div>
                                                     {{/if}}
+                                                {{else}}
+                                                    <p>Awesome, you have nice links on this page!</p>
                                                 {{/if}}
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
