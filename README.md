@@ -1,5 +1,18 @@
 # UNL Site Validator
 
+## Install
+To install, run the script `scripts/install.php` via command line
+
+Example - normal install
+```
+php scriptions/install.php
+```
+
+Example - Force install (replace tables)
+```
+php scriptions/install.php -f
+```
+
 ## A Note on LESS/CSS
 All CSS is created with the LESS pre-processor. Do not modify the CSS files, as they will be overwritten by the LESS builds.
 
