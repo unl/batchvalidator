@@ -36,34 +36,45 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
             while ($activeRequests < 50 && count($links) > 0) {
                 $link = Spider::absolutePath(array_shift($links), $uri);
                 
-                if (filter_var($link, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)
-                    && !array_key_exists($link, self::$checked)) {
-                    $curl[$link] = curl_init($link);
-                    curl_setopt($curl[$link], CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($curl[$link], CURLOPT_CONNECTTIMEOUT, 5);
-                    curl_setopt($curl[$link], CURLOPT_LOW_SPEED_LIMIT, 10);
-                    curl_setopt($curl[$link], CURLOPT_LOW_SPEED_TIME, 5);
-                    curl_setopt($curl[$link], CURLOPT_FOLLOWLOCATION, false);
-                    curl_setopt($curl[$link], CURLOPT_USERAGENT, UNL_WDN_Assessment::$spiderUserAgent);
-                    curl_multi_add_handle($mcurl, $curl[$link]);
-                    $activeRequests++;
+                //Don't check it if it is not a valid url
+                if (!filter_var($link, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
+                    continue;
                 }
+                
+                //Don't recheck it if we just checked it
+                if (isset(self::$checked[$link])) {
+                    //But DO add it to the list for this page.
+                    $this->addLink($link, self::$checked[$link], $uri);
+                    continue;
+                }
+                
+                $curl[$link] = curl_init($link);
+                curl_setopt($curl[$link], CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl[$link], CURLOPT_CONNECTTIMEOUT, 5);
+                curl_setopt($curl[$link], CURLOPT_LOW_SPEED_LIMIT, 10);
+                curl_setopt($curl[$link], CURLOPT_LOW_SPEED_TIME, 5);
+                curl_setopt($curl[$link], CURLOPT_FOLLOWLOCATION, false);
+                curl_setopt($curl[$link], CURLOPT_USERAGENT, UNL_WDN_Assessment::$spiderUserAgent);
+                curl_multi_add_handle($mcurl, $curl[$link]);
+                $activeRequests++;
             }
         
             usleep(500);
             curl_multi_exec($mcurl, $running);
                 
             while ($msg = curl_multi_info_read($mcurl, $msgCount)) {
-            
+                
                 $finishedCurl = $msg['handle'];
                 $info = curl_getinfo($finishedCurl);
                 $activeRequests--;
+                
+                //Mark the url as checked.
+                self::$checked[$info['url']] = $info['http_code'];
+                
                 if ($info['http_code'] == 200) {
-                    self::$checked[$info['url']] = true;
                     curl_multi_remove_handle($mcurl, $finishedCurl);
                     curl_close($finishedCurl);
                 } else {
-                    self::$checked[$info['url']] = false;
                     $this->addLink($info['url'], $info['http_code'], $uri);
                     continue;
                 }
