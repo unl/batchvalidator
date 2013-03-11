@@ -5,12 +5,12 @@ To install, run the script `scripts/install.php` via command line
 
 Example - normal install
 ```
-php scriptions/install.php
+php scripts/install.php
 ```
 
 Example - Force install (replace tables)
 ```
-php scriptions/install.php -f
+php scripts/install.php -f
 ```
 
 ## A Note on LESS/CSS
