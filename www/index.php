@@ -129,9 +129,9 @@ if (!isset($template_path)) {
                                     <span class="item-label">Site title:</span> <span id="site-title">{{{site_title}}}</span>
                                 </li>
                                 <li>
-                                    <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
+                                    <span class="item-label">Date of last check:</span> <time class="last-scan-date">{{last_scan}}</time>
                                 </li>
-                            </p>
+                            </ul>
                             </div>
                             <div class="bp2-wdn-col-one-fourth">
                                 <!--<a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>-->
@@ -233,9 +233,9 @@ if (!isset($template_path)) {
                                 <div class="bp2-wdn-col-three-fourths">
                                 <ul class="structure-list">
                                     <li>
-                                        <span class="item-label">Date of last check:</span> <time id="last-scan-date">{{last_scan}}</time>
+                                        <span class="item-label">Date of last check:</span> <time class="last-scan-date">{{last_scan}}</time>
                                     </li>
-                                </p>
+                                </ul>
                                 </div>
                                 <div class="bp2-wdn-col-one-fourth">
                                     <a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>
