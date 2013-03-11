@@ -93,11 +93,16 @@
     .shader {
         background-color: lighten(@colorTriad, 15%);
         overflow: hidden;
-        border-left: 3px solid @colorTriad;
+        border-right: 3px solid @colorTriad;
         padding: 0.5em 1.5em;
 
         .row {
             margin-top: 1em;
+        }
+
+        &.even {
+            background-color: transparent;
+            border: none;
         }
     }
 }
