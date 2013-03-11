@@ -203,7 +203,7 @@ if (!isset($template_path)) {
                             <tbody>
                                 {{#each pages}}
                                 <tr data-page="{{page}}" class="trigger-row">
-                                    <th id="page-01" class="side-col">
+                                    <th id="page-01" class="justified">
                                         {{strip_site page}}
                                     </th>
                                     <td headers="page-01 validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
@@ -225,7 +225,7 @@ if (!isset($template_path)) {
                                         </td>
                                     {{/if}}
                                 </tr>
-                                <tr class="expansion-row">
+                                <tr class="expansion-row justified">
                                     <td colspan=5 data-header="Page-level Details" class="expansion-container">
                                         <span class="title">Page-Level Details</span>
                                         <div class="wdn-grid-set">
@@ -234,32 +234,34 @@ if (!isset($template_path)) {
                                             </div>
                                             <div class="wdn-col-two-fifths page-bad-links">
                                                 {{#if bad_links}}
-                                                <div class="wdn-grid-set">
-                                                {{#if bad_links.[301]}}
-                                                    <div class="wdn-col-one-fourth">
-                                                        <span class="dashboard-value">301</span>
+                                                    {{#if bad_links.[301]}}
+                                                    <div class="wdn-grid-set">
+                                                        <div class="wdn-col-one-fourth">
+                                                            <span class="dashboard-value secondary">301</span>
+                                                        </div>
+                                                        <div class="wdn-col-three-fourths">
+                                                            <ul>
+                                                                {{#each bad_links.[301]}}
+                                                                <li>{{this}}</li>
+                                                                {{/each}}
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div class="wdn-col-three-fourths">
-                                                        <ul>
-                                                            {{#each bad_links.[301]}}
-                                                            <li>{{this}}</li>
-                                                            {{/each}}
-                                                        </ul>
+                                                    {{/if}}
+                                                    {{#if bad_links.[404]}}
+                                                    <div class="wdn-grid-set">
+                                                        <div class="wdn-col-one-fourth">
+                                                            <span class="dashboard-value secondary">404</span>
+                                                        </div>
+                                                        <div class="wdn-col-three-fourths">
+                                                            <ul>
+                                                                {{#each bad_links.[404]}}
+                                                                <li>{{this}}</li>
+                                                                {{/each}}
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                {{/if}}
-                                                {{#if bad_links.[404]}}
-                                                    <div class="wdn-col-one-fourth">
-                                                        <span class="dashboard-value">404</span>
-                                                    </div>
-                                                    <div class="wdn-col-three-fourths">
-                                                        <ul>
-                                                            {{#each bad_links.[404]}}
-                                                            <li>{{this}}</li>
-                                                            {{/each}}
-                                                        </ul>
-                                                    </div>
-                                                {{/if}}
-                                                </div>
+                                                    {{/if}}
                                                 {{/if}}
                                             </div>
                                         </div>
