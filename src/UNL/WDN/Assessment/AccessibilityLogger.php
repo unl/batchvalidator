@@ -42,10 +42,14 @@ class UNL_WDN_Assessment_AccessibilityLogger extends Spider_LoggerAbstract
             return false;
         }
         
-        $errors = $xml->xpath('//NumOfErrors');
+        $errors = false;
         
-        if ($errors === null) {
-            return false;
+        foreach ($xml->xpath('//NumOfErrors') as $element) {
+            $element = (array)$element;
+            
+            if (isset($element[0])) {
+                $errors = $element[0];
+            }
         }
         
         return $errors;
