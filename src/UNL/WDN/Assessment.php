@@ -204,7 +204,7 @@ class UNL_WDN_Assessment
 
             $badLinks = array();
             foreach ($this->getBadLinksForPage($page['url']) as $link) {
-                $badLinks[$link['code']] = $link['link_url'];
+                $badLinks[$link['code']][] = $link['link_url'];
 
                 $stats['total_bad_links']++;
             }
