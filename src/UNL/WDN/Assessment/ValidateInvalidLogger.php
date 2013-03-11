@@ -1,5 +1,5 @@
 <?php
-class UNL_WDN_Assessment_ValidateInvalidLogger extends UNL_WDN_Assessment_ValidationLogger
+class UNL_WDN_Assessment_ValidateInvalidLogger extends UNL_WDN_Assessment_HTMLValidationLogger
 {
     function log($uri, $depth, DOMXPath $xpath)
     {

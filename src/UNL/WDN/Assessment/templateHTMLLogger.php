@@ -16,6 +16,10 @@ class UNL_WDN_Assessment_TemplateHTMLLogger extends Spider_LoggerAbstract
     {
         $version = $this->getHTMLVersion($xpath);
 
+        if (!$version) {
+            $version = 'unknown';
+        }
+
         $this->setHTMLVersion($uri, $version);
     }
     
