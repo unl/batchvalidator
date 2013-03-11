@@ -45,11 +45,11 @@ WDN.loadJQuery(function() {
                     event.preventDefault();
                     wrapper.trigger('begin'); // Start the queue
                 });
-                $('#validator-results tr[data-page]').click(function (event) {
+                $('#validator-results tr[data-page]').on('click', function (event) {
                     var current_tr = $(this);
                     var next_tr = current_tr.next('.expansion-row');
                     validator.beginHTMLValidation(current_tr, next_tr);
-                    validator.showSubRow(next_tr);
+                    validator.showSubRow(current_tr, next_tr);
                 });
             },
 
@@ -68,12 +68,26 @@ WDN.loadJQuery(function() {
                 }, 500);
             },
 
-            showSubRow : function (next_tr) {
-                next_tr.slideDown(400);
+            showSubRow : function (tr, next_tr) {
+                WDN.log('showing sub row');
+                next_tr.toggle(400);
+                tr.off('click').on('click', function () {
+                    validator.hideSubRow(tr, next_tr);
+                }); // Remove the current click event and add a new one to close
+            },
+
+            hideSubRow : function (tr, next_tr) {
+                WDN.log('hiding sub row');
+                next_tr.toggle(400);
+                tr.off('click').on('click', function () {
+                    validator.beginHTMLValidation(tr, next_tr);
+                    validator.showSubRow(tr, next_tr);
+                })
             },
 
             beginHTMLValidation : function (tr, tr_next) {
                 var error_wrapper = tr_next.find('.html-errors-wrapper');
+                error_wrapper.empty();
                 // show a spinner
                 mini_loader.clone().appendTo(error_wrapper).show();
                 validator.getHTMLValidationResults(tr.attr('data-page'), error_wrapper);
