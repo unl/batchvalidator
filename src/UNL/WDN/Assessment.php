@@ -156,6 +156,7 @@ class UNL_WDN_Assessment
         $stats['last_scan'] = $this->getLastScanDate();
         $stats['total_pages'] = 0;
         $stats['total_html_errors'] = 0;
+        $stats['total_accessibility_errors'] = 0;
         $stats['total_bad_links'] = 0;
         $stats['total_current_template_html'] = 0;
         $stats['total_current_template_dep'] = 0;
@@ -170,8 +171,14 @@ class UNL_WDN_Assessment
             
             $stats['pages'][$i]['html_errors'] = $page['html_errors'];
             
-            if ($page['valid'] != 'unknown') {
+            if ($page['html_errors'] != 'unknown') {
                 $stats['total_html_errors'] += $page['html_errors'];
+            }
+
+            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
+
+            if ($page['accessibility_errors'] != 'unknown') {
+                $stats['total_accessibility_errors'] += $page['accessibility_errors'];
             }
             
             $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
