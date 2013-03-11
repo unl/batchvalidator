@@ -102,10 +102,10 @@ class UNL_WDN_Assessment
     
     function getValidityStatus($uri)
     {
-        $sth = $this->db->prepare('SELECT valid FROM assessment WHERE baseurl = ? AND url = ?;');
+        $sth = $this->db->prepare('SELECT html_errors FROM assessment WHERE baseurl = ? AND url = ?;');
         $sth->execute(array($this->baseUri, $uri));
         $result = $sth->fetch();
-        return $result['valid'];
+        return $result['html_errors'];
     }
 
     function getTitle()
@@ -156,6 +156,7 @@ class UNL_WDN_Assessment
         $stats['last_scan'] = $this->getLastScanDate();
         $stats['total_pages'] = 0;
         $stats['total_html_errors'] = 0;
+        $stats['total_accessibility_errors'] = 0;
         $stats['total_bad_links'] = 0;
         $stats['total_current_template_html'] = 0;
         $stats['total_current_template_dep'] = 0;
@@ -168,10 +169,16 @@ class UNL_WDN_Assessment
         foreach ($this->getSubPages() as $page) {
             $stats['pages'][$i]['page'] = $page['url'];
             
-            $stats['pages'][$i]['html_errors'] = $page['valid'];
+            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
             
-            if ($page['valid'] != 'unknown') {
-                $stats['total_html_errors'] += $page['valid'];
+            if ($page['html_errors'] != 'unknown') {
+                $stats['total_html_errors'] += $page['html_errors'];
+            }
+
+            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
+
+            if ($page['accessibility_errors'] != 'unknown') {
+                $stats['total_accessibility_errors'] += $page['accessibility_errors'];
             }
             
             $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
