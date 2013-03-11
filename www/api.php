@@ -8,11 +8,16 @@ if (!isset($_GET['uri'])) {
     throw new Exception("You must pass the base uri &uri=", 400);
 }
 
+$page = null;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
 $assessment = new UNL_WDN_Assessment($_GET['uri'], $db);
 
 //Allow rechecking
 if (isset($_POST['action']) && $_POST['action'] == 'check') {
-    $assessment->check();
+    $assessment->check($page);
 }
 
 $action = "stats";
@@ -43,7 +48,7 @@ switch ($action)
         break;
     case "stats":
     default:
-        $json = $assessment->getJSONstats();
+        $json = $assessment->getJSONstats($page);
 }
 
 //Always display results

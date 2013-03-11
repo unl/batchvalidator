@@ -47,9 +47,18 @@ Required GET Arguments for ALL requests:
 ### GET site statisitcs
 A GET request to the base api url with the `uri` argument set will return a JSON result set
 
-Example:
+Optional GET Arguments
+* `page`
+  * The URL of a specific sub-page (url encoded) - this will return results for only that sub-page
+
+Example (all pages):
 ```
 GET http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F
+```
+
+Example (single page):
+```
+GET http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F&page=http%3A%2F%2Fwdn.unl.edu%2Fdocumentation%2F
 ```
 
 ### GET page html errors
@@ -73,8 +82,18 @@ Will re-crawl and run all tests against a site.  This will usually take a long t
 Additional required POST arguments:
 * `action=check`
 
-Example:
+Optional GET Arguments
+* `page`
+  * The URL of a specific sub-page (url encoded) - this will check ONLY that sub-page and return results for only that sub-page
+
+Example (all pages):
 ```
 POST http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F
+POST-DATA: 'action=check'
+```
+
+Example (single page):
+```
+POST http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F%2F&page=http%3A%2F%2Fwdn.unl.edu%2Fdocumentation%2F
 POST-DATA: 'action=check'
 ```

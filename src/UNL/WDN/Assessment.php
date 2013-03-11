@@ -55,11 +55,20 @@ class UNL_WDN_Assessment
     /**
      * Will recheck all metrics for every page
      * (save results to DB)
+     * 
+     * @param null $url - if not null, will run a scan on only the given url.
      */
-    function check()
+    function check($url = null)
     {
-        $this->removeEntries();
-
+        $limit = 1;
+        
+        //Scan the entire site.
+        if ($url == null) {
+            $this->removeEntries();
+            $url = $this->baseUri;
+            $limit = self::$spiderPageLimit;
+        }
+        
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
         $validationLogger = new UNL_WDN_Assessment_HTMLValidationLogger($this);
         $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger($this);
@@ -68,9 +77,9 @@ class UNL_WDN_Assessment
 
         $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker), 
                                     array(),
-                                    array('page_limit'=>self::$spiderPageLimit));
+                                    array('page_limit'=>$limit));
 
-        $spider->spider($this->baseUri);
+        $spider->spider($url);
     }
     
     function removeEntries()
@@ -153,7 +162,7 @@ class UNL_WDN_Assessment
         return json_decode($json, true);
     }
     
-    function getJSONstats()
+    function getJSONstats($url = null)
     {
         $versions = self::getCurrentTemplateVersions();
         
@@ -173,43 +182,45 @@ class UNL_WDN_Assessment
         
         $i = 0;
         foreach ($this->getSubPages() as $page) {
-            $stats['pages'][$i]['page'] = $page['url'];
-            
-            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
-            
             if ($page['html_errors'] != 'unknown') {
                 $stats['total_html_errors'] += $page['html_errors'];
             }
-
-            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
 
             if ($page['accessibility_errors'] != 'unknown') {
                 $stats['total_accessibility_errors'] += $page['accessibility_errors'];
             }
             
-            $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
-            $stats['pages'][$i]['template_html']['current'] = false;
-            
+            $htmlCurrent = false;
             if ($page['template_html'] != 'unknown' && $page['template_html'] == $versions['html']) {
                 $stats['total_current_template_html']++;
-                $stats['pages'][$i]['template_html']['current'] = true;
+                $htmlCurrent = true;
             }
             
-            $stats['pages'][$i]['template_dep']['version'] = $page['template_dep'];
-            $stats['pages'][$i]['template_dep']['current'] = false;
-
+            $depCurrent = false;
             if ($page['template_dep'] != 'unknown' && $page['template_dep'] == $versions['dep']) {
                 $stats['total_current_template_dep']++;
-                $stats['pages'][$i]['template_dep']['current'] = true;
+                $depCurrent = true;
             }
-            
-            $stats['pages'][$i]['bad_links'] = array();
-            
+
+            $badLinks = array();
             foreach ($this->getBadLinksForPage($page['url']) as $link) {
-                $stats['pages'][$i]['bad_links'][$link['code']][] = $link['link_url'];
+                $badLinks[$link['code']] = $link['link_url'];
 
                 $stats['total_bad_links']++;
             }
+            
+            if ($url != null && $page['url'] != $url) {
+                continue;
+            }
+            
+            $stats['pages'][$i]['page'] = $page['url'];
+            $stats['pages'][$i]['html_errors'] = $page['html_errors'];
+            $stats['pages'][$i]['accessibility_errors'] = $page['accessibility_errors'];
+            $stats['pages'][$i]['template_dep']['version'] = $page['template_dep'];
+            $stats['pages'][$i]['template_dep']['current'] = $depCurrent;
+            $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
+            $stats['pages'][$i]['template_html']['current'] = $htmlCurrent;
+            $stats['pages'][$i]['bad_links'] = $badLinks;
             
             $i++;
         }
