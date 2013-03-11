@@ -17,10 +17,15 @@ php scripts/install.php -f
 All CSS is created with the LESS pre-processor. Do not modify the CSS files, as they will be overwritten by the LESS builds.
 
 WDN Template _mixins are required:
-`ln -s /path/to/UNL_WDNTemplates/wdn/templates_3.1/less/_mixins wdn_mixins`
+```
+ln -s /path/to/UNL_WDNTemplates/wdn/templates_3.1/less/_mixins wdn_mixins
+```
 
 ## Build Dependencies
-`make`. That's all.
+```
+make
+```
+That's all.
 
 #### Sublime Text 2 Build
 1. Use the `(less2css)[https://github.com/timdouglas/sublime-less2css]` Build Process
