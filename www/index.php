@@ -225,6 +225,46 @@ if (!isset($template_path)) {
                                         </td>
                                     {{/if}}
                                 </tr>
+                                <tr class="expansion-row">
+                                    <td colspan=5 data-header="Page-level Details" class="expansion-container">
+                                        <span class="title">Page-Level Details</span>
+                                        <div class="wdn-grid-set">
+                                            <div class="wdn-col-three-fifths page-validator-results">
+                                                Here are all the HTML errors. Good luck!
+                                            </div>
+                                            <div class="wdn-col-two-fifths page-bad-links">
+                                                {{#if bad_links}}
+                                                <div class="wdn-grid-set">
+                                                {{#if bad_links.[301]}}
+                                                    <div class="wdn-col-one-fourth">
+                                                        <span class="dashboard-value">301</span>
+                                                    </div>
+                                                    <div class="wdn-col-three-fourths">
+                                                        <ul>
+                                                            {{#each bad_links.[301]}}
+                                                            <li>{{this}}</li>
+                                                            {{/each}}
+                                                        </ul>
+                                                    </div>
+                                                {{/if}}
+                                                {{#if bad_links.[404]}}
+                                                    <div class="wdn-col-one-fourth">
+                                                        <span class="dashboard-value">404</span>
+                                                    </div>
+                                                    <div class="wdn-col-three-fourths">
+                                                        <ul>
+                                                            {{#each bad_links.[404]}}
+                                                            <li>{{this}}</li>
+                                                            {{/each}}
+                                                        </ul>
+                                                    </div>
+                                                {{/if}}
+                                                </div>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                                 {{/each}}
                             </tbody>
                         </table>
