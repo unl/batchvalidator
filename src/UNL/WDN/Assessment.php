@@ -7,6 +7,8 @@ class UNL_WDN_Assessment
     
     public static $spiderUserAgent = "UNL_WDN_Validator/2";
     
+    public static $spiderPageLimit = 500;
+    
     public $db;
     
     function __construct($baseUri, $db)
@@ -19,11 +21,11 @@ class UNL_WDN_Assessment
      * 
      * @return Spider
      */
-    protected function getSpider($loggers = array(), $filters = array())
+    protected function getSpider($loggers = array(), $filters = array(), $options = array())
     {
         $downloader       = new Spider_Downloader();    
         $parser           = new Spider_Parser();
-        $spider           = new Spider($downloader, $parser);
+        $spider           = new Spider($downloader, $parser, $options);
         
         foreach ($loggers as $logger) {
             $spider->addLogger($logger);
@@ -64,7 +66,9 @@ class UNL_WDN_Assessment
         $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger($this);
         $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);
 
-        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker));
+        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker), 
+                                    array(),
+                                    array('page_limit'=>self::$spiderPageLimit));
 
         $spider->spider($this->baseUri);
     }
