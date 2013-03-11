@@ -55,6 +55,8 @@ GET http://validator.unl.edu/site/api.php?uri=http%3A%2F%2Fwdn.unl.edu%2F
 ### GET page html errors
 Will return a list of HTML errors for a given page within a site.
 
+When the page is checked with this method, the API will recheck that page for HTML errors, update the DB with the new error count and return the errors in JSON format.
+
 Additional required GET arguments:
 * `action=html_errors`
 * `page`
