@@ -229,10 +229,15 @@ if (!isset($template_path)) {
                                     <td colspan=5 data-header="Page-level Details" class="expansion-container">
                                         <div class="wdn-grid-set">
                                             <div class="bp2-wdn-col-three-fifths page-validator-results">
-                                                Here are all the HTML errors. Good luck!
+                                                <div class="shader">
+                                                    <span class="title">HTML Errors</span>
+                                                    <div class="html-errors-wrapper">
+
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="bp2-wdn-col-two-fifths page-bad-links">
-                                                <div class="shader">
+                                                <div class="shader even">
                                                     <span class="title">Bad Links</span>
                                                 {{#if bad_links}}
                                                     {{#if bad_links.[301]}}
