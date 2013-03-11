@@ -120,7 +120,7 @@ if (!isset($template_path)) {
                 </div>
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
-                        <h2 class="report-title">Summary of Check</h2>
+                        <h2 class="report-title title">Summary of Check</h2>
                         <div class="wdn-grid-set">
                             <div class="bp2-wdn-col-three-fourths">
                             <h3>Site Information</h3>
@@ -202,28 +202,79 @@ if (!isset($template_path)) {
                             </thead>
                             <tbody>
                                 {{#each pages}}
-                                <tr data-page="{{page}}">
-                                    <th id="page-01" class="side-col">
+                                <tr data-page="{{page}}" class="trigger-row">
+                                    <th id="page-{{@index}}" class="justified">
                                         {{strip_site page}}
                                     </th>
-                                    <td headers="page-01 validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
+                                    <td headers="page-{{@index}} validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
                                         {{html_errors}}
                                     </td>
-                                    <td headers="page-01 validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
+                                    <td headers="page-{{@index}} validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
                                         {{{format_boolean template_html.current}}}
                                     </td>
-                                    <td headers="page-01 validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
+                                    <td headers="page-{{@index}} validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
                                         {{{format_boolean template_dep.current}}}
                                     </td>
                                     {{#if bad_links}}
-                                        <td headers="page-01 validator-404" data-header="Bad Links" class="error">
+                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links" class="error">
                                             {{links bad_links}}
                                         </td>
                                     {{else}}
-                                        <td headers="page-01 validator-404" data-header="Bad Links">
+                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links">
                                             0
                                         </td>
                                     {{/if}}
+                                </tr>
+                                <tr class="expansion-row justified">
+                                    <td colspan=5 data-header="Page-level Details" class="expansion-container">
+                                        <div class="wdn-grid-set">
+                                            <div class="bp2-wdn-col-three-fifths page-validator-results">
+                                                <div class="shader">
+                                                    <span class="title">HTML Errors</span>
+                                                    <div class="html-errors-wrapper">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bp2-wdn-col-two-fifths page-bad-links">
+                                                <div class="shader even">
+                                                    <span class="title">Bad Links</span>
+                                                {{#if bad_links}}
+                                                    {{#if bad_links.[301]}}
+                                                    <div class="wdn-grid-set row">
+                                                        <div class="wdn-col-one-fourth">
+                                                            <span class="dashboard-value secondary">301</span>
+                                                        </div>
+                                                        <div class="wdn-col-three-fourths">
+                                                            <ul class="item-list">
+                                                                {{#each bad_links.[301]}}
+                                                                <li>{{this}}</li>
+                                                                {{/each}}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    {{/if}}
+                                                    {{#if bad_links.[404]}}
+                                                    <div class="wdn-grid-set row">
+                                                        <div class="wdn-col-one-fourth">
+                                                            <span class="dashboard-value secondary">404</span>
+                                                        </div>
+                                                        <div class="wdn-col-three-fourths">
+                                                            <ul class="item-list">
+                                                                {{#each bad_links.[404]}}
+                                                                <li>{{this}}</li>
+                                                                {{/each}}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    {{/if}}
+                                                {{else}}
+                                                    <p>Awesome, you have nice links on this page!</p>
+                                                {{/if}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -244,9 +295,29 @@ if (!isset($template_path)) {
                         </div>
                     </section>
                 </script>
+                <script id="temp-html-validator-results" type="text/x-handlebars-template">
+                    {{#if errors}}
+                        <ul class="item-list report-list">
+                            {{#each errors}}
+                                <li>
+                                    Line {{line}}, column {{col}}: <span class="message">{{message}}</span> <br />
+                                    <code>{{{source}}}</code>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{else}}
+                        <p>Awesome, no errors on the page!</p>
+                    {{/if}}
+                </script>
                 <div class="loader hidden">
                     <p class="action-title">Site check! 1. 2. 3.</p>
-                    <p>Your site is being checked; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <p>We're checking; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <div class="wdn-spinner">
+                        <div class="circle"></div>
+                        <div class="circle1"></div>
+                    </div>
+                </div>
+                <div class="loader mini hidden">
                     <div class="wdn-spinner">
                         <div class="circle"></div>
                         <div class="circle1"></div>

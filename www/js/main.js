@@ -1,7 +1,7 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
         var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
-        loader = $('.loader'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
+        loader = $('.loader').not('.mini'), mini_loader = $('.loader.mini'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
 
@@ -14,14 +14,10 @@ WDN.loadJQuery(function() {
                         $("#submit").attr('disabled', '');
                     }
                 })
-                validatorForm.submit(function () {
+                validatorForm.on('submit' , function (event) {
                     event.preventDefault();
-                    if (url_check.test(the_url.val())) {
-                        uri = $("#uri").val();
-                        validator.initialQuery();
-                    } else {
-                        the_url.after('Ugh, that is not a URL.');
-                    }
+                    uri = $("#uri").val();
+                    validator.initialQuery();
                 });
                 wrapper.on('begin', validator.beginQueue);
             },
@@ -33,7 +29,6 @@ WDN.loadJQuery(function() {
                     } else { // This site hasn't been scanned, so start the queue
                         validator.loadSummaryTemplate(data); // Show the barebones as an underlay.
                         wrapper.trigger('begin'); // Start the queue
-                        validator.subsequentQuery(); // POST the queue to get it going
                     }
                 });
             },
@@ -45,10 +40,16 @@ WDN.loadJQuery(function() {
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
+                // Bind events to elements inside summary
                 $('.recheck-button').click(function(event) {
                     event.preventDefault();
                     wrapper.trigger('begin'); // Start the queue
-                    validator.subsequentQuery(); // POST the queue to get it going
+                });
+                $('#validator-results tr[data-page]').on('click', function (event) {
+                    var current_tr = $(this);
+                    var next_tr = current_tr.next('.expansion-row');
+                    validator.beginHTMLValidation(current_tr, next_tr);
+                    validator.showSubRow(current_tr, next_tr);
                 });
             },
 
@@ -59,6 +60,7 @@ WDN.loadJQuery(function() {
             },
 
             beginQueue : function () {
+                validator.subsequentQuery(); // POST the queue to get it going
                 $('#validator-results-setup').css({"opacity" : 0.05});
                 loader.clone().appendTo(wrapper).show();
                 $('html, body').animate({
@@ -66,7 +68,42 @@ WDN.loadJQuery(function() {
                 }, 500);
             },
 
+            showSubRow : function (tr, next_tr) {
+                WDN.log('showing sub row');
+                next_tr.toggle(400);
+                tr.off('click').on('click', function () {
+                    validator.hideSubRow(tr, next_tr);
+                }); // Remove the current click event and add a new one to close
+            },
 
+            hideSubRow : function (tr, next_tr) {
+                WDN.log('hiding sub row');
+                next_tr.toggle(400);
+                tr.off('click').on('click', function () {
+                    validator.beginHTMLValidation(tr, next_tr);
+                    validator.showSubRow(tr, next_tr);
+                })
+            },
+
+            beginHTMLValidation : function (tr, tr_next) {
+                var error_wrapper = tr_next.find('.html-errors-wrapper');
+                error_wrapper.empty();
+                // show a spinner
+                mini_loader.clone().appendTo(error_wrapper).show();
+                validator.getHTMLValidationResults(tr.attr('data-page'), error_wrapper);
+            },
+
+            getHTMLValidationResults : function (page, wrapper) {
+                $.getJSON(api_url + encodeURIComponent(uri) + '&page=' + encodeURIComponent(page) + '&action=html_errors', function (data) {
+                    validator.showHTMLValidationResults(data, wrapper);
+                });
+            },
+
+            showHTMLValidationResults : function (data, wrapper) {
+                var summaryTemplate = Handlebars.compile($("#temp-html-validator-results").html()),
+                render = summaryTemplate(data),
+                output = wrapper.html(render).fadeIn(700);
+            }
         }
 
     }(WDN.jQuery));
@@ -85,7 +122,7 @@ Handlebars.registerHelper('percentage', function (current, total) {
 
 Handlebars.registerHelper('strip_site', function (page) {
     var site = WDN.jQuery("#uri").val();
-    return page.replace(site, "/"); //Keep the slash?
+    return page.replace(site, "/");
 });
 
 Handlebars.registerHelper('format_boolean', function (marker) {

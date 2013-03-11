@@ -8,14 +8,19 @@
         margin-top: 3em;
         text-shadow: 0 1px 1px #fff;
         .transition(opacity, 300ms, linear);
+        overflow: hidden;
     }
 
-    .report-title {
+    .title {
         text-align: center;
-        font-size: 3.5em;
         border-bottom: 1px solid lighten(@baseText, 50%);
         padding-bottom: 0;
         margin-bottom: .5em;
+        font-size: 2em;
+        display: block;
+    }
+    .report-title {
+        font-size: 3.5em;
     }
 
     .dashboard-metrics {
@@ -43,10 +48,15 @@
                 text-shadow: -1px 0 1px lighten(@colorPrimary, 50%);
             }
         }
+    }
 
-        .dashboard-value {
-            font-size: 4em;
-            line-height: 1;
+    .dashboard-value {
+        font-size: 4em;
+        line-height: 1;
+
+        &.secondary {
+            font-size: 2em;
+            color: lighten(@baseText, 25%);
         }
     }
 
@@ -79,5 +89,20 @@
         margin-top: 1em;
         border-top: 1px solid lighten(@baseText, 50%);
         padding-top: 1em;
+    }
+    .shader {
+        background-color: lighten(@colorTriad, 15%);
+        overflow: hidden;
+        border-right: 3px solid @colorTriad;
+        padding: 0.5em 1.5em;
+
+        .row {
+            margin-top: 1em;
+        }
+
+        &.even {
+            background-color: transparent;
+            border: none;
+        }
     }
 }
