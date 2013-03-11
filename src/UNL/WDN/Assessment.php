@@ -58,7 +58,7 @@ class UNL_WDN_Assessment
         $this->removeEntries();
 
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
-        $validationLogger = new UNL_WDN_Assessment_ValidationLogger($this);
+        $validationLogger = new UNL_WDN_Assessment_HTMLValidationLogger($this);
         $templateHTMLLogger = new UNL_WDN_Assessment_TemplateHTMLLogger($this);
         $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger($this);
         $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);

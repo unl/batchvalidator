@@ -35,7 +35,7 @@ switch ($action)
         
         $result = $v->validate($_GET['page']);
         
-        $logger = new UNL_WDN_Assessment_ValidationLogger($assessment);
+        $logger = new UNL_WDN_Assessment_HTMLValidationLogger($assessment);
         $logger->setValidationResult($_GET['page'], count($result->errors));
         
         $json = json_encode($result);
