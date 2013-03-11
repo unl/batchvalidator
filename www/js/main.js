@@ -82,7 +82,7 @@ Handlebars.registerHelper('percentage', function (current, total) {
 
 Handlebars.registerHelper('strip_site', function (page) {
     var site = WDN.jQuery("#uri").val();
-    return page.replace(site, "/"); //Keep the slash?
+    return page.replace(site, "");
 });
 
 Handlebars.registerHelper('format_boolean', function (marker) {
