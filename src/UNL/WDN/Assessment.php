@@ -5,6 +5,8 @@ class UNL_WDN_Assessment
     
     public static $htmlValidatorURI = "http://validator.unl.edu/check";
     
+    public static $spiderUserAgent = "UNL_WDN_Validator/2";
+    
     public $db;
     
     function __construct($baseUri, $db)
