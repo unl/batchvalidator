@@ -63,7 +63,7 @@ WDN.loadJQuery(function() {
                 });
                 $('.external-site').on('click', function (event) {
                     event.stopPropagation();
-                    window.open($(this).val('href'));
+                    window.open(this.href);
                     return false;
                 });
                 $('#validator-results tr[data-page]').on('click', function (event) {
