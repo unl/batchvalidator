@@ -204,7 +204,7 @@ if (!isset($template_path)) {
                                 {{#each pages}}
                                 <tr data-page="{{page}}" class="trigger-row">
                                     <th id="page-{{@index}}" class="justified">
-                                        <a href="{{page}}" target='_blank'>{{strip_site page}}</a>
+                                        {{strip_site page}} <a href="{{page}}" class="external-site"><img src="css/images/external.png" alt="link to external site" /></a>
                                     </th>
                                     <td headers="page-{{@index}} validator-html" data-header="HTML Validity" class="{{error_total html_errors}}">
                                         {{html_errors}}

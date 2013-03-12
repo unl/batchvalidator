@@ -57,9 +57,14 @@ WDN.loadJQuery(function() {
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
                 // Bind events to elements inside summary
-                $('.recheck-button').click(function(event) {
+                $('.recheck-button').click(function (event) {
                     event.preventDefault();
                     wrapper.trigger('begin'); // Start the queue
+                });
+                $('.external-site').on('click', function (event) {
+                    event.stopPropagation();
+                    window.open($(this).val('href'));
+                    return false;
                 });
                 $('#validator-results tr[data-page]').on('click', function (event) {
                     var current_tr = $(this);
