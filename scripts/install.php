@@ -39,6 +39,9 @@ if (isset($argv[1]) && $argv[1] == '-f') {
     exec_sql($db, $sql, 'Deleting old install');
 }
 
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/assessment_runs.sql");
+exec_sql($db, $sql, 'adding assessment_runs table');
+
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/assessment.sql");
 exec_sql($db, $sql, 'adding assessment table');
 
