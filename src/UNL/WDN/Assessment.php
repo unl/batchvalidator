@@ -153,6 +153,29 @@ class UNL_WDN_Assessment
         return $result['html_errors'];
     }
 
+    function getRunInformation()
+    {
+        $sth = $this->db->prepare('SELECT * FROM assessment_runs WHERE baseurl = ?');
+        $sth->execute(array($this->baseUri));
+        $result = $sth->fetch();
+        
+        return $result;
+    }
+    
+    function isQueued()
+    {
+        if (!$runInformation = $this->getRunInformation()) {
+            
+            return false;
+        }
+        //var_dump($runInformation['date_completed']);
+        if ($runInformation['date_completed'] != null) {
+            return false;
+        }
+        
+        return true;
+    }
+
     function getTitle()
     {
         $page = @file_get_contents($this->baseUri);
@@ -207,6 +230,7 @@ class UNL_WDN_Assessment
         $stats['total_current_template_dep'] = 0;
         $stats['current_template_html'] = $versions['html'];
         $stats['current_template_dep'] = $versions['dep'];
+        $stats['queued'] = $this->isQueued();
         
         $stats['pages'] = array();
         
