@@ -32,6 +32,7 @@ $sql = "";
 //Force install (delete old data)
 if (isset($argv[1]) && $argv[1] == '-f') {
     $sql = "SET FOREIGN_KEY_CHECKS=0;
+            DROP TABLE IF EXISTS assessment_runs;
             DROP TABLE IF EXISTS assessment;
             DROP TABLE IF EXISTS url_has_badlinks;
             SET FOREIGN_KEY_CHECKS=1;";
