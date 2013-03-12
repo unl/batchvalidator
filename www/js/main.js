@@ -1,25 +1,40 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
         var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
-        loader = $('.loader').not('.mini'), mini_loader = $('.loader.mini'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
+        loader = $('.loader').not('.mini'), submit_button = $("#submit"), mini_loader = $('.loader.mini'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
 
             initialize : function () {
                 var the_url = $("#uri");
                 the_url.keyup(function () {
-                    if (url_check.test(this.value)) {
-                        $("#submit").removeAttr('disabled');
-                    } else {
-                        $("#submit").attr('disabled', '');
+                    validator.validateURL(this.value);
+                });
+                if (baseURI) { // baseURI passed through query string
+                    if (validator.validateURL(baseURI)) {
+                        validator.submitValidationRequest();
                     }
-                })
+                }
                 validatorForm.on('submit' , function (event) {
                     event.preventDefault();
-                    uri = $("#uri").val();
-                    validator.initialQuery();
+                    validator.submitValidationRequest();
                 });
                 wrapper.on('begin', validator.beginQueue);
+            },
+
+            submitValidationRequest : function () {
+                submit_button.val('Checking...');
+                uri = $("#uri").val();
+                validator.initialQuery();
+            },
+
+            validateURL : function (test) {
+                if (url_check.test(test)) {
+                    $("#submit").removeAttr('disabled');
+                    return true;
+                } 
+                $("#submit").attr('disabled', '');
+                return false;
             },
 
             initialQuery : function () {
@@ -37,6 +52,7 @@ WDN.loadJQuery(function() {
                 var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
                 render = summaryTemplate(data),
                 output = wrapper.html(render).fadeIn(700);
+                    submit_button.val('Check');
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
