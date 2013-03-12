@@ -17,7 +17,12 @@ $assessment = new UNL_WDN_Assessment($_GET['uri'], $db);
 
 //Allow rechecking
 if (isset($_POST['action']) && $_POST['action'] == 'check') {
-    $assessment->check($page);
+    if ($page == null) {
+        //Add a run
+        $assessment->addRun();
+    } else {
+        $assessment->check($page);
+    }
 }
 
 $action = "stats";

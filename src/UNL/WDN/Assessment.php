@@ -63,10 +63,11 @@ class UNL_WDN_Assessment
         $limit = 1;
         
         //Scan the entire site.
+        $updateCompletionDate = false;
         if ($url == null) {
-            $this->removeEntries();
             $url = $this->baseUri;
             $limit = self::$spiderPageLimit;
+            $updateCompletionDate = true;
         }
         
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
@@ -80,10 +81,39 @@ class UNL_WDN_Assessment
                                     array('page_limit'=>$limit));
 
         $spider->spider($url);
+
+        //Update the completion date if this is a full scan.
+        if ($updateCompletionDate) {
+            $this->updateCompletionDate();
+        }
+    }
+    
+    function addRun()
+    {
+        //Remove old entries
+        $this->removeEntries();
+        
+        //Add a new run
+        $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, date_started) VALUES (?, ?);');
+        $sth->execute(array($this->baseUri, date('Y-m-d H:i:s')));
+
+        //Until a queue is added, run the check right away
+        $this->check();
+    }
+    
+    function updateCompletionDate()
+    {
+        $sth = $this->db->prepare('UPDATE assessment_runs SET date_completed = ? WHERE baseurl = ?');
+
+        $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
     }
     
     function removeEntries()
     {
+        //Remove assessment_runs entries
+        $sth = $this->db->prepare('DELETE FROM assessment_runs WHERE baseurl = ?');
+        $sth->execute(array($this->baseUri));
+        
         //Remove assessment entries
         $sth = $this->db->prepare('DELETE FROM assessment WHERE baseurl = ?');
         $sth->execute(array($this->baseUri));
@@ -142,7 +172,7 @@ class UNL_WDN_Assessment
     
     function getLastScanDate()
     {
-        $sth = $this->db->prepare('SELECT MAX(timestamp) as scan_date FROM assessment WHERE baseurl = ?');
+        $sth = $this->db->prepare('SELECT date_completed as scan_date FROM assessment_runs WHERE baseurl = ?');
         $sth->execute(array($this->baseUri));
         $result = $sth->fetch();
         
