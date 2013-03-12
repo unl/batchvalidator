@@ -1,7 +1,8 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
         var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
-        loader = $('.loader').not('.mini'), submit_button = $("#submit"), mini_loader = $('.loader.mini'), uri, url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
+        loader = $('.loader').not('.mini'), submit_button = $("#submit"), mini_loader = $('.loader.mini'), uri, form_disabled = true, 
+        url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
 
@@ -11,13 +12,15 @@ WDN.loadJQuery(function() {
                     validator.validateURL(this.value);
                 });
                 if (baseURI) { // baseURI passed through query string
-                    if (validator.validateURL(baseURI)) {
+                    if (validator.validateURL(baseURI) && form_disabled === false) {
                         validator.submitValidationRequest();
                     }
                 }
                 validatorForm.on('submit' , function (event) {
                     event.preventDefault();
-                    validator.submitValidationRequest();
+                    if (form_disabled === false) {
+                        validator.submitValidationRequest();
+                    }
                 });
                 wrapper.on('begin', validator.beginQueue);
             },
@@ -31,9 +34,11 @@ WDN.loadJQuery(function() {
             validateURL : function (test) {
                 if (url_check.test(test)) {
                     $("#submit").removeAttr('disabled');
+                    form_disabled = false;
                     return true;
                 } 
                 $("#submit").attr('disabled', '');
+                form_disabled = true;
                 return false;
             },
 
