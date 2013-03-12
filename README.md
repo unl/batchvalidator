@@ -54,6 +54,11 @@ Required GET Arguments for ALL requests:
 ### GET site statisitcs
 A GET request to the base api url with the `uri` argument set will return a JSON result set
 
+`last_scan` will be `false` if the site has never been scaned or a scan is currently not complete.
+`queued` will be `true` if the site is currently in the in the process of being scanned or is in the queue.
+
+In the case that a site is `queued` and in the process of being scanned, current results of the scan will be returned.
+
 Optional GET Arguments
 * `page`
   * The URL of a specific sub-page (url encoded) - this will return results for only that sub-page
