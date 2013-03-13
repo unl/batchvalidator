@@ -16,9 +16,13 @@ class UNL_WDN_Assessment
         $this->baseUri = $baseUri;
         $this->db      = $db;
     }
-    
+
     /**
-     * 
+     *
+     * @param array $loggers
+     * @param array $filters
+     * @param array $options
+     *
      * @return Spider
      */
     protected function getSpider($loggers = array(), $filters = array(), $options = array())
