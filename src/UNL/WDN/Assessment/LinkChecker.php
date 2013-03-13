@@ -27,7 +27,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     function checkLinks($uri, $links, $depth)
     {
         set_time_limit(self::$time_limit);
-        
+        var_dump($links);
         $mcurl = curl_multi_init();
         $curl = array();
         $activeRequests = 0;
@@ -95,7 +95,8 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         foreach ($nodes as $node) {
             $link = trim((string)$node->nodeValue);
             if (substr($link, 0, 7) != 'mailto:'
-                && substr($link, 0, 11) != 'javascript:') {
+                && substr($link, 0, 11) != 'javascript:'
+                && substr($link, 0, 1) != '#') {
                 $links[] = $link;
             } 
         }
