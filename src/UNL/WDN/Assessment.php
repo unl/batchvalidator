@@ -262,6 +262,8 @@ class UNL_WDN_Assessment
 
                 $stats['total_bad_links']++;
             }
+
+            $stats['total_pages']++;
             
             if ($url != null && $page['url'] != $url) {
                 continue;
@@ -280,8 +282,6 @@ class UNL_WDN_Assessment
             $i++;
         }
 
-        $stats['total_pages'] = $i;
-        
         return json_encode($stats);
     }
 }
