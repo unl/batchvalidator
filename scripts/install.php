@@ -48,3 +48,6 @@ exec_sql($db, $sql, 'adding assessment table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/url_has_badlinks.sql");
 exec_sql($db, $sql, 'adding url_has_badlinks table');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/scannable.sql");
+exec_sql($db, $sql, 'adding scannable to the assessment table');

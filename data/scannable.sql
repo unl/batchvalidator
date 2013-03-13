@@ -1,0 +1,1 @@
+ALTER TABLE `assessment` ADD `scannable` TINYINT(1) NOT NULL DEFAULT 1;
