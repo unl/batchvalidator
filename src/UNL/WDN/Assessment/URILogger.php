@@ -14,13 +14,18 @@ class UNL_WDN_Assessment_URILogger extends Spider_LoggerAbstract
     
     public function log($uri, $depth, DOMXPath $xpath)
     {
-        $this->addUri($uri);
+        $this->addUri($uri, $this->isScannable($xpath));
+    }
+    
+    function isScannable(DOMXPath $xpath)
+    {
+        return (bool)$xpath->query('//xhtml:html')->length;
     }
 
-    function addUri($uri)
+    function addUri($uri, $scannable)
     {
-        $sth = $this->assessment->db->prepare('INSERT INTO assessment (baseurl, url, timestamp) VALUES (?, ?, ?);');
-        $sth->execute(array($this->assessment->baseUri, $uri, date('Y-m-d H:i:s')));
+        $sth = $this->assessment->db->prepare('INSERT INTO assessment (baseurl, url, scannable, timestamp) VALUES (?, ?, ?, ?);');
+        $sth->execute(array($this->assessment->baseUri, $uri, (int)$scannable, date('Y-m-d H:i:s')));
 
     }
 }
