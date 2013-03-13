@@ -13,6 +13,11 @@ Example - Force install (replace tables)
 php scripts/install.php -f
 ```
 
+You will also need to set up a cron to process the queue.  Edit your cron with something like:
+```
+* * * * * /usr/bin/php /path/to/application/scripts/process_user_queue.php
+```
+
 ## A Note on LESS/CSS
 All CSS is created with the LESS pre-processor. Do not modify the CSS files, as they will be overwritten by the LESS builds.
 
