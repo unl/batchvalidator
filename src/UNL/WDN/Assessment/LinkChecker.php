@@ -27,7 +27,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     function checkLinks($uri, $links, $depth)
     {
         set_time_limit(self::$time_limit);
-        var_dump($links);
+        
         $mcurl = curl_multi_init();
         $curl = array();
         $activeRequests = 0;
@@ -71,14 +71,13 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                 //Mark the url as checked.
                 self::$checked[$info['url']] = $info['http_code'];
                 
-                if ($info['http_code'] == 200) {
-                    curl_multi_remove_handle($mcurl, $finishedCurl);
-                    curl_close($finishedCurl);
-                } else {
+                if ($info['http_code'] != 200) {
                     $this->addLink($info['url'], $info['http_code'], $uri);
                     continue;
                 }
 
+                curl_multi_remove_handle($mcurl, $finishedCurl);
+                curl_close($finishedCurl);
             }
         
         }
