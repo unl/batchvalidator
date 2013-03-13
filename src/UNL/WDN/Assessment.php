@@ -275,6 +275,7 @@ class UNL_WDN_Assessment
             $stats['pages'][$i]['template_html']['version'] = $page['template_html'];
             $stats['pages'][$i]['template_html']['current'] = $htmlCurrent;
             $stats['pages'][$i]['bad_links'] = $badLinks;
+            $stats['pages'][$i]['scannable'] = (bool)$page['scannable'];
             
             $i++;
         }
