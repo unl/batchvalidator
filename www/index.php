@@ -58,7 +58,10 @@ if (!isset($template_path)) {
 <link rel="stylesheet" type="text/css" href="http://wdn.unl.edu/resources/grid/grid-v3.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <script type="text/javascript" src="js/main.min.js"></script>
-<script type="text/javascript">var baseURI = '<?php echo $uri; ?>';</script>
+<script type="text/javascript">
+    var baseURI = '<?php echo $uri; ?>';
+    WDN.initializePlugin('notice');
+</script>
 
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="fixed" -->
@@ -121,6 +124,26 @@ if (!isset($template_path)) {
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
                         <h2 class="report-title title">Summary of Check</h2>
+                        {{#if error_scanning}}
+                            <div class="wdn_notice negate">
+                                <div class="message">
+                                    <h4>We had some problems while scanning your site.</h4>
+                                    <p>
+                                        Please check the following pages for errors, then recheck the site.  Errors that
+                                        cause this problem usually have to do with CDATA sections in the HTML.
+                                    </p>
+                                    <ul>
+                                        {{#each pages}}
+                                        {{#unless scannable}}
+                                        <li>
+                                            <a href="#page-{{@index}}">{{page}}</a>
+                                        </li>
+                                        {{/unless}}
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        {{/if}}
                         <div class="wdn-grid-set">
                             <div class="bp2-wdn-col-three-fourths">
                             <h3>Site Information</h3>
