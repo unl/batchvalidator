@@ -235,6 +235,7 @@ class UNL_WDN_Assessment
         $stats['current_template_html'] = $versions['html'];
         $stats['current_template_dep'] = $versions['dep'];
         $stats['queued'] = $this->isQueued();
+        $stats['error_scanning'] = false;
         
         $stats['pages'] = array();
         
@@ -242,6 +243,10 @@ class UNL_WDN_Assessment
         foreach ($this->getSubPages() as $page) {
             if ($page['html_errors'] != 'unknown') {
                 $stats['total_html_errors'] += $page['html_errors'];
+            }
+            
+            if (!$page['scannable']) {
+                $stats['error_scanning'] = true;
             }
 
             if ($page['accessibility_errors'] != 'unknown') {
