@@ -50,6 +50,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                 
                 $curl[$link] = curl_init($link);
                 curl_setopt($curl[$link], CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl[$link], CURLOPT_NOBODY, true);
                 curl_setopt($curl[$link], CURLOPT_CONNECTTIMEOUT, 5);
                 curl_setopt($curl[$link], CURLOPT_LOW_SPEED_LIMIT, 10);
                 curl_setopt($curl[$link], CURLOPT_LOW_SPEED_TIME, 5);
