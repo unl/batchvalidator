@@ -8,9 +8,11 @@ if (!isset($_GET['uri'])) {
     throw new Exception("You must pass the base uri &uri=", 400);
 }
 
+$_GET['uri'] = trim($_GET['uri']);
+
 $page = null;
 if (isset($_GET['page'])) {
-    $page = $_GET['page'];
+    $page = trim($_GET['page']);
 }
 
 $assessment = new UNL_WDN_Assessment($_GET['uri'], $db);
