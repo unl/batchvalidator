@@ -2,7 +2,7 @@
 require_once dirname(dirname(__FILE__)) . '/www/config.inc.php';
 
 //Only run a max of 5 checks at a time.
-$sth = $db->prepare("SELECT count(*) as total FROM assessment_runs WHERE status = 'running'");
+$sth = $db->prepare("SELECT count(*) as total FROM assessment_runs WHERE status = 'running' AND run_type = 'user'");
 $sth->execute();
 $result = $sth->fetch();
 
@@ -15,7 +15,7 @@ if ($result['total'] >= UNL_WDN_Assessment::$maxConcurrentUserJobs) {
 }
 
 //Select a site to queue.
-$sth = $db->prepare("SELECT baseurl FROM assessment_runs WHERE status = 'queued' ORDER BY date_started ASC LIMIT 1");
+$sth = $db->prepare("SELECT baseurl FROM assessment_runs WHERE status = 'queued' AND run_type = 'user' ORDER BY date_started ASC LIMIT 1");
 $sth->execute();
 $result = $sth->fetch();
 
