@@ -220,10 +220,10 @@ class UNL_WDN_Assessment
         return json_decode($json, true);
     }
 
-    function emailStats()
+    function emailStats($email = null)
     {
         $mailer = new UNL_WDN_Assessment_Mailer($this);
-        $mailer->mail();
+        $mailer->mail($email);
     }
     
     function getStats($url = null)

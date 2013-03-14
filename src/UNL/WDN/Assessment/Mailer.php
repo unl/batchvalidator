@@ -57,7 +57,7 @@ class UNL_WDN_Assessment_Mailer
     }
 
     
-    function mail()
+    function mail($email = null)
     {
         $mailer = new UNL_WDN_Emailer_Main();
 
@@ -77,6 +77,10 @@ class UNL_WDN_Assessment_Mailer
 
         if (!$to = $this->getContactAddress()) {
             return false;
+        }
+        
+        if (isset($email)) {
+            $to = $email;
         }
         
         $mailer->html_body    = $body;
