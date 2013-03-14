@@ -1,0 +1,11 @@
+a:16:{s:7:"attribs";a:4:{s:5:"xmlns";s:37:"http://pear.php.net/dtd/rest.release2";s:9:"xmlns:xsi";s:41:"http://www.w3.org/2001/XMLSchema-instance";s:11:"xmlns:xlink";s:28:"http://www.w3.org/1999/xlink";s:18:"xsi:schemaLocation";s:79:"http://pear.php.net/dtd/rest.release2 http://pear.php.net/dtd/rest.release2.xsd";}s:1:"p";a:2:{s:7:"attribs";a:1:{s:10:"xlink:href";s:12:"rest/p/savvy";}s:8:"_content";s:5:"Savvy";}s:1:"c";s:13:"phpsavant.com";s:1:"v";s:5:"0.7.3";s:1:"a";s:5:"0.1.0";s:2:"mp";s:5:"5.2.0";s:2:"st";s:5:"alpha";s:1:"l";s:15:"New BSD License";s:1:"m";s:11:"saltybeagle";s:1:"s";s:77:"Savvy is a powerful but lightweight object-oriented template system for PHP.
+";s:1:"d";s:191:"
+Unlike other template systems, Savvy by default does not compile your
+templates into PHP; instead, it uses PHP itself as its template language so you
+don't need to learn a new markup system.";s:2:"da";s:19:"2012-08-20 10:52:21";s:1:"n";s:229:"Improve support for proxying arrays:
+
+* Objects which implement ArrayIterator are now proxied using a compatible object
+* Ensure keys are proxied when returned from ArrayObject
+
+
+Package Savvy API release notes for version 0.1.0.";s:1:"f";s:5:"15320";s:1:"g";s:36:"http://phpsavant.com/get/Savvy-0.7.3";s:1:"x";a:1:{s:7:"attribs";a:1:{s:10:"xlink:href";s:17:"package.0.7.3.xml";}}}

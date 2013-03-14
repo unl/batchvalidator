@@ -1,0 +1,7 @@
+a:16:{s:7:"attribs";a:4:{s:5:"xmlns";s:37:"http://pear.php.net/dtd/rest.release2";s:9:"xmlns:xsi";s:41:"http://www.w3.org/2001/XMLSchema-instance";s:11:"xmlns:xlink";s:28:"http://www.w3.org/1999/xlink";s:18:"xsi:schemaLocation";s:79:"http://pear.php.net/dtd/rest.release2 http://pear.php.net/dtd/rest.release2.xsd";}s:1:"p";a:2:{s:7:"attribs";a:1:{s:10:"xlink:href";s:41:"Chiara_PEAR_Server_REST/p/unl_wdn_emailer";}s:8:"_content";s:15:"UNL_WDN_Emailer";}s:1:"c";s:12:"pear.unl.edu";s:1:"v";s:5:"0.1.0";s:1:"a";s:5:"0.1.0";s:2:"mp";s:5:"5.2.0";s:2:"st";s:5:"alpha";s:1:"l";s:15:"New BSD License";s:1:"m";s:11:"saltybeagle";s:1:"s";s:46:"Send emails using the UNL HTML email template
+";s:1:"d";s:47:"
+Send emails using the UNL HTML email template
+";s:2:"da";s:19:"2010-09-30 16:30:06";s:1:"n";s:90:"Package UNL_WDN_Email release notes for version 0.1.0.
+
+Basic functionality is available.
+";s:1:"f";s:4:"6778";s:1:"g";s:45:"http://pear.unl.edu/get/UNL_WDN_Emailer-0.1.0";s:1:"x";a:1:{s:7:"attribs";a:1:{s:10:"xlink:href";s:17:"package.0.1.0.xml";}}}
