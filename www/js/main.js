@@ -28,7 +28,7 @@ WDN.loadJQuery(function() {
             submitValidationRequest : function () {
                 submit_button.val('Checking...');
                 uri = $("#uri").val();
-                validator.initialQuery();
+                validator.querySiteInformation();
             },
 
             validateURL : function (test) {
@@ -42,25 +42,43 @@ WDN.loadJQuery(function() {
                 return false;
             },
 
-            initialQuery : function () {
+            querySiteInformation : function (isFirstQuery) {
                 $.getJSON(api_url+encodeURIComponent(uri), function (data) {
-                    if (data.last_scan) {
-                        validator.loadSummaryTemplate(data);
-                    } else { // This site hasn't been scanned, so start the queue
-                        validator.loadSummaryTemplate(data); // Show the barebones as an underlay.
+                    if (!data.status) { //Site has never been checked
                         wrapper.trigger('begin'); // Start the queue
+                    } else if (data.status == 'complete') { //Queue has completed...
+                        validator.loadSummaryTemplate(data);
+                        
+                        $('.loader').remove(); //Remove the spinner
+                        
+                        wrapper.fadeIn(700); //Display the wrapper
+                        
+                        $('html, body').animate({
+                            scrollTop: wrapper.offset().top - 15
+                        }, 500);
+                    } else { // This site is being scanned
+                        if (isFirstQuery == null) {
+                            loader.clone().appendTo($('#scan-container')).show(); //Show the spinner
+                        }
+
+                        validator.loadSummaryTemplate(data); //Show the current results under the spinner
+
+                        //Poll the server again in 5 seconds until complete.
+                        setTimeout(function()
+                        {
+                            validator.querySiteInformation(false)
+                        }, 5000);
                     }
                 });
             },
-
+            
             loadSummaryTemplate : function (data) {
                 var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
-                render = summaryTemplate(data),
-                output = wrapper.html(render).fadeIn(700);
-                    submit_button.val('Check');
-                $('html, body').animate({
-                    scrollTop: wrapper.offset().top - 15
-                }, 500);
+                render = summaryTemplate(data);
+                wrapper.html(render);
+                
+                submit_button.val('Check');
+                
                 // Bind events to elements inside summary
                 $('.recheck-button').click(function (event) {
                     event.preventDefault();
@@ -81,14 +99,15 @@ WDN.loadJQuery(function() {
 
             subsequentQuery : function () {
                 $.post(api_url + encodeURIComponent(uri), 'action=check', function(data) {
+                    validator.querySiteInformation();
+                    
                     validator.loadSummaryTemplate(data);
                 }, "json");
             },
 
             beginQueue : function () {
                 validator.subsequentQuery(); // POST the queue to get it going
-                $('#validator-results-setup').css({"opacity" : 0.05});
-                loader.clone().appendTo(wrapper).show();
+
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);

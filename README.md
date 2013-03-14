@@ -13,6 +13,11 @@ Example - Force install (replace tables)
 php scripts/install.php -f
 ```
 
+You will also need to set up a cron to process the queue.  Edit your cron with something like:
+```
+* * * * * /usr/bin/php /path/to/application/scripts/process_user_queue.php
+```
+
 ## A Note on LESS/CSS
 All CSS is created with the LESS pre-processor. Do not modify the CSS files, as they will be overwritten by the LESS builds.
 
@@ -54,10 +59,12 @@ Base URL: `api.php`
 ### GET site statisitcs
 A GET request to the base api url with the `uri` argument set will return a JSON result set
 
-* `last_scan` will be `false` if the site has never been scaned or a scan is currently not complete.
-* `queued` will be `true` if the site is currently in the in the process of being scanned or is in the queue.
+* `status` will contain the current status of the run
+  * `queued` means that the site is currently waiting to process
+  * `running` means that the site is currently being checked
+  * `complete` means that the site check has completed
 
-In the case that a site is `queued` and in the process of being scanned, current results of the scan will be returned.
+Current results of the a scan will always be returned (even if it is `queued` or `running`.
 
 *Optional GET Arguments*
 * `page`

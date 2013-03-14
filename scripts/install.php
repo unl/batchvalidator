@@ -51,3 +51,6 @@ exec_sql($db, $sql, 'adding url_has_badlinks table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/scannable.sql");
 exec_sql($db, $sql, 'adding scannable to the assessment table');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/queue.sql");
+exec_sql($db, $sql, 'adding queue columns');
