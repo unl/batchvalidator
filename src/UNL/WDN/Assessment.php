@@ -97,14 +97,14 @@ class UNL_WDN_Assessment
         }
     }
     
-    function addRun()
+    function addRun($runType = 'user')
     {
         //Remove old entries
         $this->removeEntries();
         
         //Add a new run
-        $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, date_started) VALUES (?, ?);');
-        $sth->execute(array($this->baseUri, date('Y-m-d H:i:s')));
+        $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, run_type, date_started) VALUES (?, ?, ?);');
+        $sth->execute(array($this->baseUri, $runType, date('Y-m-d H:i:s')));
     }
     
     function setCompleted()
