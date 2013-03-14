@@ -11,6 +11,8 @@ class UNL_WDN_Assessment
     
     public static $maxConcurrentUserJobs = 5;
 
+    public static $maxConcurrentAutoJobs = 3;
+
     public $db;
     
     function __construct($baseUri, $db)
@@ -110,8 +112,14 @@ class UNL_WDN_Assessment
         $sth = $this->db->prepare("UPDATE assessment_runs SET date_completed = ?, status='complete' WHERE baseurl = ?");
 
         $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
+        
+        $info = $this->getRunInformation();
+        
+        if (isset($info['run_type']) && $info['run_type'] == 'auto') {
+            $this->emailStats();
+        }
     }
-
+    
     function setRunning()
     {
         $sth = $this->db->prepare("UPDATE assessment_runs SET status='running' WHERE baseurl = ?");
@@ -211,8 +219,14 @@ class UNL_WDN_Assessment
         
         return json_decode($json, true);
     }
+
+    function emailStats()
+    {
+        $mailer = new UNL_WDN_Assessment_Mailer($this);
+        $mailer->mail();
+    }
     
-    function getJSONstats($url = null)
+    function getStats($url = null)
     {
         $versions = self::getCurrentTemplateVersions();
         $run = $this->getRunInformation();
@@ -289,6 +303,11 @@ class UNL_WDN_Assessment
             $i++;
         }
 
-        return json_encode($stats);
+        return $stats;
+    }
+    
+    function getJSONstats($url = null)
+    {
+        return json_encode($this->getStats($url));
     }
 }
