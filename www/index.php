@@ -189,7 +189,7 @@ if (!isset($template_path)) {
                                         {{percentage total_current_template_html total_pages}}
                                     </span>
                                     <span class="dashboard-metric">
-                                        current HTML {{{format_version current_template_html}}}
+                                        current HTML <span class='version'>{{{format_version current_template_html}}}</span>
                                     </span>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ if (!isset($template_path)) {
                                         {{percentage total_current_template_dep total_pages}}
                                     </span>
                                     <span class="dashboard-metric">
-                                        current dependents {{{format_version current_template_dep}}}
+                                        current dependents <span class='version'>{{{format_version current_template_dep}}}</span>
                                     </span>
                                 </div>
                             </div>

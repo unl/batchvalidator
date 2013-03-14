@@ -13,6 +13,7 @@
 #maincontent .report-title{font-size:3.5em;}
 #maincontent .dashboard-metrics{text-transform:uppercase;font-weight:bold;letter-spacing:-0.05em;}#maincontent .dashboard-metrics [class*=dashboard-]{display:block;text-align:center;}
 #maincontent .dashboard-metrics .visual-island{background-color:rgba(111, 191, 77, 0.5);border:3px solid rgba(96, 166, 66, 0.2);border-radius:3px;color:#2f551e;text-shadow:-1px 0 1px #ffffff;margin-bottom:1em;min-height:9em;}#maincontent .dashboard-metrics .visual-island.error{background-color:rgba(183, 3, 2, 0.4);border:3px solid rgba(183, 3, 2, 0.2);color:#200100;text-shadow:-1px 0 1px #febaba;}
+#maincontent .dashboard-metrics .version{font-size:.5em;}
 #maincontent .dashboard-value{font-size:4em;line-height:1;}#maincontent .dashboard-value.secondary{font-size:2em;color:#939393;}
 #maincontent .error{background-color:rgba(183, 3, 2, 0.4);border:3px solid rgba(183, 3, 2, 0.2);border-width:3px 0;color:#200100;text-shadow:-1px 0 1px #febaba;}
 #maincontent .item-label{font-weight:bold;text-transform:uppercase;color:#4e8d33;}
