@@ -68,8 +68,8 @@ class UNL_WDN_Assessment_Mailer
         $body .= "<ul>
                     <li>" . $stats['total_pages'] . " Pages</li>
                     <li>" . $stats['total_html_errors'] . " HTML Errors</li>
-                    <li>" . round(($stats['total_current_template_html']/$stats['total_pages'])*100) . "% Current HTML</li>
-                    <li>" . round(($stats['total_current_template_dep']/$stats['total_pages']*100)) . "% Current Dependents</li>
+                    <li>" . round(($stats['total_current_template_html']/$stats['total_pages'])*100) . "% in current HTML (v" . $stats['current_template_html']  . ")</li>
+                    <li>" . round(($stats['total_current_template_dep']/$stats['total_pages']*100)) . "% in current Dependents (v" . $stats['current_template_dep']  . ")</li>
                     <li>" . $stats['total_bad_links'] . " Bad Links</li>
                   </ul>";
 
