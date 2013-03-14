@@ -189,7 +189,7 @@ if (!isset($template_path)) {
                                         {{percentage total_current_template_html total_pages}}
                                     </span>
                                     <span class="dashboard-metric">
-                                        current HTML
+                                        current HTML {{{format_version current_template_html}}}
                                     </span>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ if (!isset($template_path)) {
                                         {{percentage total_current_template_dep total_pages}}
                                     </span>
                                     <span class="dashboard-metric">
-                                        current dependents
+                                        current dependents {{{format_version current_template_dep}}}
                                     </span>
                                 </div>
                             </div>
@@ -235,10 +235,10 @@ if (!isset($template_path)) {
                                         {{html_errors}}
                                     </td>
                                     <td headers="page-{{@index}} validator-current-html" data-header="Current HTML" class="{{error_boolean template_html.current}}">
-                                        {{{format_boolean template_html.current}}}
+                                        {{{format_boolean template_html.current}}} {{{format_version template_html.version}}}
                                     </td>
                                     <td headers="page-{{@index}} validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
-                                        {{{format_boolean template_dep.current}}}
+                                        {{{format_boolean template_dep.current}}} {{{format_version template_dep.version}}}
                                     </td>
                                     {{#if bad_links}}
                                         <td headers="page-{{@index}} validator-404" data-header="Bad Links" class="error">

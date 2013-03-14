@@ -177,6 +177,14 @@ Handlebars.registerHelper('format_boolean', function (marker) {
     return "&#x2714;";
 });
 
+Handlebars.registerHelper('format_version', function (version) {
+    if (!version || version == 'unknown') {
+        version = '-unknown';
+    }
+
+    return '(v' + version + ')';
+});
+
 Handlebars.registerHelper('links', function (links) {
     var total = 0;
     if (links["301"]){
