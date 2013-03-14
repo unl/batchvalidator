@@ -9,6 +9,8 @@ class UNL_WDN_Assessment
     
     public static $spiderPageLimit = 500;
     
+    public static $maxConcurrentUserJobs = 5;
+
     public $db;
     
     function __construct($baseUri, $db)
@@ -72,6 +74,7 @@ class UNL_WDN_Assessment
             $url = $this->baseUri;
             $limit = self::$spiderPageLimit;
             $updateCompletionDate = true;
+            $this->setRunning();
         }
         
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
@@ -88,7 +91,7 @@ class UNL_WDN_Assessment
 
         //Update the completion date if this is a full scan.
         if ($updateCompletionDate) {
-            $this->updateCompletionDate();
+            $this->setCompleted();
         }
     }
     
@@ -100,16 +103,20 @@ class UNL_WDN_Assessment
         //Add a new run
         $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, date_started) VALUES (?, ?);');
         $sth->execute(array($this->baseUri, date('Y-m-d H:i:s')));
-
-        //Until a queue is added, run the check right away
-        $this->check();
     }
     
-    function updateCompletionDate()
+    function setCompleted()
     {
-        $sth = $this->db->prepare('UPDATE assessment_runs SET date_completed = ? WHERE baseurl = ?');
+        $sth = $this->db->prepare("UPDATE assessment_runs SET date_completed = ?, status='complete' WHERE baseurl = ?");
 
         $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
+    }
+
+    function setRunning()
+    {
+        $sth = $this->db->prepare("UPDATE assessment_runs SET status='running' WHERE baseurl = ?");
+
+        $sth->execute(array($this->baseUri));
     }
     
     function removeEntries()
@@ -165,20 +172,6 @@ class UNL_WDN_Assessment
         
         return $result;
     }
-    
-    function isQueued()
-    {
-        if (!$runInformation = $this->getRunInformation()) {
-            
-            return false;
-        }
-        //var_dump($runInformation['date_completed']);
-        if ($runInformation['date_completed'] != null) {
-            return false;
-        }
-        
-        return true;
-    }
 
     function getTitle()
     {
@@ -222,6 +215,7 @@ class UNL_WDN_Assessment
     function getJSONstats($url = null)
     {
         $versions = self::getCurrentTemplateVersions();
+        $run = $this->getRunInformation();
         
         $stats = array();
         $stats['site_title'] = $this->getTitle();
@@ -234,8 +228,12 @@ class UNL_WDN_Assessment
         $stats['total_current_template_dep'] = 0;
         $stats['current_template_html'] = $versions['html'];
         $stats['current_template_dep'] = $versions['dep'];
-        $stats['queued'] = $this->isQueued();
         $stats['error_scanning'] = false;
+        $stats['status'] = false;
+        
+        if ($run) {
+            $stats['status'] = $run['status'];
+        }
         
         $stats['pages'] = array();
         

@@ -118,8 +118,10 @@ if (!isset($template_path)) {
                         <input type="submit" id="submit" name="submit" value="Check" disabled />
                     </fieldset>
                 </form>
-                <div id="scan-wrapper">
-
+                <div id="scan-container">
+                    <div id="scan-wrapper">
+    
+                    </div>
                 </div>
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
