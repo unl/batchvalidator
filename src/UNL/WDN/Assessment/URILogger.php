@@ -14,6 +14,12 @@ class UNL_WDN_Assessment_URILogger extends Spider_LoggerAbstract
     
     public function log($uri, $depth, DOMXPath $xpath)
     {
+        //Hack to prevent long runs
+        if ((time() - $this->assessment->starttime) >= UNL_WDN_Assessment::$timeout) {
+            $this->assessment->setRunStatus('timeout');
+            exit();
+        }
+        
         $this->addUri($uri, $this->isScannable($xpath));
     }
     
@@ -26,6 +32,5 @@ class UNL_WDN_Assessment_URILogger extends Spider_LoggerAbstract
     {
         $sth = $this->assessment->db->prepare('INSERT INTO assessment (baseurl, url, scannable, timestamp) VALUES (?, ?, ?, ?);');
         $sth->execute(array($this->assessment->baseUri, $uri, (int)$scannable, date('Y-m-d H:i:s')));
-
     }
 }

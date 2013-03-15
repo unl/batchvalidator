@@ -3,6 +3,8 @@ class UNL_WDN_Assessment
 {
     public $baseUri;
     
+    public $starttime = 0;
+    
     public static $htmlValidatorURI = "http://validator.unl.edu/check";
     
     public static $spiderUserAgent = "UNL_WDN_Validator/2";
@@ -71,6 +73,7 @@ class UNL_WDN_Assessment
     function check($url = null)
     {
         $limit = 1;
+        $this->starttime = time();
         
         //Scan the entire site.
         $updateCompletionDate = false;
