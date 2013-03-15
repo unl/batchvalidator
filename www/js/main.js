@@ -55,6 +55,7 @@ WDN.loadJQuery(function() {
                         wrapper.trigger('begin'); // Start the queue
                     } else if (data.status == 'complete'
                                || data.status == 'timeout'
+                               || data.status == 'restricted'
                                || data.status == 'error') { //Queue has completed...
                         validator.loadSummaryTemplate(data);
                         
@@ -237,6 +238,14 @@ Handlebars.registerHelper('status_timeout', function (status, options) {
 
 Handlebars.registerHelper('status_error', function (status, options) {
     if (status == 'error') {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
+Handlebars.registerHelper('status_restricted', function (status, options) {
+    if (status == 'restricted') {
         return options.fn(this);
     }
 

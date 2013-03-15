@@ -137,6 +137,16 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                         {{/status_error}}
+                        {{#status_restricted status}}
+                        <div class="wdn_notice negate">
+                            <div class="message">
+                                <h4>The site that you entered can not be checked</h4>
+                                <p>
+                                    The site is in our restricted sites list.  We do not allow checking anything in that list...
+                                </p>
+                            </div>
+                        </div>
+                        {{/status_restricted}}
                         {{#status_timeout status}}
                             <div class="wdn_notice negate">
                                 <div class="message">

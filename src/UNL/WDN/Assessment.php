@@ -16,6 +16,8 @@ class UNL_WDN_Assessment
     public static $maxConcurrentAutoJobs = 3;
     
     public static $timeout = 2700; //45min (2700 seconds)
+    
+    public static $restrictedURIs = array('http://events.unl.edu/');
 
     public $db;
     
@@ -63,6 +65,17 @@ class UNL_WDN_Assessment
         
         $spider->spider($this->baseUri);
     }
+    
+    function isRestricted()
+    {
+        foreach (self::$restrictedURIs as $uri) {
+            if (stripos($this->baseUri, $uri) === 0) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     /**
      * Will recheck all metrics for every page
@@ -72,6 +85,12 @@ class UNL_WDN_Assessment
      */
     function check($url = null)
     {
+        //Don't check restricted URIs
+        if ($this->isRestricted()) {
+            $this->setRunStatus('restricted');
+            exit();
+        }
+        
         $limit = 1;
         $this->starttime = time();
         
