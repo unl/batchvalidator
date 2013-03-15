@@ -1,6 +1,6 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
-        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", 
+        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", pollTimeout = false,
         loader = $('.loader').not('.mini'), submit_button = $("#submit"), mini_loader = $('.loader.mini'), uri, form_disabled = true, 
         url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
@@ -33,6 +33,9 @@ WDN.loadJQuery(function() {
                 if (history.pushState) {
                     history.pushState(null, null, '?uri=' + encodeURIComponent(uri));
                 }
+                
+                //clear any remaining timeouts
+                clearTimeout(validator.pollTimeout);
             },
 
             validateURL : function (test) {
@@ -68,7 +71,7 @@ WDN.loadJQuery(function() {
                         validator.loadSummaryTemplate(data); //Show the current results under the spinner
 
                         //Poll the server again in 5 seconds until complete.
-                        setTimeout(function()
+                        validator.pollTimeout = setTimeout(function()
                         {
                             validator.querySiteInformation()
                         }, 5000);
