@@ -53,7 +53,9 @@ WDN.loadJQuery(function() {
                 $.getJSON(api_url+encodeURIComponent(uri), function (data) {
                     if (!data.status) { //Site has never been checked
                         wrapper.trigger('begin'); // Start the queue
-                    } else if (data.status == 'complete') { //Queue has completed...
+                    } else if (data.status == 'complete'
+                               || data.status == 'timeout'
+                               || data.status == 'error') { //Queue has completed...
                         validator.loadSummaryTemplate(data);
                         
                         $('.loader').remove(); //Remove the spinner
@@ -223,4 +225,20 @@ Handlebars.registerHelper('error_boolean', function (marker) {
     if (!marker) {
         return 'error';
     }
+});
+
+Handlebars.registerHelper('status_timeout', function (status, options) {
+    if (status == 'timeout') {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
+Handlebars.registerHelper('status_error', function (status, options) {
+    if (status == 'error') {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
 });

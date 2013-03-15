@@ -126,6 +126,28 @@ if (!isset($template_path)) {
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
                         <h2 class="report-title title">Summary of Check</h2>
+                        {{#status_error status}}
+                            <div class="wdn_notice negate">
+                                <div class="message">
+                                    <h4>There was an error while scanning your site</h4>
+                                    <p>
+                                        We encountered an error that we could not recover from while scanning your site, thus
+                                        the results will be incomplete.
+                                    </p>
+                                </div>
+                            </div>
+                        {{/status_error}}
+                        {{#status_timeout status}}
+                            <div class="wdn_notice negate">
+                                <div class="message">
+                                    <h4>We could not finish scanning your site</h4>
+                                    <p>
+                                        It was taking too long to scan everything on your site, so we had to stop early.
+                                        The results of what we did find are below.
+                                    </p>
+                                </div>
+                            </div>
+                        {{/status_timeout}}
                         {{#if error_scanning}}
                             <div class="wdn_notice negate">
                                 <div class="message">
