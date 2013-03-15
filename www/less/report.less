@@ -44,7 +44,7 @@
             color: darken(@colorComplementary, 30%);
             text-shadow: -1px 0 1px lighten(@colorComplementary, 50%);
             margin-bottom: 1em;
-            min-height: 9em;
+            min-height: 9.2em;
             &.error {
                 background-color: rgba(183, 3, 2, 0.4);
                 border: 3px solid rgba(183, 3, 2, 0.2);
@@ -52,9 +52,14 @@
                 text-shadow: -1px 0 1px lighten(@colorPrimary, 50%);
             }
         }
+
+        .dashboard-metric {
+            font-size: .90em;
+        }
         
         .version {
-            font-size: .5em;
+            font-size: .75em;
+            display: block;
         }
     }
 
