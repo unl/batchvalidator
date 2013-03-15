@@ -2,6 +2,9 @@
 class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
 {
     protected static $checked = array();
+    
+    //this can be altered, but should remain low, as to not overload servers.
+    protected static $maxActiveRequests = 10;
 
     /**
      *
@@ -29,7 +32,8 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         $activeRequests = 0;
         while (count($links) + $activeRequests > 0) {
         
-            while ($activeRequests < 50 && count($links) > 0) {
+            //Limit the number of concurrent checks
+            while ($activeRequests <= self::$maxActiveRequests && count($links) > 0) {
                 $link = Spider::absolutePath(array_shift($links), $uri);
                 
                 //Don't check it if it is not a valid url
@@ -56,7 +60,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                 $activeRequests++;
             }
         
-            usleep(500);
+            sleep(1);
             curl_multi_exec($mcurl, $running);
                 
             while ($msg = curl_multi_info_read($mcurl, $msgCount)) {
