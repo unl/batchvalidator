@@ -12,6 +12,8 @@ class UNL_WDN_Assessment
     public static $maxConcurrentUserJobs = 5;
 
     public static $maxConcurrentAutoJobs = 3;
+    
+    public static $timeout = 2700; //45min (2700 seconds)
 
     public $db;
     
@@ -122,9 +124,14 @@ class UNL_WDN_Assessment
     
     function setRunning()
     {
-        $sth = $this->db->prepare("UPDATE assessment_runs SET status='running' WHERE baseurl = ?");
+        $this->setRunStatus('running');
+    }
 
-        $sth->execute(array($this->baseUri));
+    function setRunStatus($status)
+    {
+        $sth = $this->db->prepare("UPDATE assessment_runs SET status=? WHERE baseurl = ?");
+
+        $sth->execute(array($status, $this->baseUri));
     }
     
     function removeEntries()
