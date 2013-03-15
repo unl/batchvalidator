@@ -2,8 +2,6 @@
 class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
 {
     protected static $checked = array();
-    
-    public static $time_limit = 60;
 
     /**
      *
@@ -26,8 +24,6 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     
     function checkLinks($uri, $links, $depth)
     {
-        set_time_limit(self::$time_limit);
-        
         $mcurl = curl_multi_init();
         $curl = array();
         $activeRequests = 0;
