@@ -42,7 +42,7 @@ WDN.loadJQuery(function() {
                 return false;
             },
 
-            querySiteInformation : function (isFirstQuery) {
+            querySiteInformation : function () {
                 $.getJSON(api_url+encodeURIComponent(uri), function (data) {
                     if (!data.status) { //Site has never been checked
                         wrapper.trigger('begin'); // Start the queue
@@ -57,8 +57,8 @@ WDN.loadJQuery(function() {
                             scrollTop: wrapper.offset().top - 15
                         }, 500);
                     } else { // This site is being scanned
-                        if (isFirstQuery == null) {
-                            loader.clone().appendTo($('#scan-container')).show(); //Show the spinner
+                        if ($('#scan-container > .loader').length == 0) {
+                            loader.clone().appendTo($('#scan-container')).show(); //Show the spinner if it isn't already visible.
                         }
 
                         validator.loadSummaryTemplate(data); //Show the current results under the spinner
@@ -66,7 +66,7 @@ WDN.loadJQuery(function() {
                         //Poll the server again in 5 seconds until complete.
                         setTimeout(function()
                         {
-                            validator.querySiteInformation(false)
+                            validator.querySiteInformation()
                         }, 5000);
                     }
                 });
@@ -107,7 +107,9 @@ WDN.loadJQuery(function() {
 
             beginQueue : function () {
                 validator.subsequentQuery(); // POST the queue to get it going
-
+                
+                loader.clone().appendTo($('#scan-container')).show(); //Show the spinner
+                
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
