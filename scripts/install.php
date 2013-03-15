@@ -54,3 +54,6 @@ exec_sql($db, $sql, 'adding scannable to the assessment table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/queue.sql");
 exec_sql($db, $sql, 'adding queue columns');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/queue_statuses.sql");
+exec_sql($db, $sql, 'adding queue statuses');
