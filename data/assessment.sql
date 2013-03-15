@@ -13,4 +13,6 @@ CREATE TABLE IF NOT EXISTS `assessment` (
   KEY `template_dep` (`template_dep`),
   KEY `template_html` (`template_html`),
   KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1; 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE INDEX `assessment_baseurl` ON `assessment`(`baseurl`);

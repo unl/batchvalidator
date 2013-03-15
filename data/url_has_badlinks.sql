@@ -9,3 +9,5 @@ CREATE TABLE IF NOT EXISTS `url_has_badlinks` (
   KEY `url` (`url`),
   KEY `code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1; 
+
+CREATE INDEX `url_has_badlinks_baseurl` ON `url_has_badlinks`(`baseurl`);
