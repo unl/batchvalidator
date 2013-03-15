@@ -29,6 +29,10 @@ WDN.loadJQuery(function() {
                 submit_button.val('Checking...');
                 uri = $("#uri").val();
                 validator.querySiteInformation();
+
+                if (history.pushState) {
+                    history.pushState(null, null, '?uri=' + encodeURIComponent(uri));
+                }
             },
 
             validateURL : function (test) {
