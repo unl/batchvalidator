@@ -3,7 +3,7 @@
 require dirname(dirname(__FILE__)) . '/www/config.inc.php';
 
 if (!isset($argv[1]) || !isset($argv[2])) {
-    echo "useage: php sendTestEmail.php http://reportsite.unl.edu/ youremail@unl.edu" . PHP_EOL;
+    echo "usage: php sendTestEmail.php http://reportsite.unl.edu/ youremail@unl.edu" . PHP_EOL;
     exit();
 }
 
