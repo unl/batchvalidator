@@ -49,35 +49,35 @@
                 width:100% !important;
                 height:auto !important;
             }
-            span.emailbodytext], a.emailbodytext {
-            font-size:16px !important;
-            line-height:21px !important;
-        }
-        span.h1 {
-            font-size: 28px !important;
-        }
-        span.h2 {
-            font-size: 22px !important;
-        }
-        span.h3 {
-            font-size: 18px !important;
-        }
-        a.emailmobbutton {
-            display:block !important;
-            font-size: 16px !important;
-            font-weight: bold !important;
-            padding: 6px 4px 8px 4px !important;
-            line-height: 18px !important;
-            background: #eeeeee !important;
-            border-radius:5px !important;
-            margin: 10px auto;
-            width: 70%;
-            text-align:center;
-            color: #111111;
-            text-decoration: none;
-            text-shadow: #ffffff 1px 0 0 ;
-        }
+            span.emailbodytext, a.emailbodytext {
+                font-size:16px !important;
+                line-height:21px !important;
             }
+            span.h1 {
+                font-size: 28px !important;
+            }
+            span.h2 {
+                font-size: 22px !important;
+            }
+            span.h3 {
+                font-size: 18px !important;
+            }
+            a.emailmobbutton {
+                display:block !important;
+                font-size: 16px !important;
+                font-weight: bold !important;
+                padding: 6px 4px 8px 4px !important;
+                line-height: 18px !important;
+                background: #eeeeee !important;
+                border-radius:5px !important;
+                margin: 10px auto;
+                width: 70%;
+                text-align:center;
+                color: #111111;
+                text-decoration: none;
+                text-shadow: #ffffff 1px 0 0 ;
+            }
+        }
     </style>
 </head>
 <body style="padding:0; margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust: 100%; background-color:#ffffff;" bgcolor="#ffffff">
