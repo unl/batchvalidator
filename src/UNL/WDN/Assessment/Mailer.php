@@ -78,7 +78,7 @@ class UNL_WDN_Assessment_Mailer
         $mailer->html_body    = $body;
         $mailer->to_address   = $to;
         $mailer->from_address = "noreply@unl.edu";
-        $mailer->subject      = "Site Check Complete - " . $this->assessment->baseUri;
+        $mailer->subject      = "Automatic Site Check Results - " . $this->assessment->baseUri;
 
         $mailer->send();
     }

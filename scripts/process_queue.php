@@ -2,7 +2,7 @@
 require_once dirname(dirname(__FILE__)) . '/www/config.inc.php';
 
 if (!isset($argv[1]) || !in_array($argv[1], array('user', 'auto'))) {
-    echo "useage: php process_queue.php user|auto" . PHP_EOL;
+    echo "usage: php process_queue.php user|auto" . PHP_EOL;
     exit();
 }
 
