@@ -373,7 +373,7 @@ if (!isset($template_path)) {
                     <form method="get" action="#" class="wdn-form single" id="email-contact-form">
                         <fieldset class="main-focus">
                             <legend class="intro-action">Email me when the hamsters finish</legend>
-                            <label for="uri" class="element">
+                            <label for="email" class="element">
                                 Enter your email address
                             </label>
                             <input type="email" name="email" value="" required="required" id="email" />
