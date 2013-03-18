@@ -284,9 +284,14 @@ class UNL_WDN_Assessment
         $stats['current_template_dep'] = $versions['dep'];
         $stats['error_scanning'] = false;
         $stats['status'] = false;
+        $stats['contact_email'] = false;
         
         if ($run) {
             $stats['status'] = $run['status'];
+        }
+        
+        if ($run && isset($run['contact_email'])) {
+            $stats['contact_email'] = true;
         }
         
         $stats['pages'] = array();
