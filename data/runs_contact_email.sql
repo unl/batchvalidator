@@ -1,0 +1,1 @@
+ALTER TABLE `assessment_runs` ADD `contact_email` VARCHAR(255) NULL;
