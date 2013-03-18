@@ -18,12 +18,23 @@ if (isset($_GET['page'])) {
 $assessment = new UNL_WDN_Assessment($_GET['uri'], $db);
 
 //Allow rechecking
-if (isset($_POST['action']) && $_POST['action'] == 'check') {
-    if ($page == null) {
-        //Add a run
-        $assessment->addRun();
-    } else {
-        $assessment->check($page);
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'check':
+            if ($page == null) {
+                //Add a run
+                $assessment->addRun();
+            } else {
+                $assessment->check($page);
+            }
+            break;
+        case 'contact_email':
+            if (!isset($_POST['email'])) {
+                throw new Exception('No Email Provided', 400);
+            }
+            
+            $assessment->setRunContactEmail($_POST['email']);
+            break;
     }
 }
 
