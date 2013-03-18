@@ -142,6 +142,10 @@ class UNL_WDN_Assessment
         if (isset($info['run_type']) && $info['run_type'] == 'auto') {
             $this->emailStats();
         }
+        
+        if (isset($info['contact_email'])) {
+            $this->emailStats($info['contact_email']);
+        }
     }
     
     function setRunning()

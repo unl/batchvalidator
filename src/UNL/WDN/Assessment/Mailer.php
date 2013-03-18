@@ -65,14 +65,10 @@ class UNL_WDN_Assessment_Mailer
 
         $mailer = new UNL_WDN_Emailer_Main();
 
-        $stats = $this->assessment->getStats();
+        $to = $email;
         
-        if (!$to = $this->getContactAddress()) {
+        if (empty($email) && !$to = $this->getContactAddress()) {
             return false;
-        }
-        
-        if (isset($email)) {
-            $to = $email;
         }
         
         $mailer->html_body    = $body;
