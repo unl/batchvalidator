@@ -19,11 +19,7 @@ class UNL_WDN_Emailer_Main
         $savvy = new Savvy();
         $savvy->setTemplatePath(dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/data');
         
-        $html = '<html>'.
-                '<body style="word-wrap: break-word;" bgcolor="#ffffff">'.
-                    $savvy->render($this, 'WDNEmailTemplate.tpl.php').
-                '</body>'.
-                '</html>';
+        $html = $savvy->render($this, 'WDNEmailTemplate.tpl.php');
         return $html;
     }
     
