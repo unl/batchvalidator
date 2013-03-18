@@ -155,6 +155,13 @@ class UNL_WDN_Assessment
 
         $sth->execute(array($status, $this->baseUri));
     }
+
+    function setRunContactEmail($email)
+    {
+        $sth = $this->db->prepare("UPDATE assessment_runs SET contact_email=? WHERE baseurl = ? and run_type='user' LIMIT 1");
+
+        $sth->execute(array($email, $this->baseUri));
+    }
     
     function removeEntries()
     {
