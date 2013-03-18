@@ -366,9 +366,28 @@ if (!isset($template_path)) {
                         <p>Awesome, no errors on the page!</p>
                     {{/if}}
                 </script>
+                <script id="temp-html-contact" type="text/x-handlebars-template">
+                    {{#if contact_email}}
+                    <p>An email will be sent when the hamsters finish.</p>
+                    {{else}}
+                    <form method="get" action="#" class="wdn-form single" id="email-contact-form">
+                        <fieldset class="main-focus">
+                            <legend class="intro-action">Email me when the hamsters finish</legend>
+                            <label for="uri" class="element">
+                                Enter your email address
+                            </label>
+                            <input type="email" name="email" value="" required="required" id="email" />
+                            <input type="submit" id="email-submit" name="submit" value="Submit"/>
+                        </fieldset>
+                    </form>
+                    {{/if}}
+                </script>
                 <div class="loader hidden">
                     <p class="action-title">Site check! 1. 2. 3.</p>
                     <p>We're checking; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
+                    <div class='contact-container'>
+                        
+                    </div>
                     <div class="wdn-spinner">
                         <div class="circle"></div>
                         <div class="circle1"></div>
