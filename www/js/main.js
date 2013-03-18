@@ -99,8 +99,8 @@ WDN.loadJQuery(function() {
                     render = contactTemplate(data);
 
                 //Don't update the html if the form already exists.
-                if ($(".contact-container:visible form").length == 0 && $(render).closest("form").length == 1) {
-                    $(".contact-container:visible").html(render);
+                if ($("#contact-container:visible form").length == 0 && $(render).closest("form").length == 1) {
+                    $("#contact-container:visible").html(render);
 
                     //register a watcher
                     $("#email-contact-form").one('submit', function (event) {
@@ -109,7 +109,7 @@ WDN.loadJQuery(function() {
                     });
                 } else if ($(render).closest("form").length == 0) {
                     //But DO update the form otherwise.
-                    $(".contact-container:visible").html(render);
+                    $("#contact-container:visible").html(render);
                 }
             },
             

@@ -371,10 +371,10 @@ if (!isset($template_path)) {
                     <p>An email will be sent when the hamsters finish.</p>
                     {{else}}
                     <form method="get" action="#" class="wdn-form single" id="email-contact-form">
-                        <fieldset class="main-focus">
+                        <fieldset>
                             <legend class="intro-action">Email me when the hamsters finish</legend>
                             <label for="email" class="element">
-                                Enter your email address
+                                Enter your email address if you want to recieve an email when our hamsters finish.
                             </label>
                             <input type="email" name="email" value="" required="required" id="email" />
                             <input type="submit" id="email-submit" name="submit" value="Submit"/>
@@ -385,7 +385,7 @@ if (!isset($template_path)) {
                 <div class="loader hidden">
                     <p class="action-title">Site check! 1. 2. 3.</p>
                     <p>We're checking; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
-                    <div class='contact-container'>
+                    <div id='contact-container'>
                         
                     </div>
                     <div class="wdn-spinner">

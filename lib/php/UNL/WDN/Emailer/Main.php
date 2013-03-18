@@ -18,11 +18,11 @@ class UNL_WDN_Emailer_Main
 
         $savvy = new Savvy();
         $savvy->setTemplatePath(dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/data');
-
+        
         $html = $savvy->render($this, 'WDNEmailTemplate.tpl.php');
         return $html;
     }
-
+    
     public function toTxt()
     {
         return $this->text_body;
@@ -32,8 +32,8 @@ class UNL_WDN_Emailer_Main
     {
 
         $hdrs = array(
-            'From'    => $this->from_address,
-            'Subject' => $this->subject);
+          'From'    => $this->from_address,
+          'Subject' => $this->subject);
 
         require_once 'Mail/mime.php';
         $mime = new Mail_mime("\n");
