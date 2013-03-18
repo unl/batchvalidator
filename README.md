@@ -13,9 +13,12 @@ Example - Force install (replace tables)
 php scripts/install.php -f
 ```
 
-You will also need to set up a cron to process the queue.  Edit your cron with something like:
+You will also need to set up some cron jobs to handle queues.
 ```
-* * * * * /usr/bin/php /path/to/application/scripts/process_user_queue.php
+* * * * * php /path/to/application/scripts/process_user.php user  #handle user queue
+*/5 22-6 * * * php /path/to/application/scripts/process_user.php auto  #handle auto queue
+@daily php /path/to/application/scripts/auto_queue.php  #add to auto queue
+@daily php /path/to/application/scripts/getLatestTemplateVersions.php  #update template versions
 ```
 
 ## A Note on LESS/CSS
