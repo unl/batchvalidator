@@ -11,9 +11,9 @@ class UNL_WDN_Assessment
     
     public static $spiderPageLimit = 500;
     
-    public static $maxConcurrentUserJobs = 2;
+    public static $maxConcurrentUserJobs = 1;
 
-    public static $maxConcurrentAutoJobs = 2;
+    public static $maxConcurrentAutoJobs = 1;
     
     public static $timeout = 2700; //45min (2700 seconds)
     
