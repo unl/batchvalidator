@@ -331,7 +331,7 @@ class UNL_WDN_Assessment
         }
 
         if ($run && isset($run['page_limit'])) {
-            $stats['page_limit'] = $run['page_limit'];
+            $stats['page_limit'] = (int)$run['page_limit'];
         }
         
         $stats['pages'] = array();
