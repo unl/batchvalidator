@@ -108,7 +108,7 @@ WDN.loadJQuery(function() {
                 });
             },
             
-            loadWaitingTemplate : function (data) {console.log(waiting);
+            loadWaitingTemplate : function (data) {
                 if (waiting) { // If we're already waiting, no need to do anything
                     return;
                 }
