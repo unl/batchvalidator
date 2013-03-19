@@ -80,27 +80,34 @@ class UNL_WDN_Assessment
     /**
      * Will recheck all metrics for every page
      * (save results to DB)
-     * 
+     *
      * @param null $url - if not null, will run a scan on only the given url.
+     * @param int  $pageLimit
      */
-    function check($url = null)
+    function check($url = null, $pageLimit = 0)
     {
         //Don't check restricted URIs
         if ($this->isRestricted()) {
             $this->setRunStatus('restricted');
             exit();
         }
-        
-        $limit = 1;
+
         $this->starttime = time();
         
         //Scan the entire site.
         $updateCompletionDate = false;
         if ($url == null) {
             $url = $this->baseUri;
-            $limit = self::$spiderPageLimit;
             $updateCompletionDate = true;
+
+            //Don't allow for negative page limits
+            if ($pageLimit <= 0) {
+                $pageLimit = self::$spiderPageLimit;
+            }
+            
             $this->setRunning();
+        } else {
+            $pageLimit = 1;
         }
         
         $uriLogger = new UNL_WDN_Assessment_URILogger($this);
@@ -111,7 +118,7 @@ class UNL_WDN_Assessment
 
         $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker), 
                                     array(),
-                                    array('page_limit'=>$limit));
+                                    array('page_limit'=>$pageLimit));
 
         $spider->spider($url);
 
