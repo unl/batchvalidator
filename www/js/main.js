@@ -1,7 +1,7 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
         var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", pollTimeout = false,
-        loader = $('.loader').not('.mini'), submit_button = $("#submit"), mini_loader = $('.loader.mini'), uri, form_disabled = true, 
+        loader = $('.loader').not('.mini'), submit_button = $("#submit"), uri, form_disabled = true, 
         url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
@@ -178,7 +178,7 @@ WDN.loadJQuery(function() {
                 var error_wrapper = tr_next.find('.html-errors-wrapper');
                 error_wrapper.empty();
                 // show a spinner
-                mini_loader.clone().appendTo(error_wrapper).show();
+                loader.clone().appendTo(error_wrapper).show();
                 validator.getHTMLValidationResults(tr.attr('data-page'), error_wrapper);
             },
 

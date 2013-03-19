@@ -391,15 +391,6 @@ if (!isset($template_path)) {
                     {{/if}}
                 </script>
                 <div class="loader hidden">
-                    <div id='contact-container'>
-                        
-                    </div>
-                    <div class="wdn-spinner">
-                        <div class="circle"></div>
-                        <div class="circle1"></div>
-                    </div>
-                </div>
-                <div class="loader mini hidden">
                     <div class="wdn-spinner">
                         <div class="circle"></div>
                         <div class="circle1"></div>
