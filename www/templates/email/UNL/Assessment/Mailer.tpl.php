@@ -75,7 +75,6 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     <?php
     $i = 0;
     foreach ($stats['total_bad_links'] as $code=>$total) {
-        //echo $i . " " . $code . " - " . $total . PHP_EOL;
         if ($i = 0) {
             echo "<tr>";
         }
