@@ -326,7 +326,7 @@ Handlebars.registerHelper('status_restricted', function (status, options) {
 });
 
 Handlebars.registerHelper('position', function (position) {
-    if (position == 1) {
+    if (position == 0) {
         return '<p class="indicator-bar its-on">Your Queue Placement: <span class="spot">Now Checking</span></p>';
     }
 
