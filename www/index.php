@@ -250,9 +250,9 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                             <div class="wdn-col" id="404-links">
-                                <div class="visual-island {{error_total total_bad_links.code_404}}">
+                                <div class="visual-island {{error_total total_bad_links.[404]}}">
                                     <span class="dashboard-value">
-                                        {{total_bad_links.code_404}}
+                                        {{total_bad_links.[404]}}
                                     </span>
                                     <span class="dashboard-metric">
                                         404 links
@@ -260,9 +260,9 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                             <div class="wdn-col" id="301-links">
-                                <div class="visual-island {{error_total total_bad_links.code_301}}">
+                                <div class="visual-island {{error_total total_bad_links.[301]}}">
                                     <span class="dashboard-value">
-                                        {{total_bad_links.code_301}}
+                                        {{total_bad_links.[301]}}
                                     </span>
                                     <span class="dashboard-metric">
                                         301 links
