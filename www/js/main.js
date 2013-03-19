@@ -1,7 +1,14 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
-        var validatorForm = $("#validator-form"), wrapper = $("#scan-wrapper"), api_url = "api.php?uri=", pollTimeout = false,
-        loader = $('.loader').not('.mini'), submit_button = $("#submit"), uri, form_disabled = true, 
+        var validatorForm = $("#validator-form"), 
+        wrapper = $("#scan-wrapper"), 
+        api_url = "api.php?uri=", 
+        pollTimeout = false,
+        loader = $('.loader'), 
+        submit_button = $("#submit"), 
+        uri, 
+        form_disabled = true,
+        waiting = false;
         url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
 
         return {
@@ -23,6 +30,16 @@ WDN.loadJQuery(function() {
                     }
                 });
                 wrapper.on('begin', validator.beginQueue);
+                wrapper.on('waiting', function (event, data) {
+                    validator.loadWaitingTemplate(data);
+                });
+                wrapper.on('waiting', function (event, data) {
+                    validator.loadSummaryTemplate(data);
+                });
+                wrapper.on('complete', function (event, data) {
+                    validator.loadSummaryTemplate(data);
+                });
+                wrapper.on('complete', validator.clearWaiting);
             },
 
             submitValidationRequest : function () {
@@ -34,6 +51,8 @@ WDN.loadJQuery(function() {
                     history.pushState(null, null, '?uri=' + encodeURIComponent(uri));
                 }
                 
+                // This is a new query, so reset the waiting var
+                waiting = false;
                 //clear any remaining timeouts
                 clearTimeout(validator.pollTimeout);
             },
@@ -45,7 +64,8 @@ WDN.loadJQuery(function() {
                 data.push({name: 'action', value: 'contact_email'});
                 
                 $.post(api_url + encodeURIComponent(uri), data , function(data) {
-                    validator.loadWaitingTemplate(data);
+                    waiting = false;
+                    wrapper.trigger('waiting', data);
                 }, "json");
             },
 
@@ -68,9 +88,8 @@ WDN.loadJQuery(function() {
                                || data.status == 'timeout'
                                || data.status == 'restricted'
                                || data.status == 'error') { //Queue has completed...
+                        wrapper.trigger('complete', data);
                         validator.loadSummaryTemplate(data);
-                        
-                        $('.loader:visible').remove(); //Remove the spinner
                         
                         wrapper.fadeIn(700); //Display the wrapper
                         
@@ -78,8 +97,7 @@ WDN.loadJQuery(function() {
                             scrollTop: wrapper.offset().top - 15
                         }, 500);
                     } else { // This site is being scanned
-                        validator.loadWaitingTemplate(data);
-                        validator.loadSummaryTemplate(data); //Show the current results under the spinner
+                        wrapper.trigger('waiting', data);
 
                         //Poll the server again in 5 seconds until complete.
                         validator.pollTimeout = setTimeout(function()
@@ -91,11 +109,29 @@ WDN.loadJQuery(function() {
             },
             
             loadWaitingTemplate : function (data) {
+                if (waiting) { // If we're already waiting, no need to do anything
+                    return;
+                }
+
                 var contactTemplate = Handlebars.compile($("#temp-waiting").html()),
                     render = contactTemplate(data);
 
                 $('#scan-waiting').html(render);
-                loader.clone().appendTo($('#validator-spinner')).show()
+                loader.clone().appendTo($('#spinner-wrapper')).show();
+
+                // set the waiting var
+                waiting = true;
+
+                // register a watcher
+                $("#email-contact-form").one('submit', function (event) {
+                    event.preventDefault();
+                    validator.submitContactEmailRequest();
+                });
+            },
+
+            clearWaiting : function () {
+                waiting = false;
+                $('#scan-waiting').remove();
             },
             
             loadSummaryTemplate : function (data) {
@@ -123,17 +159,17 @@ WDN.loadJQuery(function() {
                 });
             },
 
-            subsequentQuery : function () {
+            rerunCheck : function () { // Do another full site check
                 $.post(api_url + encodeURIComponent(uri), 'action=check', function(data) {
                     validator.querySiteInformation();
                     
                     validator.loadSummaryTemplate(data);
-                    validator.loadWaitingTemplate(data);
                 }, "json");
             },
 
             beginQueue : function () {
-                validator.subsequentQuery(); // POST the queue to get it going
+                validator.rerunCheck(); // POST the queue to get it going
+                wrapper.trigger('waiting', data);
                 
                 loader.clone().appendTo($('#scan-container')).show(); //Show the spinner
                 

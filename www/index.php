@@ -373,7 +373,12 @@ if (!isset($template_path)) {
                     <p class="action-title">Site check! 1. 2. 3.</p>
                     <section class="wdn-grid-set">
                         <div class="bp2-wdn-col-one-fifth" id="validator-spinner">
+                            <div id="spinner-wrapper">
 
+                            </div>
+                            <div id="queueplacement-wrapper">
+
+                            </div>
                         </div>
                         <div class="bp2-wdn-col-two-fifths">
                             <p>
