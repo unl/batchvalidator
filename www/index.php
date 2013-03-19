@@ -390,14 +390,16 @@ if (!isset($template_path)) {
                         <p>Awesome, no errors on the page!</p>
                     {{/if}}
                 </script>
+                <script id="temp-queueplacement" type="text/x-handlebars-template">
+                    {{{position queue_position}}}
+                </script>
                 <script id="temp-waiting" type="text/x-handlebars-template">
                     <p class="action-title">Site check! 1. 2. 3.</p>
+                    <div id="queueplacement-wrapper">
+                    </div>
                     <section class="wdn-grid-set">
                         <div class="bp2-wdn-col-one-fifth" id="validator-spinner">
                             <div id="spinner-wrapper">
-
-                            </div>
-                            <div id="queueplacement-wrapper">
 
                             </div>
                         </div>

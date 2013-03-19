@@ -110,6 +110,7 @@ WDN.loadJQuery(function() {
             
             loadWaitingTemplate : function (data) {
                 if (waiting) { // If we're already waiting, no need to do anything
+                    validator.showQueuePlacement(data);
                     return;
                 }
 
@@ -119,6 +120,7 @@ WDN.loadJQuery(function() {
                 $('#scan-waiting').html(render).show();
 
                 loader.clone().appendTo($('#spinner-wrapper')).show();
+                validator.showQueuePlacement(data, true);
 
                 // set the waiting var
                 waiting = true;
@@ -135,6 +137,16 @@ WDN.loadJQuery(function() {
                 $('#scan-waiting').hide();
             },
             
+            showQueuePlacement : function (data, initialDisplay) {
+                var queueTemplate = Handlebars.compile($("#temp-queueplacement").html()),
+                render = queueTemplate(data);
+                if (initialDisplay) {
+                    $('#queueplacement-wrapper').hide().html(render).slideDown();
+                } else {
+                    $('#queueplacement-wrapper').html(render);
+                }
+            },
+
             loadSummaryTemplate : function (data) {
                 var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
                 render = summaryTemplate(data);
@@ -311,4 +323,12 @@ Handlebars.registerHelper('status_restricted', function (status, options) {
     }
 
     return options.inverse(this);
+});
+
+Handlebars.registerHelper('position', function (position) {
+    if (position == 1) {
+        return '<p class="indicator-bar its-on">Your Queue Placement: <span class="spot">Now Checking</span></p>';
+    }
+
+    return '<p class="indicator-bar">Your Queue Placement: <span class="spot">' + position + '</span></p>';
 });
