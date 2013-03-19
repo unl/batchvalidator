@@ -273,6 +273,25 @@ class UNL_WDN_Assessment
         $mailer->mail($email);
     }
     
+    function getQueuePosition($runInformation = array())
+    {
+        if (empty($runInformation)) {
+            $runInformation = $this->getRunInformation();
+        }
+        
+        if (!$runInformation) {
+            return "unknown";
+        }
+        
+        $sql = "SELECT count(*) as queue_position FROM assessment_runs WHERE status = 'queued' AND run_type = ? AND date_started <= ?";
+
+        $sth = $this->db->prepare($sql);
+        $sth->execute(array($runInformation['run_type'], $runInformation['date_started']));
+        $result = $sth->fetch();
+        
+        return $result['queue_position'];
+    }
+    
     function getStats($url = null)
     {
         $versions = self::getCurrentTemplateVersions();
@@ -292,6 +311,7 @@ class UNL_WDN_Assessment
         $stats['status'] = false;
         $stats['contact_email'] = false;
         $stats['page_limit'] = 0;
+        $stats['queue_position'] = 'unknown';
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
@@ -300,6 +320,10 @@ class UNL_WDN_Assessment
         
         if ($run) {
             $stats['status'] = $run['status'];
+        }
+
+        if ($run) {
+            $stats['queue_position'] = $this->getQueuePosition($run);
         }
         
         if ($run && isset($run['contact_email'])) {
