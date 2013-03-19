@@ -15,8 +15,8 @@ php scripts/install.php -f
 
 You will also need to set up some cron jobs to handle queues.
 ```
-* * * * * php /path/to/application/scripts/process_user.php user  #handle user queue
-*/5 22-6 * * * php /path/to/application/scripts/process_user.php auto  #handle auto queue
+* * * * * php /path/to/application/scripts/process_queue.php user  #handle user queue
+*/5 22-6 * * * php /path/to/application/scripts/process_queue.php auto  #handle auto queue
 @daily php /path/to/application/scripts/auto_queue.php  #add to auto queue
 @daily php /path/to/application/scripts/getLatestTemplateVersions.php  #update template versions
 ```
