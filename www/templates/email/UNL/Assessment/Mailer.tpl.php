@@ -72,24 +72,42 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
         </td>
     </tr>
 
-    <tr>
+    <?php
+    $i = 0;
+    foreach ($stats['total_bad_links'] as $code=>$total) {
+        //echo $i . " " . $code . " - " . $total . PHP_EOL;
+        if ($i = 0) {
+            echo "<tr>";
+        }
+        ?>
         <td class="emailcolsplit" align="left" valign="top" width="310">
-            <?php 
-                if ($stats['total_bad_links'] > 0) {
-                    echo '<span class="emailbodytext" style="'.$error_class.'">';
-                } else {
-                    echo '<span class="emailbodytext" style="'.$ok_class.'">';
-                }
+            <?php
+            if ($total > 0) {
+                echo '<span class="emailbodytext" style="'.$error_class.'">';
+            } else {
+                echo '<span class="emailbodytext" style="'.$ok_class.'">';
+            }
             ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $stats['total_bad_links'] ?></span> Bad Links
+            <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $total ?></span> <?php echo $code ?> Links
             </span>
         </td>
         <td class="emailcolgutter" width="20">
             &nbsp;
         </td>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-        </td>
-    </tr>
+        <?php
+        $i++;
+        
+        if ($i == 2) {
+            echo "</tr>";
+            $i = 0;
+        }
+    }
+    
+    if ($i == 1) {
+        echo "</tr>";
+    }
+    ?>
+
 </table>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
