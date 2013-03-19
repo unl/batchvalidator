@@ -45,7 +45,7 @@ WDN.loadJQuery(function() {
                 data.push({name: 'action', value: 'contact_email'});
                 
                 $.post(api_url + encodeURIComponent(uri), data , function(data) {
-                    validator.loadContactTemplate(data);
+                    validator.loadWaitingTemplate(data);
                 }, "json");
             },
 
@@ -78,11 +78,7 @@ WDN.loadJQuery(function() {
                             scrollTop: wrapper.offset().top - 15
                         }, 500);
                     } else { // This site is being scanned
-                        if ($('#scan-container > .loader').length == 0) {
-                            loader.clone().appendTo($('#scan-container')).show(); //Show the spinner if it isn't already visible.
-                            validator.loadContactTemplate(data);
-                        }
-
+                        validator.loadWaitingTemplate(data);
                         validator.loadSummaryTemplate(data); //Show the current results under the spinner
 
                         //Poll the server again in 5 seconds until complete.
@@ -94,23 +90,12 @@ WDN.loadJQuery(function() {
                 });
             },
             
-            loadContactTemplate : function (data) {
-                var contactTemplate = Handlebars.compile($("#temp-html-contact").html()),
+            loadWaitingTemplate : function (data) {
+                var contactTemplate = Handlebars.compile($("#temp-waiting").html()),
                     render = contactTemplate(data);
 
-                //Don't update the html if the form already exists.
-                if ($("#contact-container:visible form").length == 0 && $(render).closest("form").length == 1) {
-                    $("#contact-container:visible").html(render);
-
-                    //register a watcher
-                    $("#email-contact-form").one('submit', function (event) {
-                        event.preventDefault();
-                        validator.submitContactEmailRequest();
-                    });
-                } else if ($(render).closest("form").length == 0) {
-                    //But DO update the form otherwise.
-                    $("#contact-container:visible").html(render);
-                }
+                $('#scan-waiting').html(render);
+                loader.clone().appendTo($('#validator-spinner')).show()
             },
             
             loadSummaryTemplate : function (data) {
@@ -143,7 +128,7 @@ WDN.loadJQuery(function() {
                     validator.querySiteInformation();
                     
                     validator.loadSummaryTemplate(data);
-                    validator.loadContactTemplate(data);
+                    validator.loadWaitingTemplate(data);
                 }, "json");
             },
 
