@@ -129,6 +129,17 @@ if (!isset($template_path)) {
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
                         <h2 class="report-title title">Summary of Check</h2>
+                        {{#homepage_only page_limit}}
+                        <div class="wdn_notice alert">
+                            <div class="message">
+                                <h4>We only scanned your homepage</h4>
+                                <p>
+                                    In the future we will be scanning your entire site automatically.  Please feel free
+                                    to run a scan on the entire site now.
+                                </p>
+                            </div>
+                        </div>
+                        {{/homepage_only}}
                         {{#status_error status}}
                             <div class="wdn_notice negate">
                                 <div class="message">

@@ -261,6 +261,14 @@ Handlebars.registerHelper('links', function (links) {
     return total;
 });
 
+Handlebars.registerHelper('homepage_only', function (page_limit, options) {
+    if (page_limit == 1) {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
 // Error Reporting
 Handlebars.registerHelper('error_percentage', function (current, total) {
     var percentage = Math.round(current/total * 100);
