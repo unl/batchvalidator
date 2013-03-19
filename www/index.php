@@ -390,7 +390,12 @@ if (!isset($template_path)) {
                             {{/each}}
                         </ul>
                     {{else}}
-                        <p>Awesome, no errors on the page!</p>
+                        {{#if validity}}
+                            <p>Awesome, no errors on the page!</p>
+                        {{else}}
+                            <p>Officially, we can not confirm or deny the presence of errors on this page. <br />
+                            However, it's likely you have too many errors which caused the checker to get confused.</p>
+                        {{/if}}
                     {{/if}}
                 </script>
                 <script id="temp-queueplacement" type="text/x-handlebars-template">
