@@ -108,7 +108,7 @@ WDN.loadJQuery(function() {
                 });
             },
             
-            loadWaitingTemplate : function (data) {
+            loadWaitingTemplate : function (data) {console.log(waiting);
                 if (waiting) { // If we're already waiting, no need to do anything
                     return;
                 }
@@ -116,7 +116,8 @@ WDN.loadJQuery(function() {
                 var contactTemplate = Handlebars.compile($("#temp-waiting").html()),
                     render = contactTemplate(data);
 
-                $('#scan-waiting').html(render);
+                $('#scan-waiting').html(render).show();
+
                 loader.clone().appendTo($('#spinner-wrapper')).show();
 
                 // set the waiting var
@@ -131,7 +132,7 @@ WDN.loadJQuery(function() {
 
             clearWaiting : function () {
                 waiting = false;
-                $('#scan-waiting').remove();
+                $('#scan-waiting').hide();
             },
             
             loadSummaryTemplate : function (data) {
@@ -169,9 +170,8 @@ WDN.loadJQuery(function() {
 
             beginQueue : function () {
                 validator.rerunCheck(); // POST the queue to get it going
-                wrapper.trigger('waiting', data);
                 
-                loader.clone().appendTo($('#scan-container')).show(); //Show the spinner
+                wrapper.trigger('waiting', {});
                 
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
