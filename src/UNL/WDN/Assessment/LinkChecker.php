@@ -5,6 +5,8 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     
     //this can be altered, but should remain low, as to not overload servers.
     protected static $maxActiveRequests = 10;
+    
+    public static $loggedStatusCodes = array(404, 301);
 
     /**
      *
@@ -107,7 +109,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
 
     function addLink($link, $code, $uri)
     {
-        if (!in_array($code, array(404, 301))) {
+        if (!in_array($code, self::$loggedStatusCodes)) {
             return;
         }
         
