@@ -142,4 +142,28 @@
             border: none;
         }
     }
+    .indicator-bar {
+        background-color: #666;
+        border-radius: 3px;
+        padding: 0.5em 1em;
+        color: #fff;
+        text-shadow: 0 1px 1px darken(#666, 20%);
+        font-size: 85%;
+        line-height: 1;
+
+        .spot {
+            border-radius: 2px;
+            background-color: darken(#666, 10%);
+            padding: 0.25em;
+        }
+
+        &.its-on {
+            background-color: #95B8CC;
+            text-shadow: 0 1px 1px darken(#95B8CC, 20%);
+
+            .spot {
+                background-color: darken(#95B8CC, 10%);
+            }
+        }
+    }
 }
