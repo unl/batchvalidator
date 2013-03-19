@@ -1,0 +1,1 @@
+ALTER TABLE `assessment_runs` ADD `page_limit` INT NOT NULL DEFAULT 0;

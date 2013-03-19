@@ -58,5 +58,5 @@ exec_sql($db, $sql, 'adding queue columns');
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/queue_statuses.sql");
 exec_sql($db, $sql, 'adding queue statuses');
 
-$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/runs_contact_email.sql");
-exec_sql($db, $sql, 'adding email_contact to the assessment_runs table');
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/runs_page_limit.sql");
+exec_sql($db, $sql, 'adding page_limit to the assessment_runs table');
