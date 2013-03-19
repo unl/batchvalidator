@@ -23,9 +23,18 @@
         margin: 0;
         padding: 0;
         list-style: none;
+
+        li {
+            border-bottom: 1px solid #fff;
+            margin-bottom: 0.25em;
+            padding-bottom: 0.25em;
+        }
     }
 
     .report-list {
+
+        max-height: 20em;
+        overflow: scroll;
         
         code {
             background-color: rgba(255, 255, 255, 0.3);
