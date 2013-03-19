@@ -367,24 +367,30 @@ if (!isset($template_path)) {
                     {{/if}}
                 </script>
                 <script id="temp-html-contact" type="text/x-handlebars-template">
+                    <p class="action-title">Site check! 1. 2. 3.</p>
+                    <p>
+                        Your site is in the queue to be checked; our hamsters are running as quickly as possible.
+                        Your results will appear when the check is complete.
+                    </p>
+                    <p>
+                        You can also enter your email below to recieve an email when the check is complete.
+                    </p>
                     {{#if contact_email}}
-                    <p>An email will be sent when the hamsters finish.</p>
+                    <p>Great, an email will be sent when the check is complete. Closing this page will <em>not</em> affect the check.</p>
                     {{else}}
                     <form method="get" action="#" class="wdn-form single" id="email-contact-form">
                         <fieldset>
-                            <legend class="intro-action">Email me when the hamsters finish</legend>
-                            <label for="email" class="element">
-                                Enter your email address if you want to recieve an email when our hamsters finish.
+                            <legend class="intro-action">Receive an email when the check is complete</legend>
+                            <label for="email" class="element text-hidden">
+                                Your email address
                             </label>
-                            <input type="email" name="email" value="" required="required" id="email" />
+                            <input type="email" name="email" value="" placeholder="you@unl.edu" required="required" id="email" />
                             <input type="submit" id="email-submit" name="submit" value="Submit"/>
                         </fieldset>
                     </form>
                     {{/if}}
                 </script>
                 <div class="loader hidden">
-                    <p class="action-title">Site check! 1. 2. 3.</p>
-                    <p>We're checking; our hamsters are running as quickly as possible. <br /> We'll present the results as soon as they're ready.</p>
                     <div id='contact-container'>
                         
                     </div>
