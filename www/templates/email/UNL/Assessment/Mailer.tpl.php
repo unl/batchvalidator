@@ -5,7 +5,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 ?>
 
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    Yo! Just to let you know, a recent check was automatically run on your site:
+    Hello! Just to let you know, a recent check was automatically run on your site:
 </span>
 <span class="emailbodytext" style="margin-bottom: 30px; margin-left:30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo $stats['site_title']; ?></a>
