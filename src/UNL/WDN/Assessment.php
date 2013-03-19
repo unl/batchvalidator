@@ -315,7 +315,7 @@ class UNL_WDN_Assessment
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
-            $stats['total_bad_links'][$code] = 0;
+            $stats['total_bad_links']['code_' . $code] = 0;
         }
         
         if ($run) {
@@ -366,7 +366,7 @@ class UNL_WDN_Assessment
             foreach ($this->getBadLinksForPage($page['url']) as $link) {
                 $badLinks[$link['code']][] = $link['link_url'];
 
-                $stats['total_bad_links'][$link['code']]++;
+                $stats['total_bad_links']['code_' . $link['code']]++;
             }
 
             $stats['total_pages']++;

@@ -208,7 +208,7 @@ if (!isset($template_path)) {
                                 <!--<a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>-->
                             </div>
                         </div>
-                        <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
+                        <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-sixths dashboard-metrics">
                             <div class="wdn-col" id="valid-pages">
                                 <div class="visual-island">
                                     <span class="dashboard-value">
@@ -249,13 +249,23 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="valid-links">
-                                <div class="visual-island {{error_total total_bad_links}}">
+                            <div class="wdn-col" id="404-links">
+                                <div class="visual-island {{error_total total_bad_links.code_404}}">
                                     <span class="dashboard-value">
-                                        {{total_bad_links}}
+                                        {{total_bad_links.code_404}}
                                     </span>
                                     <span class="dashboard-metric">
-                                        Bad links
+                                        404 links
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="301-links">
+                                <div class="visual-island {{error_total total_bad_links.code_301}}">
+                                    <span class="dashboard-value">
+                                        {{total_bad_links.code_301}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        301 links
                                     </span>
                                 </div>
                             </div>
@@ -360,7 +370,7 @@ if (!isset($template_path)) {
                                 </ul>
                                 </div>
                                 <div class="bp2-wdn-col-one-fourth">
-                                    <a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>
+                                    <a href="#" class="wdn-button large-button triad recheck-button">Recheck Entire Site</a>
                                 </div>
                             </div>
                         </div>
