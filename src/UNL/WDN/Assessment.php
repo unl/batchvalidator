@@ -292,6 +292,7 @@ class UNL_WDN_Assessment
         $stats['error_scanning'] = false;
         $stats['status'] = false;
         $stats['contact_email'] = false;
+        $stats['page_limit'] = 0;
         
         if ($run) {
             $stats['status'] = $run['status'];
@@ -299,6 +300,10 @@ class UNL_WDN_Assessment
         
         if ($run && isset($run['contact_email'])) {
             $stats['contact_email'] = true;
+        }
+
+        if ($run && isset($run['page_limit'])) {
+            $stats['page_limit'] = $run['page_limit'];
         }
         
         $stats['pages'] = array();
