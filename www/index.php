@@ -271,7 +271,8 @@ if (!isset($template_path)) {
                                     <th id="validator-html">HTML Errors</th>
                                     <th id="validator-current-html">Current HTML</th>
                                     <th id="validator-current-dependents">Current Dependents</th>
-                                    <th id="validator-404">Bad Links</th>
+                                    <th id="validator-301">301 Links</th>
+                                    <th id="validator-404">404 Links</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -290,17 +291,26 @@ if (!isset($template_path)) {
                                         {{{format_boolean template_dep.current}}} {{{format_version template_dep.version}}}
                                     </td>
                                     {{#if bad_links}}
-                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links" class="error">
+                                        <td headers="page-{{@index}} validator-301" data-header="301 Links" class="error">
                                             {{links bad_links}}
                                         </td>
                                     {{else}}
-                                        <td headers="page-{{@index}} validator-404" data-header="Bad Links">
+                                        <td headers="page-{{@index}} validator-301" data-header="301 Links">
+                                            0
+                                        </td>
+                                    {{/if}}
+                                    {{#if bad_links}}
+                                        <td headers="page-{{@index}} validator-404" data-header="404 Links" class="error">
+                                            {{links bad_links}}
+                                        </td>
+                                    {{else}}
+                                        <td headers="page-{{@index}} validator-404" data-header="404 Links">
                                             0
                                         </td>
                                     {{/if}}
                                 </tr>
                                 <tr class="expansion-row justified">
-                                    <td colspan=5 data-header="Page-level Details" class="expansion-container">
+                                    <td colspan=6 data-header="Page-level Details" class="expansion-container">
                                         <div class="wdn-grid-set">
                                             <div class="bp2-wdn-col-three-fifths page-validator-results">
                                                 <div class="shader">
@@ -312,7 +322,7 @@ if (!isset($template_path)) {
                                             </div>
                                             <div class="bp2-wdn-col-two-fifths page-bad-links">
                                                 <div class="shader even">
-                                                    <span class="title">Bad Links</span>
+                                                    <span class="title">Link Issues</span>
                                                 {{#if bad_links}}
                                                     {{#if bad_links.[301]}}
                                                     <div class="wdn-grid-set row">
