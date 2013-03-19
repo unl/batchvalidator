@@ -28,7 +28,7 @@ if ($result['total'] >= $max) {
 }
 
 //Select a site to queue.
-$sth = $db->prepare("SELECT baseurl FROM assessment_runs WHERE status = 'queued' AND run_type = ? ORDER BY date_started ASC LIMIT 1");
+$sth = $db->prepare("SELECT baseurl, page_limit FROM assessment_runs WHERE status = 'queued' AND run_type = ? ORDER BY date_started ASC LIMIT 1");
 $sth->execute(array($run_type));
 $result = $sth->fetch();
 
@@ -50,4 +50,4 @@ function shutdown($assessment) {
 register_shutdown_function('shutdown', $assessment);
 
 //run the check
-$assessment->check();
+$assessment->check(null, $result['page_limit']);
