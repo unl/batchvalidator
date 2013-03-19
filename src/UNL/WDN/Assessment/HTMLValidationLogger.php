@@ -3,6 +3,8 @@ class UNL_WDN_Assessment_HTMLValidationLogger extends Spider_LoggerAbstract
 {
     public static $validator_uri = "http://validator.unl.edu/check";
     
+    public static $last_check_time = false;
+    
     /**
      * 
      * @var UNL_WDN_Assessment
@@ -27,6 +29,11 @@ class UNL_WDN_Assessment_HTMLValidationLogger extends Spider_LoggerAbstract
     
     function getNumberOfErrors($uri)
     {
+        //Wait until at least 1 second has passed between checks.
+        if (self::$last_check_time && (time() - self::$last_check_time) < 1) {
+            sleep(1);
+        }
+        
         //Set to head to speed things up.
         stream_context_set_default(
             array(
@@ -39,6 +46,9 @@ class UNL_WDN_Assessment_HTMLValidationLogger extends Spider_LoggerAbstract
         if (!$headers = @get_headers(self::$validator_uri . "?uri=" . urlencode($uri), 1)) {
             return false;
         }
+
+        //Update the last check time.
+        self::$last_check_time = time();
         
         if (!isset($headers['X-W3C-Validator-Errors'])) {
             return false;
