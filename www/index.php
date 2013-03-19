@@ -122,6 +122,9 @@ if (!isset($template_path)) {
                     <div id="scan-wrapper">
     
                     </div>
+                    <div id="scan-waiting" class="overlay">
+
+                    </div>
                 </div>
                 <script id="temp-validator-results" type="text/x-handlebars-template">
                     <section id="validator-results-setup" class="report-view">
@@ -366,40 +369,47 @@ if (!isset($template_path)) {
                         <p>Awesome, no errors on the page!</p>
                     {{/if}}
                 </script>
-                <script id="temp-html-contact" type="text/x-handlebars-template">
+                <script id="temp-waiting" type="text/x-handlebars-template">
                     <p class="action-title">Site check! 1. 2. 3.</p>
-                    <p>
-                        Your site is in the queue to be checked; our hamsters are running as quickly as possible.
-                        Your results will appear when the check is complete.
-                    </p>
-                    <p>
-                        You can also enter your email below to recieve an email when the check is complete.
-                    </p>
-                    {{#if contact_email}}
-                    <p>Great, an email will be sent when the check is complete. Closing this page will <em>not</em> affect the check.</p>
-                    {{else}}
-                    <form method="get" action="#" class="wdn-form single" id="email-contact-form">
-                        <fieldset>
-                            <legend class="intro-action">Receive an email when the check is complete</legend>
-                            <label for="email" class="element text-hidden">
-                                Your email address
-                            </label>
-                            <input type="email" name="email" value="" placeholder="you@unl.edu" required="required" id="email" />
-                            <input type="submit" id="email-submit" name="submit" value="Submit"/>
-                        </fieldset>
-                    </form>
-                    {{/if}}
+                    <section class="wdn-grid-set">
+                        <div class="bp2-wdn-col-one-fifth" id="validator-spinner">
+                            <div id="spinner-wrapper">
+
+                            </div>
+                            <div id="queueplacement-wrapper">
+
+                            </div>
+                        </div>
+                        <div class="bp2-wdn-col-two-fifths">
+                            <p>
+                                Your site is in the queue to be checked; our hamsters are running as quickly as possible.<br />
+                                Your results will appear when the check is complete.
+                            </p>
+                        </div>
+                        <div class="bp2-wdn-col-two-fifths">
+                            <div class="visual-island font-reset">
+                                {{#if contact_email}}
+                                <p>An email will be sent when the check is complete. Closing this page will <em>not</em> affect the check.</p>
+                                {{else}}
+                                <p class="instructions">
+                                    Feel free to do other work. Enter your email and we'll send you a summary when the check is complete.
+                                </p>
+                                <form method="get" action="#" class="wdn-form" id="email-contact-form">
+                                    <fieldset>
+                                        <legend class="intro-action">Receive an email when the check is complete</legend>
+                                        <label for="email" class="element text-hidden">
+                                            Your email address
+                                        </label>
+                                        <input type="email" name="email" value="" placeholder="you@unl.edu" required="required" id="email" />
+                                        <input type="submit" id="email-submit" name="submit" value="Submit"/>
+                                    </fieldset>
+                                </form>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </section>
                 </script>
                 <div class="loader hidden">
-                    <div id='contact-container'>
-                        
-                    </div>
-                    <div class="wdn-spinner">
-                        <div class="circle"></div>
-                        <div class="circle1"></div>
-                    </div>
-                </div>
-                <div class="loader mini hidden">
                     <div class="wdn-spinner">
                         <div class="circle"></div>
                         <div class="circle1"></div>
