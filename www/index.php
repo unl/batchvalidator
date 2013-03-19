@@ -202,23 +202,16 @@ if (!isset($template_path)) {
                                 <li>
                                     <span class="item-label">Date of last check:</span> <time class="last-scan-date">{{last_scan}}</time>
                                 </li>
+                                <li>
+                                    <span class="item-label">Total pages checked:</span> {{total_pages}}
+                                </li>
                             </ul>
                             </div>
                             <div class="bp2-wdn-col-one-fourth">
                                 <!--<a href="#" class="wdn-button large-button triad recheck-button">Recheck Site</a>-->
                             </div>
                         </div>
-                        <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-sixths dashboard-metrics">
-                            <div class="wdn-col" id="valid-pages">
-                                <div class="visual-island">
-                                    <span class="dashboard-value">
-                                        {{total_pages}}
-                                    </span>
-                                    <span class="dashboard-metric">
-                                        pages
-                                    </span>
-                                </div>
-                            </div>
+                        <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
                             <div class="wdn-col" id="valid-errors">
                                 <div class="visual-island {{error_total total_html_errors}}">
                                     <span class="dashboard-value">
