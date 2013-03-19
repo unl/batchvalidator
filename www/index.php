@@ -243,9 +243,9 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                             <div class="wdn-col" id="404-links">
-                                <div class="visual-island {{error_total total_bad_links.code_404}}">
+                                <div class="visual-island {{error_total total_bad_links.[404]}}">
                                     <span class="dashboard-value">
-                                        {{total_bad_links.code_404}}
+                                        {{total_bad_links.[404]}}
                                     </span>
                                     <span class="dashboard-metric">
                                         404 links
@@ -253,9 +253,9 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                             <div class="wdn-col" id="301-links">
-                                <div class="visual-island {{error_total total_bad_links.code_301}}">
+                                <div class="visual-island {{error_total total_bad_links.[301]}}">
                                     <span class="dashboard-value">
-                                        {{total_bad_links.code_301}}
+                                        {{total_bad_links.[301]}}
                                     </span>
                                     <span class="dashboard-metric">
                                         301 links
@@ -290,24 +290,12 @@ if (!isset($template_path)) {
                                     <td headers="page-{{@index}} validator-current-dependents" data-header="Current Dependents" class="{{error_boolean template_dep.current}}">
                                         {{{format_boolean template_dep.current}}} {{{format_version template_dep.version}}}
                                     </td>
-                                    {{#if bad_links}}
-                                        <td headers="page-{{@index}} validator-301" data-header="301 Links" class="error">
-                                            {{links bad_links}}
-                                        </td>
-                                    {{else}}
-                                        <td headers="page-{{@index}} validator-301" data-header="301 Links">
-                                            0
-                                        </td>
-                                    {{/if}}
-                                    {{#if bad_links}}
-                                        <td headers="page-{{@index}} validator-404" data-header="404 Links" class="error">
-                                            {{links bad_links}}
-                                        </td>
-                                    {{else}}
-                                        <td headers="page-{{@index}} validator-404" data-header="404 Links">
-                                            0
-                                        </td>
-                                    {{/if}}
+                                    <td headers="page-{{@index}} validator-301" data-header="301 Links" class="{{{error_total bad_links.[301].total}}}">
+                                        {{bad_links.[301].total}}
+                                    </td>
+                                    <td headers="page-{{@index}} validator-404" data-header="404 Links" class="{{{error_total bad_links.[404].total}}}">
+                                        {{bad_links.[404].total}}
+                                    </td>
                                 </tr>
                                 <tr class="expansion-row justified">
                                     <td colspan=6 data-header="Page-level Details" class="expansion-container">
@@ -324,28 +312,28 @@ if (!isset($template_path)) {
                                                 <div class="shader even">
                                                     <span class="title">Link Issues</span>
                                                 {{#if bad_links}}
-                                                    {{#if bad_links.[301]}}
+                                                    {{#if bad_links.[301].total}}
                                                     <div class="wdn-grid-set row">
                                                         <div class="wdn-col-one-fourth">
                                                             <span class="dashboard-value secondary">301</span>
                                                         </div>
                                                         <div class="wdn-col-three-fourths">
                                                             <ul class="item-list">
-                                                                {{#each bad_links.[301]}}
+                                                                {{#each bad_links.[301].links}}
                                                                 <li>{{this}}</li>
                                                                 {{/each}}
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     {{/if}}
-                                                    {{#if bad_links.[404]}}
+                                                    {{#if bad_links.[404].total}}
                                                     <div class="wdn-grid-set row">
                                                         <div class="wdn-col-one-fourth">
                                                             <span class="dashboard-value secondary">404</span>
                                                         </div>
                                                         <div class="wdn-col-three-fourths">
                                                             <ul class="item-list">
-                                                                {{#each bad_links.[404]}}
+                                                                {{#each bad_links.[404].links}}
                                                                 <li>{{this}}</li>
                                                                 {{/each}}
                                                             </ul>
