@@ -284,7 +284,6 @@ class UNL_WDN_Assessment
         $stats['total_pages'] = 0;
         $stats['total_html_errors'] = 0;
         $stats['total_accessibility_errors'] = 0;
-        $stats['total_bad_links'] = 0;
         $stats['total_current_template_html'] = 0;
         $stats['total_current_template_dep'] = 0;
         $stats['current_template_html'] = $versions['html'];
@@ -293,6 +292,11 @@ class UNL_WDN_Assessment
         $stats['status'] = false;
         $stats['contact_email'] = false;
         $stats['page_limit'] = 0;
+
+        $stats['total_bad_links'] = array();
+        foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
+            $stats['total_bad_links'][$code] = 0;
+        }
         
         if ($run) {
             $stats['status'] = $run['status'];
@@ -338,7 +342,7 @@ class UNL_WDN_Assessment
             foreach ($this->getBadLinksForPage($page['url']) as $link) {
                 $badLinks[$link['code']][] = $link['link_url'];
 
-                $stats['total_bad_links']++;
+                $stats['total_bad_links'][$link['code']]++;
             }
 
             $stats['total_pages']++;
