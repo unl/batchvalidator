@@ -7,5 +7,5 @@ $sth->execute();
 
 while ($result = $sth->fetch()) {
     $assessment = new UNL_WDN_Assessment($result['baseurl'], $db);
-    $assessment->addRun();
+    $assessment->addRun('auto');
 }
