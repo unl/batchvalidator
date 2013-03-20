@@ -152,14 +152,14 @@ class UNL_WDN_Assessment
         return $http_status;
     }
     
-    function addRun($runType = 'user')
+    function addRun($runType = 'user', $pageLimit = 0)
     {
         //Remove old entries
         $this->removeEntries();
         
         //Add a new run
-        $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, run_type, date_started) VALUES (?, ?, ?);');
-        $sth->execute(array($this->baseUri, $runType, date('Y-m-d H:i:s')));
+        $sth = $this->db->prepare('INSERT INTO assessment_runs (baseurl, run_type, date_started, page_limit) VALUES (?, ?, ?, ?);');
+        $sth->execute(array($this->baseUri, $runType, date('Y-m-d H:i:s'), $pageLimit));
     }
     
     function setCompleted()
