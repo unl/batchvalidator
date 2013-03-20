@@ -21,7 +21,6 @@ $max = UNL_WDN_Assessment::$maxConcurrentUserJobs;
 
 if ($run_type == 'auto') {
     $max = UNL_WDN_Assessment::$maxConcurrentAutoJobs;
-    UNL_WDN_Assessment_LinkChecker::$maxActiveRequests = 5;
 }
 
 if ($result['total'] >= $max) {
