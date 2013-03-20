@@ -4,7 +4,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     protected static $checked = array();
     
     //this can be altered, but should remain low, as to not overload servers.
-    protected static $maxActiveRequests = 10;
+    public static $maxActiveRequests = 10;
     
     public static $loggedStatusCodes = array(404, 301);
 
