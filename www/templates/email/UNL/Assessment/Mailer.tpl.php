@@ -47,13 +47,13 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     <tr>
         <td class="emailcolsplit" align="left" valign="top" width="310">
             <?php 
-                if (round(($stats['total_current_template_html']/$stats['total_pages'])*100) < 100) {
+                if ($stats['total_pages'] && round(($stats['total_current_template_html']/$stats['total_pages'])*100) < 100) {
                     echo '<span class="emailbodytext" style="'.$error_class.'">';
                 } else {
                     echo '<span class="emailbodytext" style="'.$ok_class.'">';
                 }
             ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo round(($stats['total_current_template_html']/$stats['total_pages'])*100) ?>%</span> in current HTML (v<?php echo  $stats['current_template_html'] ?>)
+                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_html']/$stats['total_pages'])*100):'' ?>%</span> in current HTML (v<?php echo  $stats['current_template_html'] ?>)
             </span>
         </td>
         <td class="emailcolgutter" width="20">
@@ -61,13 +61,13 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
         </td>
         <td class="emailcolsplit" align="left" valign="top" width="310">
             <?php 
-                if (round(($stats['total_current_template_dep']/$stats['total_pages'])*100) < 100) {
+                if ($stats['total_pages'] && round(($stats['total_current_template_dep']/$stats['total_pages'])*100) < 100) {
                     echo '<span class="emailbodytext" style="'.$error_class.'">';
                 } else {
                     echo '<span class="emailbodytext" style="'.$ok_class.'">';
                 }
             ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo round(($stats['total_current_template_dep']/$stats['total_pages']*100)) ?>%</span> in current Dependents (v<?php echo  $stats['current_template_dep'] ?>)
+                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_dep']/$stats['total_pages']*100)):'' ?>%</span> in current Dependents (v<?php echo  $stats['current_template_dep'] ?>)
             </span>
         </td>
     </tr>
@@ -75,7 +75,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     <?php
     $i = 0;
     foreach ($stats['total_bad_links'] as $code=>$total) {
-        if ($i = 0) {
+        if ($i == 0) {
             echo "<tr>";
         }
         ?>
@@ -92,7 +92,8 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
         </td>
         <?php
         $i++;
-        if ($1 == 1) {
+        
+        if ($i == 1) {
             echo '<td class="emailcolgutter" width="20">&nbsp;</td>';
         }
         
