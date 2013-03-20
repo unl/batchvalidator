@@ -90,11 +90,11 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
             <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $total ?></span> <?php echo $code ?> Links
             </span>
         </td>
-        <td class="emailcolgutter" width="20">
-            &nbsp;
-        </td>
         <?php
         $i++;
+        if ($1 == 1) {
+            echo '<td class="emailcolgutter" width="20">&nbsp;</td>';
+        }
         
         if ($i == 2) {
             echo "</tr>";
