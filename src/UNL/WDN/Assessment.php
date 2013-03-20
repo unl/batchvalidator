@@ -83,15 +83,22 @@ class UNL_WDN_Assessment
      *
      * @param null $url - if not null, will run a scan on only the given url.
      * @param int  $pageLimit
+     * @return bool
      */
     function check($url = null, $pageLimit = 0)
     {
         //Don't check restricted URIs
         if ($this->isRestricted()) {
             $this->setRunStatus('restricted');
-            exit();
+            return false;
         }
 
+        //Don't check if the home page is not found.
+        if ($this->getHTTPStatusCode($this->baseUri) == '404') {
+            $this->setCompleted();
+            return false;
+        }
+        
         $this->starttime = time();
         
         //Scan the entire site.
@@ -126,6 +133,23 @@ class UNL_WDN_Assessment
         if ($updateCompletionDate) {
             $this->setCompleted();
         }
+        
+        return true;
+    }
+    
+    function getHTTPStatusCode($url)
+    {
+        $curl = curl_init($url);
+        
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        
+        curl_exec($curl);
+        
+        $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        
+        curl_close($curl);
+        
+        return $http_status;
     }
     
     function addRun($runType = 'user')
