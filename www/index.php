@@ -242,16 +242,6 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="404-links">
-                                <div class="visual-island {{error_total total_bad_links.[404]}}">
-                                    <span class="dashboard-value">
-                                        {{total_bad_links.[404]}}
-                                    </span>
-                                    <span class="dashboard-metric">
-                                        404 links
-                                    </span>
-                                </div>
-                            </div>
                             <div class="wdn-col" id="301-links">
                                 <div class="visual-island {{error_total total_bad_links.[301]}}">
                                     <span class="dashboard-value">
@@ -259,6 +249,16 @@ if (!isset($template_path)) {
                                     </span>
                                     <span class="dashboard-metric">
                                         301 links
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="wdn-col" id="404-links">
+                                <div class="visual-island {{error_total total_bad_links.[404]}}">
+                                    <span class="dashboard-value">
+                                        {{total_bad_links.[404]}}
+                                    </span>
+                                    <span class="dashboard-metric">
+                                        404 links
                                     </span>
                                 </div>
                             </div>
