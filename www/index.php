@@ -371,6 +371,14 @@ if (!isset($template_path)) {
                             </div>
                         </div>
                     </section>
+                    <section class="wdn-band">
+                        <div class="wdn-grid-set">
+                            <div class="wdn-col centered bp2-wdn-col-three-fifths">
+                                <h2 class="footer-title">Help us help you.</h2>
+                                <p>If you notice a problem or have an idea to make this service even better, please <a href="https://github.com/unl/batchvalidator/issues">add it to the project issue list</a>.
+                            </div>
+                        </div>
+                    </section>
                 </script>
                 <script id="temp-html-validator-results" type="text/x-handlebars-template">
                     {{#if errors}}
