@@ -15,7 +15,12 @@
         &.triad {
             .linear-gradient(@highlightTriad, @shadowTriad);
             border-color: @shadowTriad;
-            text-shadow: 1px 0 1px lighten(@shadowTriad, 25%);;
+            text-shadow: 1px 0 1px lighten(@shadowTriad, 25%);
+
+            &:hover {
+                .linear-gradient(lighten(@highlightTriad, 5%), @shadowTriad);
+                color: darken(@baseText, 10%);
+            }
         }
     }
 
