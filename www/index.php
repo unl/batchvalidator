@@ -212,8 +212,9 @@ if (!isset($template_path)) {
                             </div>
                         </div>
                         <div class="wdn-grid-set-halves bp1-wdn-grid-set-thirds bp2-wdn-grid-set-fifths dashboard-metrics">
-                            <div class="wdn-col" id="valid-errors">
+                            <div class="wdn-col callout-metric" id="valid-errors">
                                 <div class="visual-island {{error_total total_html_errors}}">
+                                    <span class="more-info" data-helper-text="HTML errors are due to invalid HTML markup in your pages.">?</span>
                                     <span class="dashboard-value">
                                         {{total_html_errors}}
                                     </span>
@@ -222,8 +223,9 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="valid-html">
+                            <div class="wdn-col callout-metric" id="valid-html">
                                 <div class="visual-island {{error_percentage total_current_template_html total_pages}}">
+                                    <span class="more-info" data-helper-text="The latest version of the markup">?</span>
                                     <span class="dashboard-value">
                                         {{percentage total_current_template_html total_pages}}
                                     </span>
@@ -232,8 +234,9 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="valid-dependents">
+                            <div class="wdn-col callout-metric" id="valid-dependents">
                                 <div class="visual-island {{error_percentage total_current_template_dep total_pages}}">
+                                    <span class="more-info" data-helper-text="The latest version of the supporting framework resources (CSS, JS and other includes)">?</span>
                                     <span class="dashboard-value">
                                         {{percentage total_current_template_dep total_pages}}
                                     </span>
@@ -242,8 +245,9 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="301-links">
+                            <div class="wdn-col callout-metric" id="301-links">
                                 <div class="visual-island {{error_total total_bad_links.[301]}}">
+                                    <span class="more-info" data-helper-text="These link to a resource that has been redirected. Update your link to the redirected resource.">?</span>
                                     <span class="dashboard-value">
                                         {{total_bad_links.[301]}}
                                     </span>
@@ -252,8 +256,9 @@ if (!isset($template_path)) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="wdn-col" id="404-links">
+                            <div class="wdn-col callout-metric" id="404-links">
                                 <div class="visual-island {{error_total total_bad_links.[404]}}">
+                                    <span class="more-info" data-helper-text="These link to a resource that no longer exist.">?</span>
                                     <span class="dashboard-value">
                                         {{total_bad_links.[404]}}
                                     </span>
