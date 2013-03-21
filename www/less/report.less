@@ -73,6 +73,41 @@
         }
     }
 
+    .callout-metric {
+        position: relative;
+    }
+
+    .more-info {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        color: rgba(255, 255, 255, 0.8);
+        float: right;
+        text-shadow: -1px 0 1px rgba(0, 0, 0, 0.3);
+        width: 1.5em;
+        height: 1.5em;
+        line-height: 1;
+        text-align: center;
+        cursor: help;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding-top: 0.3em;
+
+        &:hover:before {
+            content: attr(data-helper-text);
+            background: rgba(0, 0, 0, 0.7);
+            width: 125px;
+            display: block;
+            position: absolute;
+            bottom: 100%;
+            right: -100%;
+            z-index: 11;
+            padding: 0.5em;
+            border-radius: 3px;
+            text-transform: none;
+        }
+    }
+
     .error {
         background-color: rgba(183, 3, 2, 0.4);
         border: 3px solid rgba(183, 3, 2, 0.2);

@@ -17,6 +17,8 @@
 #maincontent .dashboard-metrics .dashboard-metric{font-size:.90em;}
 #maincontent .dashboard-metrics .version{font-size:.75em;display:block;}
 #maincontent .dashboard-value{font-size:3em;line-height:1;}#maincontent .dashboard-value.secondary{font-size:2em;color:#939393;}
+#maincontent .callout-metric{position:relative;}
+#maincontent .more-info{background:rgba(0, 0, 0, 0.3);border-radius:50%;color:rgba(255, 255, 255, 0.8);float:right;text-shadow:-1px 0 1px rgba(0, 0, 0, 0.3);width:1.5em;height:1.5em;line-height:1;text-align:center;cursor:help;position:absolute;top:8px;right:8px;padding-top:0.3em;}#maincontent .more-info:hover:before{content:attr(data-helper-text);background:rgba(0, 0, 0, 0.7);width:125px;display:block;position:absolute;bottom:100%;right:-100%;z-index:11;padding:0.5em;border-radius:3px;text-transform:none;}
 #maincontent .error{background-color:rgba(183, 3, 2, 0.4);border:3px solid rgba(183, 3, 2, 0.2);border-width:3px 0;color:#200100;text-shadow:-1px 0 1px #febaba;}
 #maincontent .item-label{font-weight:bold;text-transform:uppercase;color:#4e8d33;}
 #maincontent caption{margin-top:1em;padding:0.5em 0;}
