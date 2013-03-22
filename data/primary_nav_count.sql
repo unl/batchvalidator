@@ -1,0 +1,1 @@
+ALTER TABLE `assessment` ADD `primary_nav_count` INT NOT NULL DEFAULT 0;

@@ -63,3 +63,6 @@ exec_sql($db, $sql, 'adding page_limit to the assessment_runs table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/runs_contact_email.sql");
 exec_sql($db, $sql, 'adding contact_email to the assessment_runs table');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/primary_nav_count.sql");
+exec_sql($db, $sql, 'adding primary_nav_count to the assessment table');
