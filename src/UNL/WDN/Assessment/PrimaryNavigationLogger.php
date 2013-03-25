@@ -21,10 +21,20 @@ class UNL_WDN_Assessment_PrimaryNavigationLogger extends Spider_LoggerAbstract
 
     public function getPrimaryNavigationCount(DOMXPath $xpath)
     {
+        //Check for html5 primary nav (the 'NAV' element will be missing)
         $nodes = $xpath->query(
             "//xhtml:div[@id='wdn_navigation_wrapper']/xhtml:ul/xhtml:li"
         );
         
+        if ($nodes->length) {
+            return $nodes->length;
+        }
+
+        //Else check for old html nav (will be a div element).
+        $nodes = $xpath->query(
+            "//xhtml:div[@id='wdn_navigation_wrapper']/xhtml:div/xhtml:ul/xhtml:li"
+        );
+
         return $nodes->length;
     }
 
