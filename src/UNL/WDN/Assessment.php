@@ -340,6 +340,10 @@ class UNL_WDN_Assessment
         $stats['contact_email'] = false;
         $stats['page_limit'] = 0;
         $stats['queue_position'] = 'unknown';
+        $stats['max_primary_nav_count'] = 0;
+        $stats['total_grid_2006_pages'] = 0;
+        $stats['total_ga_non_async_pages'] = 0;
+        $stats['total_ga_setallowhash_pages'] = 0;
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
@@ -376,6 +380,22 @@ class UNL_WDN_Assessment
 
             if ($page['accessibility_errors'] != 'unknown') {
                 $stats['total_accessibility_errors'] += $page['accessibility_errors'];
+            }
+
+            if ($page['primary_nav_count'] > $stats['max_primary_nav_count']) {
+                $stats['max_primary_nav_count'] = (int)$page['primary_nav_count'];
+            }
+            
+            if ($page['grid_2006']) {
+                $stats['total_grid_2006_pages']++;
+            }
+
+            if ($page['ga_non_async']) {
+                $stats['total_ga_non_async_pages']++;
+            }
+
+            if ($page['ga_setallowhash']) {
+                $stats['total_ga_setallowhash_pages']++;
             }
             
             $htmlCurrent = false;
@@ -417,6 +437,10 @@ class UNL_WDN_Assessment
             $stats['pages'][$i]['template_html']['current'] = $htmlCurrent;
             $stats['pages'][$i]['bad_links'] = $badLinks;
             $stats['pages'][$i]['scannable'] = (bool)$page['scannable'];
+            $stats['pages'][$i]['primary_nav_count'] = $page['primary_nav_count'];
+            $stats['pages'][$i]['grid_2006'] = (bool)$page['grid_2006'];
+            $stats['pages'][$i]['ga_non_async'] = (bool)$page['ga_setallowhash'];
+            $stats['pages'][$i]['ga_setallowhash'] = (bool)$page['ga_setallowhash'];
             
             $i++;
         }
