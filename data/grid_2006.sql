@@ -1,0 +1,1 @@
+ALTER TABLE `assessment` ADD `grid_2006` INT(1) NOT NULL DEFAULT 0;

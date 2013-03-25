@@ -123,8 +123,9 @@ class UNL_WDN_Assessment
         $templateDEPLogger = new UNL_WDN_Assessment_TemplateDEPLogger($this);
         $linkChecker = new UNL_WDN_Assessment_LinkChecker($this);
         $navigationLogger = new UNL_WDN_Assessment_PrimaryNavigationLogger($this);
+        $grid2006 = new UNL_WDN_Assessment_Grid2006Logger($this);
 
-        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger), 
+        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger, $grid2006), 
                                     array(),
                                     array('page_limit'=>$pageLimit));
 
