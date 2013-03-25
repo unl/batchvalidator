@@ -125,8 +125,9 @@ class UNL_WDN_Assessment
         $navigationLogger = new UNL_WDN_Assessment_PrimaryNavigationLogger($this);
         $grid2006 = new UNL_WDN_Assessment_Grid2006Logger($this);
         $gaAsync = new UNL_WDN_Assessment_GANonAsyncLogger($this);
+        $gaAllowHash = new UNL_WDN_Assessment_GASetAllowHashLogger($this);
 
-        $spider  = $this->getSpider(array($uriLogger, $gaAsync, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger, $grid2006), 
+        $spider  = $this->getSpider(array($uriLogger, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger, $grid2006, $gaAllowHash, $gaAsync), 
                                     array(),
                                     array('page_limit'=>$pageLimit));
 

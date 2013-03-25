@@ -72,3 +72,6 @@ exec_sql($db, $sql, 'adding grid_2006 to the assessment table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/ga_non_async.sql");
 exec_sql($db, $sql, 'adding ga_non_asyc to assessment table');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/ga_setallowhash.sql");
+exec_sql($db, $sql, 'adding ga_setallowhash to assessment table');

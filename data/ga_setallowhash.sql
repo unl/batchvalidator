@@ -1,0 +1,1 @@
+ALTER TABLE `assessment` ADD `ga_setallowhash` INT(1) NOT NULL DEFAULT 0;
