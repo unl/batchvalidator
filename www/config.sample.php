@@ -2,7 +2,7 @@
 function autoload($class)
 {
     $class = str_replace('_', '/', $class);
-    include $class . '.php';
+    include_once $class . '.php';
 }
 
 spl_autoload_register("autoload");
