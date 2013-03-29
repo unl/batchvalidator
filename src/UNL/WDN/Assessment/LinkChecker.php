@@ -82,8 +82,9 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                 curl_multi_remove_handle($mcurl, $finishedCurl);
                 curl_close($finishedCurl);
             }
-        
         }
+
+        curl_multi_close($mcurl);
     }
 
     protected function getLinks(DOMXPath $xpath)
