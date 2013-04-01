@@ -5,6 +5,12 @@ require_once 'config.inc.php';
 header("Content-Type: application/json");
 
 if (!isset($_GET['uri'])) {
+    if (isset($_GET['action']) && $_GET['action'] == 'aggregate') {
+        $aggregate = new UNL_WDN_Aggregate($db);
+        echo json_encode($aggregate->getStats());
+        exit();
+    }
+    
     throw new Exception("You must pass the base uri &uri=", 400);
 }
 
