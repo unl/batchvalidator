@@ -255,7 +255,7 @@ class UNL_WDN_Aggregate
         
         $stats['ga'] = array();
         $stats['ga']['non-async'] = $this->getGANonAsync();
-        $stats['ga']['non-async'] = $this->getGASetallowHash();
+        $stats['ga']['setallowhash'] = $this->getGASetallowHash();
         
         $stats['links'] = array();
         $stats['links']['404'] = $this->getLinks(404);
