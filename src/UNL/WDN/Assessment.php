@@ -185,7 +185,9 @@ class UNL_WDN_Assessment
     
     function setRunning()
     {
-        $this->setRunStatus('running');
+        $sth = $this->db->prepare("UPDATE assessment_runs SET date_started = ?, status='running' WHERE baseurl = ?");
+
+        $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
     }
 
     function setRunStatus($status)
