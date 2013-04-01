@@ -6,10 +6,6 @@ $sth = $db->prepare("select site.baseurl, date_completed from site LEFT JOIN ass
 $sth->execute();
 
 while ($result = $sth->fetch()) {
-    if ($result['baseurl'] != 'http://wdn.unl.edu/') {
-        continue;
-    }
-    
     $assessment = new UNL_WDN_Assessment($result['baseurl'], $db);
     $assessment->addRun('auto', 1);
 }
