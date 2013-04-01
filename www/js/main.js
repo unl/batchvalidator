@@ -117,6 +117,10 @@ WDN.loadJQuery(function() {
 
                 $('#scan-waiting').html(render).show();
 
+                if (WDN.idm.user.mail) {
+                    $('#email').val(WDN.idm.user.mail[0]);
+                }
+
                 loader.clone().appendTo($('#spinner-wrapper')).show();
                 validator.showQueuePlacement(data, true);
 
