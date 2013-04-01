@@ -23,6 +23,7 @@ class UNL_WDN_Assessment_Grid2006Logger extends Spider_LoggerAbstract
     {
         $nodes = $xpath->query(
             '//xhtml:div[@id="maincontent"]//*[contains(concat(" ", normalize-space(@class), " "), " col ") 
+                                               or contains(concat(" ", normalize-space(@class), " "), " one_col ")
                                                or contains(concat(" ", normalize-space(@class), " "), " two_col ")
                                                or contains(concat(" ", normalize-space(@class), " "), " three_col ")
                                                or contains(concat(" ", normalize-space(@class), " "), " four_col ")
