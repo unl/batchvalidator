@@ -44,7 +44,7 @@ class UNL_WDN_Aggregate
 
     function getTotalSites()
     {
-        $sth = $this->db->prepare("select count(*) as total from assessment_runs;");
+        $sth = $this->db->prepare("select count(*) as total from assessment_runs WHERE status != 'queued';");
         $sth->execute();
         $result = $sth->fetch();
 
