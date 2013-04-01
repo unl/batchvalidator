@@ -1,12 +1,12 @@
 WDN.loadJQuery(function() {
     var validator = (function ($) {
-        var validatorForm = $("#validator-form"), 
-        wrapper = $("#scan-wrapper"), 
-        api_url = "api.php?uri=", 
+        var validatorForm = $("#validator-form"),
+        wrapper = $("#scan-wrapper"),
+        api_url = "api.php?uri=",
         pollTimeout = false,
-        loader = $('.loader'), 
-        submit_button = $("#submit"), 
-        uri, 
+        loader = $('.loader'),
+        submit_button = $("#submit"),
+        uri,
         form_disabled = true,
         waiting = false;
         url_check = /^(((http|https):\/\/)|www\.)[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#!]*[\w\-\@?^=%&amp;\/~\+#])\//;
@@ -51,7 +51,7 @@ WDN.loadJQuery(function() {
                     history.pushState(null, null, '?uri=' + encodeURIComponent(uri));
                     WDN.analytics.callTrackPageview(window.location);
                 }
-                
+
                 // This is a new query, so reset the waiting var
                 waiting = false;
                 //clear any remaining timeouts
@@ -63,7 +63,7 @@ WDN.loadJQuery(function() {
 
                 var data = $('#email-contact-form').serializeArray();
                 data.push({name: 'action', value: 'contact_email'});
-                
+
                 $.post(api_url + encodeURIComponent(uri), data , function(data) {
                     waiting = false;
                     wrapper.trigger('waiting', data);
@@ -75,7 +75,7 @@ WDN.loadJQuery(function() {
                     $("#submit").removeAttr('disabled');
                     form_disabled = false;
                     return true;
-                } 
+                }
                 $("#submit").attr('disabled', '');
                 form_disabled = true;
                 return false;
@@ -85,15 +85,12 @@ WDN.loadJQuery(function() {
                 $.getJSON(api_url+encodeURIComponent(uri), function (data) {
                     if (!data.status) { //Site has never been checked
                         wrapper.trigger('begin'); // Start the queue
-                    } else if (data.status == 'complete'
-                               || data.status == 'timeout'
-                               || data.status == 'restricted'
-                               || data.status == 'error') { //Queue has completed...
+                    } else if (data.status == 'complete' || data.status == 'timeout' || data.status == 'restricted' || data.status == 'error') { //Queue has completed...
                         wrapper.trigger('complete', data);
                         validator.loadSummaryTemplate(data);
-                        
+
                         wrapper.fadeIn(700); //Display the wrapper
-                        
+
                         $('html, body').animate({
                             scrollTop: wrapper.offset().top - 15
                         }, 500);
@@ -103,12 +100,12 @@ WDN.loadJQuery(function() {
                         //Poll the server again in 5 seconds until complete.
                         validator.pollTimeout = setTimeout(function()
                         {
-                            validator.querySiteInformation()
+                            validator.querySiteInformation();
                         }, 5000);
                     }
                 });
             },
-            
+
             loadWaitingTemplate : function (data) {
                 if (waiting) { // If we're already waiting, no need to do anything
                     validator.showQueuePlacement(data);
@@ -119,6 +116,10 @@ WDN.loadJQuery(function() {
                     render = contactTemplate(data);
 
                 $('#scan-waiting').html(render).show();
+
+                if (WDN.idm.user.mail) {
+                    $('#email').val(WDN.idm.user.mail[0]);
+                }
 
                 loader.clone().appendTo($('#spinner-wrapper')).show();
                 validator.showQueuePlacement(data, true);
@@ -137,7 +138,7 @@ WDN.loadJQuery(function() {
                 waiting = false;
                 $('#scan-waiting').hide();
             },
-            
+
             showQueuePlacement : function (data, initialDisplay) {
                 var queueTemplate = Handlebars.compile($("#temp-queueplacement").html()),
                 render = queueTemplate(data);
@@ -152,9 +153,9 @@ WDN.loadJQuery(function() {
                 var summaryTemplate = Handlebars.compile($("#temp-validator-results").html()),
                 render = summaryTemplate(data);
                 wrapper.html(render);
-                
+
                 submit_button.val('Check');
-                
+
                 // Bind events to elements inside summary
                 $('.recheck-button').click(function (event) {
                     event.preventDefault();
@@ -176,16 +177,15 @@ WDN.loadJQuery(function() {
             rerunCheck : function () { // Do another full site check
                 $.post(api_url + encodeURIComponent(uri), 'action=check', function(data) {
                     validator.querySiteInformation();
-                    
                     validator.loadSummaryTemplate(data);
                 }, "json");
             },
 
             beginQueue : function () {
                 validator.rerunCheck(); // POST the queue to get it going
-                
+
                 wrapper.trigger('waiting', {});
-                
+
                 $('html, body').animate({
                     scrollTop: wrapper.offset().top - 15
                 }, 500);
@@ -205,7 +205,7 @@ WDN.loadJQuery(function() {
                 tr.off('click').on('click', function () {
                     validator.beginHTMLValidation(tr, next_tr);
                     validator.showSubRow(tr, next_tr);
-                })
+                });
             },
 
             beginHTMLValidation : function (tr, tr_next) {
@@ -227,7 +227,7 @@ WDN.loadJQuery(function() {
                 render = summaryTemplate(data),
                 output = wrapper.html(render).fadeIn(700);
             }
-        }
+        };
 
     }(WDN.jQuery));
 
@@ -337,7 +337,7 @@ Handlebars.registerHelper('status_restricted', function (status, options) {
 });
 
 Handlebars.registerHelper('position', function (position) {
-    if (position == 0) {
+    if (position === 0) {
         return '<p class="indicator-bar its-on">Your Queue Placement: <span class="spot">Now Checking</span></p>';
     }
 
