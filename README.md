@@ -56,9 +56,20 @@ All api data is returned as JSON
 
 Base URL: `api.php`
 
-*Required GET Arguments for ALL requests:*
+*Required GET Arguments for ALL requests (except the aggregate request):*
 * `uri`
   * The URL of the site (url encoded)
+
+### GET Aggregate Stats
+Will return a JSON object of aggregate stats about all sites that have been checked.
+
+*Additional required GET arguments:*
+* `action=aggregate`
+
+*Example:*
+```
+GET http://validator.unl.edu/site/api.php?action=aggregate
+```
 
 ### GET site statisitcs
 A GET request to the base api url with the `uri` argument set will return a JSON result set
