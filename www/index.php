@@ -366,7 +366,7 @@ if (!isset($template_path)) {
                                 </ul>
                                 </div>
                                 <div class="bp2-wdn-col-one-fourth">
-                                    <a href="#" class="wdn-button large-button triad recheck-button">Recheck Entire Site</a>
+                                    <a href="#" class="wdn-button large-button triad recheck-button">Full site scan</a>
                                 </div>
                             </div>
                         </div>
