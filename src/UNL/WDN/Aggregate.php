@@ -205,7 +205,7 @@ class UNL_WDN_Aggregate
 
         $row = $sth->fetch();
 
-        $stats['percent_pages_with_non'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        $stats['percent_pages_with_non-async'] = round(($row['total']/$this->getTotalPages())*100, 2);
 
         $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl WHERE ga_non_async = 1 GROUP BY assessment_runs.baseurl;");
         $sth->execute();
