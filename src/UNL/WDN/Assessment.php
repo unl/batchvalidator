@@ -402,13 +402,13 @@ class UNL_WDN_Assessment
             }
             
             $htmlCurrent = false;
-            if ($page['template_html'] != 'unknown' && $page['template_html'] == $versions['html']) {
+            if ($page['template_html'] != 'unknown' && $this->isCurrentVersion($versions['html'], $page['template_html'])) {
                 $stats['total_current_template_html']++;
                 $htmlCurrent = true;
             }
             
             $depCurrent = false;
-            if ($page['template_dep'] != 'unknown' && $page['template_dep'] == $versions['dep']) {
+            if ($page['template_dep'] != 'unknown' && $this->isCurrentVersion($versions['dep'], $page['template_dep'])) {
                 $stats['total_current_template_dep']++;
                 $depCurrent = true;
             }
@@ -449,6 +449,31 @@ class UNL_WDN_Assessment
         }
 
         return $stats;
+    }
+    
+    function isCurrentVersion($currentVersion, $version)
+    {
+        $currentVersion = explode("." ,$currentVersion);
+        $version = explode("." ,$version);
+        
+        if (count($currentVersion) != count($version)) {
+            return false;
+        }
+        
+        for ($i=0; $i<(count($currentVersion)-2); $i++) {
+            if ($currentVersion[$i] != $version[$i]) {
+                return false;
+            }
+        }
+        
+        $i++;
+        
+        
+        if ((int)$version[$i] >= (int)$currentVersion[$i]) {
+            return true;
+        }
+        
+        return false;
     }
     
     function getJSONstats($url = null)
