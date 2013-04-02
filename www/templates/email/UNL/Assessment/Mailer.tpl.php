@@ -5,15 +5,22 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 ?>
 
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    Hello! Just to let you know, a recent check was automatically run on your site.  This service is provided to you by the <a href='http://wdn.unl.edu/'>Web Developer Network</a>
-    at UNL.
-    
+    Hello! The UNL Web Developer Network has launched a new service, UNL Site Checker, to help you maintain your UNL 
+    website. This email is being sent to you because you are listed in the WDN Registry as a 'member' of this 
+    website.
+
+    The Site Checker tool looks at a number of aspects of your site, including validity of the sites HTML markup, broken 
+    links, and whether or not the site is running the latest UNLedu Web Framework files.
     <?php
     if ($stats['page_limit'] == 1) {
-        echo "Please note that only the homepage was checked.  In the future, we will be scanning the entire site automatically. <br />
-              Please feel free to run the scan on the entire site now.";
+        echo "For the results shown below, only the homepage was checked. Future scans will check the entire site.";
     }
     ?>
+    You can get more information on any errors 
+    noted in this email, or run your own "full site scan" by entering the 
+    <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>'>WDN Site Checker tool</a> now.
+    
+   
 </span>
 <span class="emailbodytext" style="margin-bottom: 30px; margin-left:30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
