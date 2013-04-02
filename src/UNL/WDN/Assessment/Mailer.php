@@ -34,7 +34,7 @@ class UNL_WDN_Assessment_Mailer
         {
             foreach ($info['roles'] as $role) {
                 if (in_array($role, array('developer', 'sysadmin', 'content'))) {
-                    if (!$data = file_get_contents("http://directory.unl.edu/?uid=" . $uid . "&format=json")) {
+                    if (!$data = @file_get_contents("http://directory.unl.edu/?uid=" . $uid . "&format=json")) {
                         break;
                     }
                     
