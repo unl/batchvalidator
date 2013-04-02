@@ -1,5 +1,5 @@
 <?php
-class UNL_WDN_Assessment_FileExtensionFilter extends Spider_UriFilterInterface
+class UNL_WDN_Assessment_Filter_FileExtension extends Spider_UriFilterInterface
 {
     function accept()
     {
