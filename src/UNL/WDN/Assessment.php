@@ -344,7 +344,7 @@ class UNL_WDN_Assessment
         $stats['status'] = false;
         $stats['contact_email'] = false;
         $stats['page_limit'] = 0;
-        $stats['queue_position'] = 'unknown';
+        $stats['queue_position'] = '0';
         $stats['max_primary_nav_count'] = 0;
         $stats['total_grid_2006_pages'] = 0;
         $stats['total_ga_non_async_pages'] = 0;
@@ -359,7 +359,7 @@ class UNL_WDN_Assessment
             $stats['status'] = $run['status'];
         }
 
-        if ($run) {
+        if ($run && $stats['status'] == 'queued') {
             $stats['queue_position'] = $this->getQueuePosition($run);
         }
         
