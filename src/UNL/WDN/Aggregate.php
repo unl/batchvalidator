@@ -152,6 +152,10 @@ class UNL_WDN_Aggregate
         $totalSites = 0;
         $total = 0;
         while ($row = $sth->fetch()) {
+            if ($row['total'] == 0) {
+                continue;
+            }
+            
             $total += $row['total'];
 
             if ($row['total'] > $stats['max']['count']) {
