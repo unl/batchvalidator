@@ -15,6 +15,8 @@ class UNL_WDN_Assessment
 
     public static $maxConcurrentAutoJobs = 1;
     
+    public static $maxQueuedAutoJobs = 2;
+    
     public static $timeout = 3600; //60min (3600 seconds)
     
     public static $restrictedURIs = array('http://events.unl.edu/');

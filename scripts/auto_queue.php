@@ -1,21 +1,19 @@
 <?php
 require_once dirname(dirname(__FILE__)) . '/www/config.inc.php';
 
-const MAX_QUEUED = 10;
-
 $sth = $db->prepare("select count(*) as total from assessment_runs WHERE run_type='auto' AND status='queued'");
 $sth->execute();
 
 $result = $sth->fetch();
 
-if (isset($result['total']) && $result['total'] >= MAX_QUEUED) {
+if (isset($result['total']) && $result['total'] >= UNL_WDN_Assessment::$maxQueuedAutoJobs) {
     exit();
 }
 
 $limit = 0;
 
 if (isset($result['total'])) {
-    $limit = MAX_QUEUED - $result['total'];
+    $limit = UNL_WDN_Assessment::$maxQueuedAutoJobs - $result['total'];
 }
 
 //Only run a max of 10 checks at a time.
