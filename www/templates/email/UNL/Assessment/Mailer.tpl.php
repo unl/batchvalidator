@@ -9,7 +9,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     website. This email is being sent to you because you are listed in the WDN Registry as a 'member' of this 
     website.
 
-    The Site Checker tool looks at a number of aspects of your site, including validity of the sites HTML markup, broken 
+    The Site Checker tool looks at a number of aspects of your site, including validity of the site's HTML markup, broken 
     links, and whether or not the site is running the latest UNLedu Web Framework files.
     <?php
     if ($stats['page_limit'] == 1) {
@@ -127,7 +127,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    With most humble regards, <br />
+    Thank you, <br />
     The Web Developer Network
 </span>
 
