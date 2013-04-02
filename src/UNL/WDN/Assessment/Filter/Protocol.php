@@ -3,11 +3,11 @@ class UNL_WDN_Assessment_Filter_Protocol extends Spider_UriFilterInterface
 {
     function accept()
     {
-
-        if (stripos($this->current(), 'javascript:') === 0
-            || stripos($this->current(), 'tel:') === 0
-            || stripos($this->current(), 'mailto:') === 0) {
-            
+        //$this->current() contains the base uri, so the 'protocol' it probably won't start with the following.
+        if (stripos($this->current(), 'javascript:') !== false
+            || stripos($this->current(), 'tel:') !== false
+            || stripos($this->current(), '#') !== false
+            || stripos($this->current(), 'mailto:') !== false) {
             return false;
         }
         
