@@ -7,6 +7,8 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     public static $maxActiveRequests = 10;
     
     public static $loggedStatusCodes = array(404, 301);
+    
+    public $filters = array('UNL_WDN_Assessment_Filter_Protocol');
 
     /**
      *
@@ -32,11 +34,13 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         $mcurl = curl_multi_init();
         $curl = array();
         $activeRequests = 0;
-        while (count($links) + $activeRequests > 0) {
+        $links->rewind();
+        while ($links->valid() || $activeRequests > 0) {
         
             //Limit the number of concurrent checks
-            while ($activeRequests <= self::$maxActiveRequests && count($links) > 0) {
-                $link = Spider::absolutePath(array_shift($links), $uri);
+            while ($activeRequests <= self::$maxActiveRequests && $links->valid()) {
+                $link = Spider::absolutePath($links->current(), $uri);
+                $links->next();
                 
                 //Don't check it if it is not a valid url
                 if (!filter_var($link, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
@@ -96,15 +100,16 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         );
 
         foreach ($nodes as $node) {
-            $link = trim((string)$node->nodeValue);
-            if (substr($link, 0, 7) != 'mailto:'
-                && substr($link, 0, 11) != 'javascript:'
-                && substr($link, 0, 1) != '#') {
-                $links[] = $link;
-            } 
+            $links[] = trim((string)$node->nodeValue);
         }
 
-        sort($links);
+        $links = new Spider_UriIterator($links);
+
+        //Filter the links
+        foreach ($this->filters as $filter_class) {
+            $links = new $filter_class($links);
+        }
+        
         return $links;
     }
 
