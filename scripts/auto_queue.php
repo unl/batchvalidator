@@ -17,7 +17,7 @@ if (isset($result['total'])) {
 }
 
 //Only run a max of 10 checks at a time.
-$sth = $db->prepare("select site.baseurl, date_completed from site LEFT JOIN assessment_runs on assessment_runs.baseurl = site.baseurl ORDER BY date_completed ASC LIMIT " . (int)$limit);
+$sth = $db->prepare("select site.baseurl, date_completed from site LEFT JOIN assessment_runs on assessment_runs.baseurl = site.baseurl WHERE assessment_runs.status NOT IN ('running', 'queued', 'restricted') ORDER BY date_completed ASC LIMIT " . (int)$limit);
 $sth->execute();
 
 while ($result = $sth->fetch()) {
