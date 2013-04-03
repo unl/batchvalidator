@@ -16,7 +16,7 @@ class UNL_WDN_Assessment_URILogger extends Spider_LoggerAbstract
     {
         //Hack to prevent long runs
         if ((time() - $this->assessment->starttime) >= UNL_WDN_Assessment::$timeout) {
-            $this->assessment->setRunStatus('timeout');
+            $this->assessment->setRunStatus('timeout', date('Y-m-d H:i:s'));
             exit();
         }
         

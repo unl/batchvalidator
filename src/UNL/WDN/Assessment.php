@@ -92,7 +92,7 @@ class UNL_WDN_Assessment
     {
         //Don't check restricted URIs
         if ($this->isRestricted()) {
-            $this->setRunStatus('restricted');
+            $this->setRunStatus('restricted', date('Y-m-d H:i:s'));
             return false;
         }
 
@@ -171,10 +171,8 @@ class UNL_WDN_Assessment
     
     function setCompleted()
     {
-        $sth = $this->db->prepare("UPDATE assessment_runs SET date_completed = ?, status='complete' WHERE baseurl = ?");
+        $this->setRunStatus('complete', date('Y-m-d H:i:s'));
 
-        $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
-        
         $info = $this->getRunInformation();
         
         if (isset($info['run_type']) && $info['run_type'] == 'auto') {
@@ -193,11 +191,11 @@ class UNL_WDN_Assessment
         $sth->execute(array(date('Y-m-d H:i:s'), $this->baseUri));
     }
 
-    function setRunStatus($status)
+    function setRunStatus($status, $dateCompleted = null)
     {
-        $sth = $this->db->prepare("UPDATE assessment_runs SET status=? WHERE baseurl = ?");
+        $sth = $this->db->prepare("UPDATE assessment_runs SET status=?, date_completed=? WHERE baseurl = ?");
 
-        $sth->execute(array($status, $this->baseUri));
+        $sth->execute(array($status, $dateCompleted, $this->baseUri));
     }
 
     function setRunContactEmail($email)

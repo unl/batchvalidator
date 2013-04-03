@@ -8,7 +8,7 @@ require_once dirname(dirname(__FILE__)) . '/www/config.inc.php';
  */
 
 //Only run a max of 5 checks at a time.
-$sql = "UPDATE assessment_runs SET status = 'error' WHERE timestampdiff(SECOND, date_started, now()) > ? AND status = 'running';";
+$sql = "UPDATE assessment_runs SET status = 'error' and date_completed = NOW() WHERE timestampdiff(SECOND, date_started, now()) > ? AND status = 'running';";
 $sth = $db->prepare($sql);
 $sth->execute(array(UNL_WDN_Assessment::$timeout));
 

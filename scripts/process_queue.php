@@ -43,7 +43,7 @@ $assessment = new UNL_WDN_Assessment($result['baseurl'], $db);
 function shutdown($assessment) {
     $error = error_get_last();
     if ($error['type'] === E_ERROR) {
-        $assessment->setRunStatus('error');
+        $assessment->setRunStatus('error', date('Y-m-d H:i:s'));
     }
 }
 
