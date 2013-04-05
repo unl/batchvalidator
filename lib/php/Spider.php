@@ -174,8 +174,15 @@ class Spider
             }
 
             //Make sure that we get the final url (it might redirect, and we don't want to crawl pages on another site).
-            $uri = self::getEffectiveURL($uri);
-
+            $urlInfo = self::getURLInfo($uri);
+            
+            //Don't check if it 404s or we can't connect.
+            if ($urlInfo['http_code'] == 404) {
+                continue;
+            }
+            
+            $uri = $urlInfo['effective_url'];
+            
             //check again, because it might have changed...
             if (strncmp($this->start_base, $uri, strlen($this->start_base)) !== 0) {
                 continue;
@@ -189,7 +196,7 @@ class Spider
         return new Spider_UriIterator($uris);
     }
     
-    public static function getEffectiveURL($url)
+    public static function getURLInfo($url)
     {
         static $urls;
         
@@ -205,13 +212,21 @@ class Spider
 
         curl_setopt($curl, CURLOPT_NOBODY, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 5);
         curl_setopt($curl, CURLOPT_TIMEOUT, 30);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         curl_exec($curl);
 
-        $urls[$url] = curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $effectiveURL = curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
+        $curlErrorNo = curl_errno($curl);
+
+        curl_close($curl);
+
+        $urls[$url] = array('http_code' => $httpStatus,
+                            'curl_code' => $curlErrorNo,
+                            'effective_url' => $effectiveURL);
         
         return $urls[$url];
     }
