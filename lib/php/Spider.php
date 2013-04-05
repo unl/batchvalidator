@@ -106,7 +106,7 @@ class Spider
         if ($depth > $this->options['max_depth']) {
             return;
         }
-        echo $uri . PHP_EOL;
+        
         //spider sub-pages
         $subUris = $this->getUris($baseUri, $xpath);
         
@@ -157,11 +157,6 @@ class Spider
                 && substr($uri, 0, 11) != 'javascript:') {
                 $tmpuri = $uri;
                 $uri = self::absolutePath($uri, $baseUri);
-
-                if (stripos($uri, 'freshmen/reservation')) {
-                    echo "\tBefore: $tmpuri" . PHP_EOL;
-                    echo "\tAfter: $uri" . PHP_EOL;
-                }
                 
                 if (!empty($uri)) {
                     if (strncmp($this->start_base, $uri, strlen($this->start_base)) === 0) {
