@@ -20,6 +20,8 @@ class UNL_WDN_Assessment
     public static $timeout = 3600; //60min (3600 seconds)
     
     public static $restrictedURIs = array('http://events.unl.edu/');
+    
+    public static $tempDir = "";
 
     public $db;
     
@@ -27,6 +29,10 @@ class UNL_WDN_Assessment
     {
         $this->baseUri = $baseUri;
         $this->db      = $db;
+        
+        if (empty(self::$tempDir)) {
+            self::$tempDir = dirname(dirname(dirname(dirname(__FILE__)))) . "/tmp/";
+        }
     }
 
     /**
@@ -218,6 +224,9 @@ class UNL_WDN_Assessment
         //remove url_has_badlinks entries
         $sth = $this->db->prepare('DELETE FROM url_has_badlinks WHERE baseurl = ?');
         $sth->execute(array($this->baseUri));
+        
+        //remove old cache file
+        unlink($this->getCacheFileName());
     }
     
     function getSubPages()
@@ -325,6 +334,12 @@ class UNL_WDN_Assessment
     
     function getStats($url = null)
     {
+        $tmpFileName = $this->getCacheFileName();
+        
+        if (file_exists($tmpFileName)) {
+            return unserialize(file_get_contents($tmpFileName));
+        }
+        
         $versions = self::getCurrentTemplateVersions();
         $run = $this->getRunInformation();
         
@@ -447,8 +462,18 @@ class UNL_WDN_Assessment
             
             $i++;
         }
+        
+        //save cache if we are done.
+        if (!in_array($stats['status'], array('queued', 'running'))) {
+            file_put_contents($tmpFileName, serialize($stats));
+        }
 
         return $stats;
+    }
+    
+    function getCacheFileName()
+    {
+        return self::$tempDir . "site_" . md5($this->baseUri);
     }
     
     function isCurrentVersion($currentVersion, $version)
