@@ -100,7 +100,20 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         );
 
         foreach ($nodes as $node) {
-            $links[] = trim((string)$node->nodeValue);
+
+            $uri = trim((string)$node->nodeValue);
+            
+            //trim off hashes
+            if (stripos($uri, '#') !== false) {
+                $uri = substr($uri, 0, stripos($uri, '#'));
+
+                //Skip if it is now an empty uri, as the will make something in 'test/test.php' with a href like '#' go to 'test/', which it shouldn't.
+                if ($uri == '') {
+                    continue;
+                }
+            }
+            
+            $links[] = $uri;
         }
 
         $links = new Spider_UriIterator($links);
