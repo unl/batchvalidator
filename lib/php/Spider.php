@@ -106,7 +106,7 @@ class Spider
         if ($depth > $this->options['max_depth']) {
             return;
         }
-        
+        echo $uri . PHP_EOL;
         //spider sub-pages
         $subUris = $this->getUris($baseUri, $xpath);
         
@@ -143,10 +143,25 @@ class Spider
             
             $uri = trim((string)$node->nodeValue);
             
+            //trim off hashes
+            if (stripos($uri, '#') !== false) {
+                $uri = substr($uri, 0, stripos($uri, '#'));
+                
+                //Skip if it is now an empty uri, as the will make something in 'test/test.php' with a href like '#' go to 'test/', which it shouldn't.
+                if ($uri == '') {
+                    continue;
+                }
+            }
+            
             if (substr($uri, 0, 7) != 'mailto:'
                 && substr($uri, 0, 11) != 'javascript:') {
-            
+                $tmpuri = $uri;
                 $uri = self::absolutePath($uri, $baseUri);
+
+                if (stripos($uri, 'freshmen/reservation')) {
+                    echo "\tBefore: $tmpuri" . PHP_EOL;
+                    echo "\tAfter: $uri" . PHP_EOL;
+                }
                 
                 if (!empty($uri)) {
                     if (strncmp($this->start_base, $uri, strlen($this->start_base)) === 0) {
