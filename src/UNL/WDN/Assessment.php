@@ -226,7 +226,7 @@ class UNL_WDN_Assessment
         $sth->execute(array($this->baseUri));
         
         //remove old cache file
-        if (file_exists($this->getCacheFileName()) {
+        if (file_exists($this->getCacheFileName())) {
             unlink($this->getCacheFileName());
         }
     }
