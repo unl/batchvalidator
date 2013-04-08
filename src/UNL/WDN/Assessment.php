@@ -58,10 +58,7 @@ class UNL_WDN_Assessment
         }
         
         //Add default filters
-        $spider->addUriFilter('Spider_AnchorFilter');
-        $spider->addUriFilter('Spider_MailtoFilter');
         $spider->addUriFilter('UNL_WDN_Assessment_Filter_FileExtension');
-        $spider->addUriFilter('UNL_WDN_Assessment_Filter_Protocol');
         
         return $spider;
     }
