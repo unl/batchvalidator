@@ -5,6 +5,7 @@ class UNL_WDN_Assessment_Filter_FileExtension extends Spider_UriFilterInterface
     {
         $path_parts = pathinfo($this->current());
         if (!isset($path_parts['extension'])
+            || $path_parts['extension'] == 'htm'
             || $path_parts['extension'] == 'html'
             || $path_parts['extension'] == 'php'
             || $path_parts['extension'] == 'shtml'
