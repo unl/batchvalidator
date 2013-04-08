@@ -62,8 +62,13 @@ class UNL_WDN_Aggregate
         $stats['max']['count'] = 0;
         $stats['average']['count'] = 0;
         $stats['max']['site'] = "";
+        $stats['scope'] = 'SITES_IN_TEMPLATES';
 
-        $sth = $this->db->prepare("select sum(html_errors) as total, assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl where template_html != 'UNKNOWN' GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select sum(html_errors) as total, assessment_runs.baseurl 
+                                   from assessment_runs 
+                                   LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl 
+                                   where template_html != 'UNKNOWN' 
+                                   GROUP BY assessment_runs.baseurl;");
         $sth->execute();
         
         $totalSites = 0;
@@ -92,12 +97,14 @@ class UNL_WDN_Aggregate
         $stats['max']['count'] = 0;
         $stats['average']['count'] = 0;
         $stats['max']['site'] = "";
+        $stats['scope'] = 'SITES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("select count(url_has_badlinks.code) as total, assessment_runs.baseurl 
                                    from assessment_runs 
                                    LEFT JOIN url_has_badlinks ON assessment_runs.baseurl = url_has_badlinks.baseurl
+                                   LEFT JOIN assessment ON url_has_badlinks.baseurl = assessment.baseurl
                                    WHERE url_has_badlinks.code = ?
-                                   AND template_html != 'UNKNOWN'
+                                   AND assessment.template_html != 'UNKNOWN'
                                    GROUP BY assessment_runs.baseurl;");
         $sth->execute(array($code));
 
@@ -125,6 +132,7 @@ class UNL_WDN_Aggregate
         $stats = array();
         $stats['percent_pages_in_current'] = 0;
         $stats['versions'] = array();
+        $stats['scope'] = 'PAGES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("SELECT COUNT(*) AS  total,  template_html
                                    FROM  assessment 
@@ -150,6 +158,7 @@ class UNL_WDN_Aggregate
         $stats = array();
         $stats['percent_pages_in_current'] = 0;
         $stats['versions'] = array();
+        $stats['scope'] = 'PAGES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("SELECT COUNT(*) AS  total,  template_dep
                                    FROM  assessment 
@@ -176,6 +185,7 @@ class UNL_WDN_Aggregate
         $stats['max']['count'] = 0;
         $stats['max']['site'] = "";
         $stats['average']['count'] = 0;
+        $stats['scope'] = 'SITES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("select avg(primary_nav_count) as total, assessment_runs.baseurl 
                                    from assessment_runs 
@@ -213,6 +223,7 @@ class UNL_WDN_Aggregate
         $stats = array();
         $stats['percent_pages_in_2006'] = 0;
         $stats['sites'] = array();
+        $stats['scope'] = 'PAGES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("select count(*) as total from assessment WHERE grid_2006 = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
@@ -232,7 +243,7 @@ class UNL_WDN_Aggregate
         while ($row = $sth->fetch()) {
             $stats['sites'][] = $row['baseurl'];
         }
-
+        
         return $stats;
     }
     
@@ -241,6 +252,7 @@ class UNL_WDN_Aggregate
         $stats = array();
         $stats['percent_pages_with_non-async'] = 0;
         $stats['sites'] = array();
+        $stats['scope'] = 'PAGES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_non_async = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
@@ -269,6 +281,7 @@ class UNL_WDN_Aggregate
         $stats = array();
         $stats['percent_pages_with_setallowhash'] = 0;
         $stats['sites'] = array();
+        $stats['scope'] = 'PAGES_IN_TEMPLATES';
 
         $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_setallowhash = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
