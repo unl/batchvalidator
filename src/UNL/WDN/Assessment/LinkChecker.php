@@ -8,7 +8,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     
     public static $loggedStatusCodes = array(404, 301);
     
-    public $filters = array('UNL_WDN_Assessment_Filter_Protocol');
+    public $filters = array('UNL_WDN_Assessment_Filter_Scheme');
 
     /**
      *
@@ -23,10 +23,9 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
     
     public function log($uri, $depth, DOMXPath $xpath)
     {
-        $links = $this->getLinks($xpath);
+        $links = $this->getLinks($uri, $xpath);
         
         $this->checkLinks($uri, $links, $depth);
-        
     }
     
     function checkLinks($uri, $links, $depth)
@@ -39,7 +38,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         
             //Limit the number of concurrent checks
             while ($activeRequests <= self::$maxActiveRequests && $links->valid()) {
-                $link = Spider::absolutePath($links->current(), $uri);
+                $link = $links->current();
                 $links->next();
                 
                 //Don't check it if it is not a valid url
@@ -91,32 +90,9 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         curl_multi_close($mcurl);
     }
 
-    protected function getLinks(DOMXPath $xpath)
+    protected function getLinks($uri, DOMXPath $xpath)
     {
-        $links = array();
-
-        $nodes = $xpath->query(
-            "//xhtml:a[@href]/@href | //a[@href]/@href"
-        );
-
-        foreach ($nodes as $node) {
-
-            $uri = trim((string)$node->nodeValue);
-            
-            //trim off hashes
-            if (stripos($uri, '#') !== false) {
-                $uri = substr($uri, 0, stripos($uri, '#'));
-
-                //Skip if it is now an empty uri, as the will make something in 'test/test.php' with a href like '#' go to 'test/', which it shouldn't.
-                if ($uri == '') {
-                    continue;
-                }
-            }
-            
-            $links[] = $uri;
-        }
-
-        $links = new Spider_UriIterator($links);
+        $links = Spider::getUris($this->assessment->baseUri, $uri, $xpath);
 
         //Filter the links
         foreach ($this->filters as $filter_class) {
