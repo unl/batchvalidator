@@ -29,7 +29,7 @@ class UNL_WDN_Aggregate
             return $total;
         }
         
-        $sth = $this->db->prepare("select count(*) as total from assessment;");
+        $sth = $this->db->prepare("select count(*) as total from assessment where template_html != 'UNKNOWN';");
         $sth->execute();
         $result = $sth->fetch();
 
@@ -63,7 +63,7 @@ class UNL_WDN_Aggregate
         $stats['average']['count'] = 0;
         $stats['max']['site'] = "";
 
-        $sth = $this->db->prepare("select sum(html_errors) as total, assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select sum(html_errors) as total, assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl where template_html != 'UNKNOWN' GROUP BY assessment_runs.baseurl;");
         $sth->execute();
         
         $totalSites = 0;
@@ -78,7 +78,9 @@ class UNL_WDN_Aggregate
             $totalSites++;
         }
 
-        $stats['average']['count'] = round($stats['total']/$totalSites, 2);
+        if ($totalSites) {
+            $stats['average']['count'] = round($stats['total']/$totalSites, 2);
+        }
         
         return $stats;
     }
@@ -95,6 +97,7 @@ class UNL_WDN_Aggregate
                                    from assessment_runs 
                                    LEFT JOIN url_has_badlinks ON assessment_runs.baseurl = url_has_badlinks.baseurl
                                    WHERE url_has_badlinks.code = ?
+                                   AND template_html != 'UNKNOWN'
                                    GROUP BY assessment_runs.baseurl;");
         $sth->execute(array($code));
 
@@ -110,7 +113,9 @@ class UNL_WDN_Aggregate
             $totalSites++;
         }
 
-        $stats['average']['count'] = round($stats['total']/$totalSites, 2);
+        if ($totalSites) {
+            $stats['average']['count'] = round($stats['total']/$totalSites, 2);
+        }
 
         return $stats;
     }
@@ -146,7 +151,11 @@ class UNL_WDN_Aggregate
         $stats['max']['site'] = "";
         $stats['average']['count'] = 0;
 
-        $sth = $this->db->prepare("select avg(primary_nav_count) as total, assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select avg(primary_nav_count) as total, assessment_runs.baseurl 
+                                   from assessment_runs 
+                                   LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl 
+                                   where template_html != 'UNKNOWN' 
+                                   GROUP BY assessment_runs.baseurl;");
         $sth->execute();
 
         $totalSites = 0;
@@ -166,7 +175,9 @@ class UNL_WDN_Aggregate
             $totalSites++;
         }
 
-        $stats['average']['count'] = round($total/$totalSites, 2);
+        if ($totalSites) {
+            $stats['average']['count'] = round($total/$totalSites, 2);
+        }
 
         return $stats;
     }
@@ -177,14 +188,19 @@ class UNL_WDN_Aggregate
         $stats['percent_pages_in_2006'] = 0;
         $stats['sites'] = array();
 
-        $sth = $this->db->prepare("select count(*) as total from assessment WHERE grid_2006 = 1");
+        $sth = $this->db->prepare("select count(*) as total from assessment WHERE grid_2006 = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
 
         $row = $sth->fetch();
 
-        $stats['percent_pages_in_2006'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        if ($this->getTotalPages()) {
+            $stats['percent_pages_in_2006'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        }
         
-        $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl WHERE grid_2006 = 1 GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select assessment_runs.baseurl 
+                                   from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl 
+                                   WHERE grid_2006 = 1 and template_html != 'UNKNOWN' 
+                                   GROUP BY assessment_runs.baseurl;");
         $sth->execute();
 
         while ($row = $sth->fetch()) {
@@ -200,14 +216,19 @@ class UNL_WDN_Aggregate
         $stats['percent_pages_with_non-async'] = 0;
         $stats['sites'] = array();
 
-        $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_non_async = 1");
+        $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_non_async = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
 
         $row = $sth->fetch();
 
-        $stats['percent_pages_with_non-async'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        if ($this->getTotalPages()) {
+            $stats['percent_pages_with_non-async'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        }
 
-        $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl WHERE ga_non_async = 1 GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs 
+                                   LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl 
+                                   WHERE ga_non_async = 1 and template_html != 'UNKNOWN'
+                                   GROUP BY assessment_runs.baseurl;");
         $sth->execute();
 
         while ($row = $sth->fetch()) {
@@ -223,14 +244,19 @@ class UNL_WDN_Aggregate
         $stats['percent_pages_with_setallowhash'] = 0;
         $stats['sites'] = array();
 
-        $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_setallowhash = 1");
+        $sth = $this->db->prepare("select count(*) as total from assessment WHERE ga_setallowhash = 1 and template_html != 'UNKNOWN'");
         $sth->execute();
 
         $row = $sth->fetch();
 
-        $stats['percent_pages_with_setallowhash'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        if ($this->getTotalPages()) {
+            $stats['percent_pages_with_setallowhash'] = round(($row['total']/$this->getTotalPages())*100, 2);
+        }
 
-        $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl WHERE ga_setallowhash = 1 GROUP BY assessment_runs.baseurl;");
+        $sth = $this->db->prepare("select assessment_runs.baseurl from assessment_runs 
+                                   LEFT JOIN assessment ON assessment_runs.baseurl = assessment.baseurl 
+                                   WHERE ga_setallowhash = 1 and template_html != 'UNKNOWN'
+                                   GROUP BY assessment_runs.baseurl;");
         $sth->execute();
 
         while ($row = $sth->fetch()) {
@@ -240,8 +266,22 @@ class UNL_WDN_Aggregate
         return $stats;
     }
     
-    function getStats()
+    function updateCache()
     {
+        file_put_contents(self::getCacheFileName(), serialize($this->getStats(true)));
+    }
+
+    function getCacheFileName()
+    {
+        return UNL_WDN_Assessment::getTempDir() . "aggregate";
+    }
+
+    function getStats($force = false)
+    {
+        if (!$force && file_exists($this->getCacheFileName())) {
+            return unserialize(file_get_contents($this->getCacheFileName()));
+        }
+        
         $stats = array();
         $stats['total_pages'] = $this->getTotalPages();
         $stats['total_sites'] = $this->getTotalSites();
@@ -249,9 +289,14 @@ class UNL_WDN_Aggregate
         $stats['average_run_time'] = $this->getAverageRunTime();
 
         $stats['html_errors'] = $this->getHTMLErrors();
+
+        $stats['percent_current_template_html'] = 0;
+        $stats['percent_current_template_dep'] = 0;
         
-        $stats['percent_current_template_html'] = round(($this->getTotalInCurrentTemplateHTML() / $stats['total_pages'])*100, 2);
-        $stats['percent_current_template_dep'] = round(($this->getTotalInCurrentTemplateDEP() / $stats['total_pages'])*100, 2);
+        if ($stats['total_pages']) {
+            $stats['percent_current_template_html'] = round(($this->getTotalInCurrentTemplateHTML() / $stats['total_pages'])*100, 2);
+            $stats['percent_current_template_dep'] = round(($this->getTotalInCurrentTemplateDEP() / $stats['total_pages'])*100, 2);
+        }
         
         $stats['primary_nav'] = $this->getPrimaryNav();
         
@@ -264,6 +309,8 @@ class UNL_WDN_Aggregate
         $stats['links'] = array();
         $stats['links']['404'] = $this->getLinks(404);
         $stats['links']['301'] = $this->getLinks(301);
+
+        file_put_contents(self::getCacheFileName(), serialize($stats));
         
         return $stats;
     }

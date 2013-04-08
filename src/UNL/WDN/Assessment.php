@@ -29,10 +29,15 @@ class UNL_WDN_Assessment
     {
         $this->baseUri = $baseUri;
         $this->db      = $db;
-        
+    }
+    
+    public static function getTempDir()
+    {
         if (empty(self::$tempDir)) {
-            self::$tempDir = dirname(dirname(dirname(dirname(__FILE__)))) . "/tmp/";
+            return dirname(dirname(dirname(dirname(__FILE__)))) . "/tmp/";
         }
+        
+        return self::$tempDir;
     }
 
     /**
@@ -143,6 +148,10 @@ class UNL_WDN_Assessment
         if ($updateCompletionDate) {
             $this->setCompleted();
         }
+
+        //Update the aggregate cache
+        $aggregate = new UNL_WDN_Aggregate($this->db);
+        $aggregate->updateCache();
         
         return true;
     }
@@ -472,7 +481,7 @@ class UNL_WDN_Assessment
     
     function getCacheFileName()
     {
-        return self::$tempDir . "site_" . md5($this->baseUri);
+        return self::getTempDir() . "site_" . md5($this->baseUri);
     }
     
     function isCurrentVersion($currentVersion, $version)
