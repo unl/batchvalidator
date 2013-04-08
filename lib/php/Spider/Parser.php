@@ -2,12 +2,12 @@
 class Spider_Parser implements Spider_ParserInterface
 {
     protected $options = array('tidy' => true);
-    
+
     function __construct($options = array())
     {
         $this->options += $options;
     }
-    
+
     public function parse($content)
     {
         return $this->getXPath($content);
@@ -26,12 +26,12 @@ class Spider_Parser implements Spider_ParserInterface
                 'numeric-entities' => true, //Translate named entities to numeric entities (html5 does not have a dtd and chokes on named entities)
             ));
         }
-        
+
         $document->loadXML(
             $content,
             LIBXML_NOERROR | LIBXML_NONET | LIBXML_NOWARNING
         );
-        
+
         $xpath = new DOMXPAth($document);
         $xpath->registerNamespace('xhtml', 'http://www.w3.org/1999/xhtml');
         return $xpath;

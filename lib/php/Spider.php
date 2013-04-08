@@ -8,6 +8,7 @@
  * @package   PEAR2_Spider
  * @author    Michael Gauthier <mike@silverorange.com>
  * @author    Brett Bieber <saltybeagle@php.net>
+ * @author    Michael Fairchild <mfairchild365@gmail.com>
  * @copyright 2010 silverorange Inc.
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   SVN: $Id$
@@ -21,6 +22,7 @@
  * @package   PEAR2_Spider
  * @author    Michael Gauthier <mike@silverorange.com>
  * @author    Brett Bieber <saltybeagle@php.net>
+ * @author    Michael Fairchild <mfairchild365@gmail.com>
  * @copyright 2010 silverorange Inc.
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @link      http://svn.php.net/repository/pear2/PEAR2_Spider
@@ -33,7 +35,7 @@ class Spider
     protected $parser = null;
     protected $start_base = null;
     protected $visited = array();
-    
+
     protected $options = array('page_limit' => 500,
                                'max_depth' => 50);
 
@@ -47,23 +49,44 @@ class Spider
         $this->setParser($parser);
     }
 
+    /**
+     * Set the downloader object for the spider (used to download pages)
+     * 
+     * @param Spider_Downloader $downloader
+     */
     public function setDownloader(Spider_Downloader $downloader)
     {
         $this->downloader = $downloader;
     }
 
+    /**
+     * Set the parser object for the spider (used to parse downloaded pages)
+     * 
+     * @param Spider_ParserInterface $parser
+     */
     public function setParser(Spider_ParserInterface $parser)
     {
         $this->parser = $parser;
     }
 
+    /**
+     * Add a logger object to the spider
+     * 
+     * @param Spider_LoggerAbstract $logger
+     */
     public function addLogger(Spider_LoggerAbstract $logger)
     {
         if (!in_array($logger, $this->loggers)) {
             $this->loggers[] = $logger;
         }
     }
-    
+
+    /**
+     * Add a filter object to the spider
+     * Filters are used to filter out pages before attempting to spider them
+     * 
+     * @param string $filterClass - the class name of the filter
+     */
     public function addUriFilter($filterClass)
     {
         if (!in_array($filterClass, $this->filters)) {
@@ -71,6 +94,14 @@ class Spider
         }
     }
 
+    /**
+     * Spider a site
+     * Will spider an entire site, including all pages under the baseUri (as long as it is linked to)
+     * 
+     * @param string $baseUri - The base url for the site
+     *
+     * @throws Exception
+     */
     public function spider($baseUri)
     {
         if (!filter_var($baseUri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
@@ -80,13 +111,23 @@ class Spider
         $this->spiderPage($this->start_base, $baseUri);
     }
 
+    /**
+     * Spider a specific page
+     * 
+     * @param string $baseUri - The base url for the page (if http://www.testsite.com/test/index.php, 
+     *                          it would be http://www.testsite.com/test/)
+     * @param string $uri     - The current uri to spider
+     * @param int    $depth   - The current recursion depth
+     *
+     * @return null
+     */
     protected function spiderPage($baseUri, $uri, $depth = 1)
     {
         //Stop spidering if we have reached the page_limit
         if ($this->options['page_limit'] > 0 && count($this->visited) >= $this->options['page_limit']) {
             return null;
         }
-        
+
         $this->visited[$uri] = true;
 
         try {
@@ -106,14 +147,14 @@ class Spider
         if ($depth > $this->options['max_depth']) {
             return;
         }
-        
+
         //spider sub-pages
-        $subUris = $this->getUris($baseUri, $xpath);
-        
+        $subUris = $this->getCrawlableUris($this->start_base, $baseUri, $uri, $xpath);
+
         foreach ($this->filters as $filter_class) {
             $subUris = new $filter_class($subUris);
         }
-        
+
         foreach ($subUris as $subUri) {
             if (!array_key_exists($subUri, $this->visited)) {
                 $this->spiderPage(self::getURIBase($subUri), $subUri, $depth + 1);
@@ -121,89 +162,97 @@ class Spider
         }
     }
 
-    protected function getUris($baseUri, DOMXPath $xpath)
+    /**
+     * Get all crawlable uris for a page
+     * crawlable uris are URIs that that the spider can crawl
+     *
+     * This removes anchors, empty uris, javascipr and mailto calls, external uris, and uris that return a 404
+     *
+     * It will also get the effective URLs for a uri (the final url if it redirects)
+     *
+     * @param          $startUri   - the base uri for the site
+     * @param string   $baseUri    - the base uri for the page
+     * @param string   $currentUri - the current uri to get URIs from
+     * @param DOMXPath $xpath      - the DOMXPath object for the current uri
+     *
+     * @return Spider_UriIterator - a list of uris
+     */
+    public function getCrawlableUris($startUri, $baseUri, $currentUri, DOMXPath $xpath)
+    {
+        $uris = self::getUris($baseUri, $currentUri, $xpath);
+        
+        //remove anchors
+        $uris = new Spider_filter_Anchor($uris);
+
+        //remove empty uris
+        $uris = new Spider_Filter_Empty($uris);
+
+        //remove javascript
+        $uris = new Spider_Filter_JavaScript($uris);
+        
+        //remove mailto links
+        $uris = new Spider_Filter_Mailto($uris);
+        
+        //Filter external links out. (do now to reduce the number of HTTP requests that we have to make)
+        $uris = new Spider_Filter_External($uris, $startUri);
+        
+        //Filter out pages that returned a 404
+        $uris = new Spider_Filter_HttpCode404($uris);
+        
+        //Get the effective URLs
+        $uris = new Spider_Filter_EffectiveURL($uris);
+
+        //Filter external links again as they may have changed due to the effectiveURL filter.
+        $uris = new Spider_Filter_External($uris, $startUri);
+        
+        return $uris;
+    }
+
+    /**
+     * Returns all valid uris for a page
+     * 
+     * @param string   $baseUri
+     * @param string   $currentUri
+     * @param DOMXPath $xpath
+     *
+     * @return Spider_UriIterator - a list of uris
+     */
+    public static function getUris($baseUri, $currentUri, DOMXPath $xpath)
     {
         $uris = array();
-
-        $baseHrefNodes = $xpath->query(
-            "//xhtml:base/@href"
-        );
-
-        if ($baseHrefNodes->length > 0) {
-            $baseHref = (string)$baseHrefNodes->item(0)->nodeValue;
-        } else {
-            $baseHref = '';
-        }
 
         $nodes = $xpath->query(
             "//xhtml:a[@href]/@href | //a[@href]/@href"
         );
 
         foreach ($nodes as $node) {
-            
             $uri = trim((string)$node->nodeValue);
-            
-            //trim off hashes
-            if (stripos($uri, '#') !== false) {
-                $uri = substr($uri, 0, stripos($uri, '#'));
-                
-                //Skip if it is now an empty uri, as the will make something in 'test/test.php' with a href like '#' go to 'test/', which it shouldn't.
-                if ($uri == '') {
-                    continue;
-                }
-            }
-            
-            if (substr($uri, 0, 7) == 'mailto:'
-                || substr($uri, 0, 11) == 'javascript:') {
-                continue;
-            }
-            
-            $uri = self::absolutePath($uri, $baseUri);
-            
-            if (empty($uri)) {
-                continue;
-            }
-
-            if ($uri != '.'&& preg_match('!^(https?|ftp)://!i', $uri) === 0) {
-                $uri = $baseHref . $uri;
-            }
-            
-            //Only get sub-pages of the baseuri
-            if (strncmp($this->start_base, $uri, strlen($this->start_base)) !== 0) {
-                continue;
-            }
-
-            //Make sure that we get the final url (it might redirect, and we don't want to crawl pages on another site).
-            $urlInfo = self::getURLInfo($uri);
-            
-            //Don't check if it 404s or we can't connect.
-            if ($urlInfo['http_code'] == 404) {
-                continue;
-            }
-            
-            $uri = $urlInfo['effective_url'];
-            
-            //check again, because it might have changed...
-            if (strncmp($this->start_base, $uri, strlen($this->start_base)) !== 0) {
-                continue;
-            }
+            $uri = self::absolutePath($uri, $currentUri, $baseUri);
 
             $uris[] = $uri;
         }
-        
-        sort($uris);
 
         return new Spider_UriIterator($uris);
     }
-    
+
+    /**
+     * Get information about a url.
+     * 
+     * returns an associative array with
+     * 'http_code', 'curl_code' and 'effective_url' as keys.
+     * 
+     * @param string $url
+     *
+     * @return array()
+     */
     public static function getURLInfo($url)
     {
         static $urls;
-        
+
         if ($urls == null) {
             $urls = array();
         }
-        
+
         if (isset($urls[$url])) {
             return $urls[$url];
         }
@@ -227,15 +276,34 @@ class Spider
         $urls[$url] = array('http_code' => $httpStatus,
                             'curl_code' => $curlErrorNo,
                             'effective_url' => $effectiveURL);
-        
+
         return $urls[$url];
     }
-    
-    public static function absolutePath($relativeUri, $baseUri)
-    {
 
+    /**
+     * Get the absolute path of a uri
+     * 
+     * @param string $relativeUri - the uri to get the absolute path for
+     * @param string $currentUri  - the uri of the page that the $relativeUri was found on
+     * @param string $baseUri     - the base uri of the site
+     *
+     * @return string - absolute uri
+     */
+    public static function absolutePath($relativeUri, $currentUri, $baseUri)
+    {
         if (filter_var($relativeUri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
             // URL is already absolute
+            return $relativeUri;
+        }
+        
+        //return the current uri if the relativeUri is an anchor
+        if (strpos($relativeUri, '#') === 0) {
+            return $currentUri;
+        }
+        
+        $relativeUri_parts = parse_url($relativeUri);
+        
+        if (isset($relativeUri_parts['scheme']) && !in_array($relativeUri_parts['scheme'], array('http', 'https'))) {
             return $relativeUri;
         }
         
@@ -264,7 +332,14 @@ class Spider
         
         return $absoluteUri;
     }
-    
+
+    /**
+     * Get the base uri from a uri
+     * 
+     * @param string $uri
+     *
+     * @return string - the base uri
+     */
     public static function getUriBase($uri)
     {
         $base_url_parts = parse_url($uri);
