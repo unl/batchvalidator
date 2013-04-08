@@ -120,28 +120,54 @@ class UNL_WDN_Aggregate
         return $stats;
     }
 
-    function getTotalInCurrentTemplateHTML()
+    function getTemplateHTML()
     {
-        $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
-        
-        $sth = $this->db->prepare("select count(*) as total from assessment WHERE template_html = ?");
-        $sth->execute(array($versions['html']));
+        $stats = array();
+        $stats['percent_pages_in_current'] = 0;
+        $stats['versions'] = array();
 
-        $row = $sth->fetch();
-        
-        return $row['total'];
+        $sth = $this->db->prepare("SELECT COUNT(*) AS  total,  template_html
+                                   FROM  assessment 
+                                   GROUP BY  template_html
+                                   ORDER BY  template_html");
+        $sth->execute();
+
+        while ($row = $sth->fetch()) {
+            $stats['versions'][$row['template_html']] = $row['total'];
+        }
+
+        $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
+
+        if (isset($stats['versions'][$versions['html']])) {
+            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['html']]/$this->getTotalPages())*100, 2);
+        }
+
+        return $stats;
     }
 
-    function getTotalInCurrentTemplateDEP()
+    function getTemplateDEP()
     {
+        $stats = array();
+        $stats['percent_pages_in_current'] = 0;
+        $stats['versions'] = array();
+
+        $sth = $this->db->prepare("SELECT COUNT(*) AS  total,  template_dep
+                                   FROM  assessment 
+                                   GROUP BY  template_dep
+                                   ORDER BY  template_dep");
+        $sth->execute();
+
+        while ($row = $sth->fetch()) {
+            $stats['versions'][$row['template_dep']] = $row['total'];
+        }
+        
         $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
 
-        $sth = $this->db->prepare("select count(*) as total from assessment WHERE template_dep = ?");
-        $sth->execute(array($versions['dep']));
+        if (isset($stats['versions'][$versions['dep']])) {
+            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['dep']]/$this->getTotalPages())*100, 2);
+        }
 
-        $row = $sth->fetch();
-
-        return $row['total'];
+        return $stats;
     }
 
     function getPrimaryNav()
@@ -290,13 +316,8 @@ class UNL_WDN_Aggregate
 
         $stats['html_errors'] = $this->getHTMLErrors();
 
-        $stats['percent_current_template_html'] = 0;
-        $stats['percent_current_template_dep'] = 0;
-        
-        if ($stats['total_pages']) {
-            $stats['percent_current_template_html'] = round(($this->getTotalInCurrentTemplateHTML() / $stats['total_pages'])*100, 2);
-            $stats['percent_current_template_dep'] = round(($this->getTotalInCurrentTemplateDEP() / $stats['total_pages'])*100, 2);
-        }
+        $stats['template_html'] = $this->getTemplateHTML();
+        $stats['template_dep'] = $this->getTemplateDep();
         
         $stats['primary_nav'] = $this->getPrimaryNav();
         
