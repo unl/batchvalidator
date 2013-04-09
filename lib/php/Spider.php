@@ -114,7 +114,7 @@ class Spider
     /**
      * Spider a specific page
      * 
-     * @param string $baseUri - The base url for the page (if http://www.testsite.com/test/index.php, 
+     * @param string $baseUri - The base url for the page (if http://www.testsite.com/test/index.php,
      *                          it would be http://www.testsite.com/test/)
      * @param string $uri     - The current uri to spider
      * @param int    $depth   - The current recursion depth
@@ -165,11 +165,11 @@ class Spider
     /**
      * Get all crawlable uris for a page
      * crawlable uris are URIs that that the spider can crawl
-     *
+     * 
      * This removes anchors, empty uris, javascipr and mailto calls, external uris, and uris that return a 404
-     *
+     * 
      * It will also get the effective URLs for a uri (the final url if it redirects)
-     *
+     * 
      * @param          $startUri   - the base uri for the site
      * @param string   $baseUri    - the base uri for the page
      * @param string   $currentUri - the current uri to get URIs from
@@ -211,15 +211,23 @@ class Spider
     /**
      * Returns all valid uris for a page
      * 
-     * @param string   $baseUri
-     * @param string   $currentUri
-     * @param DOMXPath $xpath
+     * @param string   $baseUri     - the base uri for the page (NOT the site base)
+     * @param string   $currentUri  - the uri of the document
+     * @param DOMXPath $xpath       - the xpath for the document
      *
      * @return Spider_UriIterator - a list of uris
      */
     public static function getUris($baseUri, $currentUri, DOMXPath $xpath)
     {
         $uris = array();
+
+        $baseHrefNodes = $xpath->query(
+            "//xhtml:base/@href"
+        );
+
+        if ($baseHrefNodes->length > 0) {
+            $baseUri = (string)$baseHrefNodes->item(0)->nodeValue;
+        }
 
         $nodes = $xpath->query(
             "//xhtml:a[@href]/@href | //a[@href]/@href"
