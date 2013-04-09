@@ -112,7 +112,7 @@ if (!isset($template_path)) {
                     <fieldset class="main-focus">
                         <legend class="intro-action">Scan your site for validation</legend>
                         <label for="uri" class="element">
-                            Enter your site URL <span class="helper-text">Simply use your homepage</span>
+                            Enter your site URL <span class="helper-text">Simply use your homepage, and be sure that the URL starts with HTTP:// and ends with a trailing /</span>
                         </label>
                         <input type="url" name="uri" value="<?php echo $uri; ?>" placeholder="http://" required="required" id="uri" />
                         <input type="submit" id="submit" name="submit" value="Check" disabled />
