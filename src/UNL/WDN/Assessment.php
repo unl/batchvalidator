@@ -148,10 +148,6 @@ class UNL_WDN_Assessment
         if ($updateCompletionDate) {
             $this->setCompleted();
         }
-
-        //Update the aggregate cache
-        $aggregate = new UNL_WDN_Aggregate($this->db);
-        $aggregate->updateCache();
         
         return true;
     }
