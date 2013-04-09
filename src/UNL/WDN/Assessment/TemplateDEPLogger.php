@@ -27,6 +27,7 @@ class UNL_WDN_Assessment_TemplateDEPLogger extends Spider_LoggerAbstract
     {
         $version = "";
 
+        //look for >= 3.1 templates
         $nodes = $xpath->query(
             "//xhtml:script[@id='wdn_dependents']/@src"
         );
@@ -37,15 +38,25 @@ class UNL_WDN_Assessment_TemplateDEPLogger extends Spider_LoggerAbstract
 
         $matches = array();
 
-        if (!preg_match('/all.js\?dep=([0-9.]*)/', $version, $matches)) {
-            return false;
-        }
-        
-        if (!isset($matches[1])) {
-            return false;
+        if (preg_match('/all.js\?dep=([0-9.]*)/', $version, $matches) && isset($matches[1])) {
+            //found look for >= 3.1 templates
+            return $matches[1];
         }
 
-        return $matches[1];
+        //look for 3.0
+        $nodes = $xpath->query(
+            "//xhtml:script/@src"
+        );
+
+        foreach ($nodes as $node) {
+            if (stripos($node->nodeValue, 'templates_3.0') !== false) {
+                //found 3.0
+                return "3.0";
+            }
+        }
+        
+        //Couldn't find anything.
+        return false;
     }
 
     function setDepVersion($uri, $result)
