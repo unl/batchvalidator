@@ -102,7 +102,7 @@ class UNL_WDN_Aggregate
         $sth = $this->db->prepare("select count(url_has_badlinks.code) as total, assessment_runs.baseurl 
                                    from assessment_runs 
                                    LEFT JOIN url_has_badlinks ON assessment_runs.baseurl = url_has_badlinks.baseurl
-                                   LEFT JOIN assessment ON url_has_badlinks.baseurl = assessment.baseurl
+                                   LEFT JOIN assessment ON url_has_badlinks.url = assessment.url
                                    WHERE url_has_badlinks.code = ?
                                    AND assessment.template_html != 'UNKNOWN'
                                    GROUP BY assessment_runs.baseurl;");
