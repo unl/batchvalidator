@@ -113,7 +113,7 @@ class UNL_WDN_Aggregate
             $stats['total'] += $row['total'];
 
             if ($row['total'] > $stats['max']['count']) {
-                $stats['max']['count'] = $row['total'];
+                $stats['max']['count'] = (int)$row['total'];
                 $stats['max']['site'] = $row['baseurl'];
             }
 
@@ -141,7 +141,7 @@ class UNL_WDN_Aggregate
         $sth->execute();
 
         while ($row = $sth->fetch()) {
-            $stats['versions'][$row['template_html']] = $row['total'];
+            $stats['versions'][$row['template_html']] = (int)$row['total'];
         }
 
         $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
@@ -167,7 +167,7 @@ class UNL_WDN_Aggregate
         $sth->execute();
 
         while ($row = $sth->fetch()) {
-            $stats['versions'][$row['template_dep']] = $row['total'];
+            $stats['versions'][$row['template_dep']] = (int)$row['total'];
         }
         
         $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
@@ -204,7 +204,7 @@ class UNL_WDN_Aggregate
             $total += $row['total'];
 
             if ($row['total'] > $stats['max']['count']) {
-                $stats['max']['count'] = $row['total'];
+                $stats['max']['count'] = (double)$row['total'];
                 $stats['max']['site'] = $row['baseurl'];
             }
 
