@@ -5,13 +5,14 @@ class UNL_WDN_Assessment_Filter_FileExtension extends Spider_UriFilterInterface
     {
         $path_parts = pathinfo($this->current());
         if (!isset($path_parts['extension'])
-            || $path_parts['extension'] == 'htm'
-            || $path_parts['extension'] == 'html'
-            || $path_parts['extension'] == 'php'
-            || $path_parts['extension'] == 'shtml'
-            || $path_parts['extension'] == 'asp'
-            || $path_parts['extension'] == 'aspx'
-            || $path_parts['extension'] == 'jsp') {
+            || stripos($path_parts['extension'], 'htm') === 0
+            || stripos($path_parts['extension'], 'html') === 0
+            || stripos($path_parts['extension'], 'php') === 0
+            || stripos($path_parts['extension'], 'shtml') === 0
+            || stripos($path_parts['extension'], 'asp') === 0
+            || stripos($path_parts['extension'], 'aspx') === 0
+            || stripos($path_parts['extension'], 'jsp') === 0
+            || stripos($path_parts['extension'], 'htm') === 0) {
             return true;
         }
         return false;
