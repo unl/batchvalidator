@@ -38,6 +38,8 @@ class UNL_WDN_Assessment_AccessibilityLogger extends Spider_LoggerAbstract
             return false;
         }
 
+        libxml_use_internal_errors(true);
+        
         if (!$xml = simplexml_load_string($xml)) {
             return false;
         }
