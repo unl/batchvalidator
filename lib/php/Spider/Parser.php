@@ -31,7 +31,7 @@ class Spider_Parser implements Spider_ParserInterface
 
         $document->loadXML(
             $content,
-            LIBXML_NOERROR | LIBXML_NONET | LIBXML_NOWARNING | LIBXML_NOCDATA
+            LIBXML_NOERROR | LIBXML_NONET | LIBXML_NOWARNING
         );
 
         $xpath = new DOMXPAth($document);
