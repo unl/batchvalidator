@@ -140,14 +140,19 @@ class UNL_WDN_Aggregate
                                    ORDER BY  template_html");
         $sth->execute();
 
+        $total = 0;
         while ($row = $sth->fetch()) {
             $stats['versions'][$row['template_html']] = (int)$row['total'];
+            
+            if ($row['template_html'] !== 'unknown') {
+                $total += $row['total'];
+            }
         }
 
         $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
 
         if (isset($stats['versions'][$versions['html']])) {
-            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['html']]/$this->getTotalPages())*100, 2);
+            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['html']]/$total)*100, 2);
         }
 
         return $stats;
@@ -166,14 +171,19 @@ class UNL_WDN_Aggregate
                                    ORDER BY  template_dep");
         $sth->execute();
 
+        $total = 0;
         while ($row = $sth->fetch()) {
             $stats['versions'][$row['template_dep']] = (int)$row['total'];
+
+            if ($row['template_dep'] !== 'unknown') {
+                $total += $row['total'];
+            }
         }
         
         $versions = UNL_WDN_Assessment::getCurrentTemplateVersions();
 
         if (isset($stats['versions'][$versions['dep']])) {
-            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['dep']]/$this->getTotalPages())*100, 2);
+            $stats['percent_pages_in_current'] = round(($stats['versions'][$versions['dep']]/$total)*100, 2);
         }
 
         return $stats;
