@@ -7,18 +7,6 @@ if (isset($_GET['uri'])
     && preg_match('/https?:\/\//', $_GET['uri'])
     && filter_var($_GET['uri'], FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
     $uri = htmlentities($_GET['uri'], ENT_QUOTES);
-    $ch = curl_init($uri);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_LOW_SPEED_LIMIT, 10);
-    curl_setopt($ch, CURLOPT_LOW_SPEED_TIME, 5);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_exec($ch);
-    $new_uri = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    if ($new_uri !== $uri) {
-        header('Location: ?uri='.urlencode($new_uri));
-        exit();
-    }
 }
 
 if (!isset($template_path)) {
