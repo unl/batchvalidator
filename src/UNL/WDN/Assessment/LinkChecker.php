@@ -92,7 +92,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
 
     protected function getLinks($uri, DOMXPath $xpath)
     {
-        $links = Spider::getUris($this->assessment->baseUri, $uri, $xpath);
+        $links = Spider::getUris(Spider::getUriBase($uri), $uri, $xpath);
 
         //Filter the links
         foreach ($this->filters as $filter_class) {
