@@ -26,7 +26,8 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
 </span>
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    Here are your results.
+    Here is a summary of your results.
+    <a href="http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>">View the complete results</a> now.
 </span>
 
 <table border="0" cellspacing="0" cellpadding="0" width="640" class="emailwrapto100pc">
@@ -117,6 +118,31 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     ?>
 
 </table>
+
+<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">HTML Errors</span>
+    HTML errors are due to invalid HTML markup in your pages.  They may cause inconsistent rendering and behavior between browsers.
+</span>
+
+<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current HTML</span>
+    The latest version of the supporting WDN framework HTML markup.  If you are using UNLcms, this will be updated automatically.
+</span>
+
+<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current Dependents</span>
+    The latest version of the supporting WDN framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.
+</span>
+
+<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">301 Links</span>
+    These link to a resource that has been permanently redirected. Update your link to the redirected resource.
+</span>
+
+<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">404 Links</span>
+    These link to a resource that no longer exist.  Please remove these links.
+</span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
     For more details on the scan, <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>'>view the complete results</a>.
