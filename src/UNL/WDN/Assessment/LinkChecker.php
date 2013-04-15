@@ -76,14 +76,14 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                 
                 //Mark the url as checked.
                 self::$checked[$info['url']] = $info['http_code'];
+
+                curl_multi_remove_handle($mcurl, $finishedCurl);
+                curl_close($finishedCurl);
                 
                 if ($info['http_code'] != 200) {
                     $this->addLink($info['url'], $info['http_code'], $uri);
                     continue;
                 }
-
-                curl_multi_remove_handle($mcurl, $finishedCurl);
-                curl_close($finishedCurl);
             }
         }
 
