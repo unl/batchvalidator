@@ -243,8 +243,8 @@ class UNL_WDN_Assessment
     
     function getBadLinksForPage($url)
     {
-        $sth = $this->db->prepare('SELECT * FROM url_has_badlinks WHERE url = ?;');
-        $sth->execute(array($url));
+        $sth = $this->db->prepare('SELECT * FROM url_has_badlinks WHERE url = ? AND baseurl = ?;');
+        $sth->execute(array($url, $this->baseUri));
         return $sth->fetchAll();
     }
     
