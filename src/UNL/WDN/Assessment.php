@@ -141,7 +141,8 @@ class UNL_WDN_Assessment
 
         $spider  = $this->getSpider(array($uriLogger, $accessibility, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger, $grid2006, $gaAllowHash, $gaAsync), 
                                     array(),
-                                    array('page_limit'=>$pageLimit));
+                                    array('page_limit'=>$pageLimit,
+                                          'respect_robots_txt'=>false));
 
         $spider->spider($url);
 
