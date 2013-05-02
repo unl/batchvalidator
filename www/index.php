@@ -213,7 +213,7 @@ if (!isset($template_path)) {
                             </div>
                             <div class="wdn-col callout-metric" id="valid-html">
                                 <div class="visual-island {{error_percentage total_current_template_html total_pages}}">
-                                    <span class="more-info" data-helper-text="The latest version of the supporting WDN framework HTML markup.  If you are using UNLcms, this will be updated automatically.">?</span>
+                                    <span class="more-info" data-helper-text="The latest version of the supporting UNLedu framework HTML markup.  If you are using UNLcms, this will be updated automatically.">?</span>
                                     <span class="dashboard-value">
                                         {{percentage total_current_template_html total_pages}}
                                     </span>
@@ -224,7 +224,7 @@ if (!isset($template_path)) {
                             </div>
                             <div class="wdn-col callout-metric" id="valid-dependents">
                                 <div class="visual-island {{error_percentage total_current_template_dep total_pages}}">
-                                    <span class="more-info" data-helper-text="The latest version of the supporting WDN framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.">?</span>
+                                    <span class="more-info" data-helper-text="The latest version of the supporting UNLedu framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.">?</span>
                                     <span class="dashboard-value">
                                         {{percentage total_current_template_dep total_pages}}
                                     </span>

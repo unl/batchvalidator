@@ -126,12 +126,12 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
     <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current HTML</span>
-    The latest version of the supporting WDN framework HTML markup.  If you are using UNLcms, this will be updated automatically.
+    The latest version of the supporting UNLedu framework HTML markup.  If you are using UNLcms, this will be updated automatically.
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
     <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current Dependents</span>
-    The latest version of the supporting WDN framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.
+    The latest version of the supporting UNLedu framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
@@ -145,7 +145,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    For more details on the scan, <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>'>view the complete results</a>.
+    For more details on the scan, <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>' class="emailmobbutton" style="font-size:14px; font-family:Helvetica,Arial,sans-serif;">View the complete results</a>.
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
