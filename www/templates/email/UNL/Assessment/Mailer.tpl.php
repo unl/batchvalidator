@@ -19,9 +19,8 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
     You can get more information on any errors 
     noted in this email, or run your own "full site scan" by entering the 
     <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>'>WDN Site Checker tool</a> now.
-    
-   
 </span>
+
 <span class="emailbodytext" style="margin-bottom: 30px; margin-left:30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     Site Checked: <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
 </span>
@@ -30,7 +29,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 if ($stats['total_grid_2006_pages']) {
     ?>
     <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $error_class?>">
-        <h2>Deprecated 2006 grid system was found on this site.</h2>
+        <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Deprecated 2006 grid system was found on this site.</span>
         <p>
             Grid columns with classes such as .one_col, .two_col are deprecated and will not be
             supported in the 4.0 release of the UNLedu Framework. Please upgrade to the latest
@@ -49,129 +48,94 @@ if ($stats['total_grid_2006_pages']) {
     <a href="http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>">View the complete results</a> now.
 </span>
 
-<table border="0" cellspacing="0" cellpadding="0" width="640" class="emailwrapto100pc">
-    <tr>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-            <span class="emailbodytext" style="<?php echo $ok_class; ?>">
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $stats['total_pages'] ?></span> Pages
-            </span>
-        </td>
-        <td class="emailcolgutter" width="20">
-            &nbsp;
-        </td>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-            <?php 
-                if ($stats['total_html_errors'] > 0) {
-                    echo '<span class="emailbodytext" style="'.$error_class.'">';
-                } else {
-                    echo '<span class="emailbodytext" style="'.$ok_class.'">';
-                }
-            ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $stats['total_html_errors'] ?></span> HTML Errors
-            </span>
-        </td>
-    </tr>
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $ok_class?>">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo $stats['total_pages'] ?> Pages Checked</span>
+    <p>
+        Grid columns with classes such as .one_col, .two_col are deprecated and will not be
+        supported in the 4.0 release of the UNLedu Framework. Please upgrade to the latest
+        <a href='http://wdn.unl.edu/resources/grid/'>grid system</a>.
+    </p>
+</span>
 
-    <tr>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-            <?php 
-                if ($stats['total_pages'] && round(($stats['total_current_template_html']/$stats['total_pages'])*100) < 100) {
-                    echo '<span class="emailbodytext" style="'.$error_class.'">';
-                } else {
-                    echo '<span class="emailbodytext" style="'.$ok_class.'">';
-                }
-            ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_html']/$stats['total_pages'])*100):'' ?>%</span> in current HTML (v<?php echo  $stats['current_template_html'] ?>)
-            </span>
-        </td>
-        <td class="emailcolgutter" width="20">
-            &nbsp;
-        </td>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-            <?php 
-                if ($stats['total_pages'] && round(($stats['total_current_template_dep']/$stats['total_pages'])*100) < 100) {
-                    echo '<span class="emailbodytext" style="'.$error_class.'">';
-                } else {
-                    echo '<span class="emailbodytext" style="'.$ok_class.'">';
-                }
-            ?>
-                <span style="display:block; font-size:28px; font-weight:bold;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_dep']/$stats['total_pages']*100)):'' ?>%</span> in current Dependents (v<?php echo  $stats['current_template_dep'] ?>)
-            </span>
-        </td>
-    </tr>
+<?php
+$class = $ok_class;
+if ($stats['total_html_errors']) {
+    $class = $error_class;
+}
+?>
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $class?>">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo $stats['total_html_errors'] ?> HTML Errors</span>
+    <p>
+        HTML errors are due to invalid HTML markup in your pages.  They may cause inconsistent rendering and behavior between browsers.
+    </p>
+</span>
 
-    <?php
-    $i = 0;
-    foreach ($stats['total_bad_links'] as $code=>$total) {
-        if ($i == 0) {
-            echo "<tr>";
-        }
-        ?>
-        <td class="emailcolsplit" align="left" valign="top" width="310">
-            <?php
-            if ($total > 0) {
-                echo '<span class="emailbodytext" style="'.$error_class.'">';
-            } else {
-                echo '<span class="emailbodytext" style="'.$ok_class.'">';
-            }
-            ?>
-            <span style="display:block; font-size:28px; font-weight:bold;"><?php echo $total ?></span> <?php echo $code ?> Links
-            </span>
-        </td>
-        <?php
-        $i++;
-        
-        if ($i == 1) {
-            echo '<td class="emailcolgutter" width="20">&nbsp;</td>';
-        }
-        
-        if ($i == 2) {
-            echo "</tr>";
-            $i = 0;
-        }
+<?php
+$class = $ok_class;
+if ($stats['total_pages'] && round(($stats['total_current_template_html']/$stats['total_pages'])*100) < 100) {
+    $class = $error_class;
+}
+?>
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $class?>">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_html']/$stats['total_pages'])*100):'' ?>% in current HTML (v<?php echo  $stats['current_template_html'] ?>)</span>
+    <p>
+        The latest version of the supporting UNLedu framework HTML markup.  If you are using UNLcms, this will be updated automatically.
+    </p>
+</span>
+
+<?php
+$class = $ok_class;
+if ($stats['total_pages'] && round(($stats['total_current_template_dep']/$stats['total_pages'])*100) < 100) {
+    $class = $error_class;
+}
+?>
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $class?>">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo ($stats['total_pages'])?round(($stats['total_current_template_dep']/$stats['total_pages']*100)):'' ?>% in current Dependents (v<?php echo  $stats['current_template_dep'] ?>)</span>
+    <p>
+        The latest version of the supporting UNLedu framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.
+    </p>
+</span>
+
+<?php
+foreach ($stats['total_bad_links'] as $code=>$total) {
+    $class = $ok_class;
+    if ($total) {
+        $class = $error_class;
     }
     
-    if ($i == 1) {
-        echo "</tr>";
+    $helper_text = "";
+    $title = "";
+    switch ($code) {
+        case "404": 
+            $helper_text = "These link to a resource that no longer exist.  Please remove these links.";
+            $title = "Broken Links";
+            break;
+        case "301":
+            $helper_text = "These link to a resource that has been permanently redirected. Update your link to the redirected resource.";
+            $title = "Redirected Links";
+            break;
     }
+    
     ?>
+    <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $class?>">
+        <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo $total ?> <?php echo $title ?> (<?php echo $code ?>)</span>
+        <p>
+            <?php echo $helper_text ?>
+        </p>
+    </span>
+    <?php
+}
+?>
 
-</table>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">HTML Errors</span>
-    HTML errors are due to invalid HTML markup in your pages.  They may cause inconsistent rendering and behavior between browsers.
-</span>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current HTML</span>
-    The latest version of the supporting UNLedu framework HTML markup.  If you are using UNLcms, this will be updated automatically.
-</span>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">Current Dependents</span>
-    The latest version of the supporting UNLedu framework resources (CSS, JS and other includes).  If you are using UNLcms, this will be updated automatically.
-</span>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">301 Links</span>
-    These link to a resource that has been permanently redirected. Update your link to the redirected resource.
-</span>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;">404 Links</span>
-    These link to a resource that no longer exist.  Please remove these links.
-</span>
-
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     For more details on the scan, <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>' class="emailmobbutton" style="font-size:14px; font-family:Helvetica,Arial,sans-serif;">View the complete results</a>.
 </span>
 
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     You were sent this email because you are a member of the site in the <a href='http://www1.unl.edu/wdn/'>WDN Registry</a>.
 </span>
 
-<span class="emailbodytext" style="margin-bottom: 20px; font-size:14px; line-height:24px; font-family:Helvetica,Arial,sans-serif; display:block;">
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     Thank you, <br />
     The Web Developer Network
 </span>
