@@ -25,6 +25,25 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
 <span class="emailbodytext" style="margin-bottom: 30px; margin-left:30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
 </span>
+
+<?php
+if ($stats['total_grid_2006_pages']) {
+    ?>
+    <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $error_class?>">
+        <h2>Deprecated 2006 grid system was found on this site.</h2>
+        <p>
+            Grid columns with classes such as .one_col, .two_col are deprecated and will not be
+            supported in the 4.0 release of the UNLedu Framework. Please upgrade to the latest
+            <a href='http://wdn.unl.edu/resources/grid/'>grid system</a>.
+        </p>
+        <p>
+        <a href="http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>">View the complete results</a> to see a list of pages using the 2006 grid system.
+        </p>
+    </span>
+    <?php
+}
+?>
+
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     Here is a summary of your results.
     <a href="http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>">View the complete results</a> now.
