@@ -132,11 +132,11 @@ foreach ($stats['total_bad_links'] as $code=>$total) {
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    You were sent this email because you are a member of the site in the <a href='http://www1.unl.edu/wdn/'>WDN Registry</a>.
+    Thank you, <br />
+    The Web Developer Network
 </span>
 
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    Thank you, <br />
-    The Web Developer Network
+    You were sent this email because you are a member of the site in the <a href='http://www1.unl.edu/wdn/'>WDN Registry</a>.
 </span>
 
