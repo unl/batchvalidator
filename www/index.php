@@ -180,6 +180,27 @@ if (!isset($template_path)) {
                                 </div>
                             </div>
                         {{/if}}
+                        {{#grid_2006 total_grid_2006_pages}}
+                        <div class="wdn_notice negate">
+                            <div class="message">
+                                <h4>Deprecated 2006 grid system was found on this site.</h4>
+                                <p>
+                                    Grid columns with classes such as .one_col, .two_col are deprecated and will not be 
+                                    supported in the 4.0 release of the UNLedu Framework. Please upgrade to the latest
+                                    <a href='http://wdn.unl.edu/resources/grid/'>grid system</a>.
+                                </p>
+                                <ul>
+                                    {{#each pages}}
+                                    {{#if grid_2006}}
+                                    <li>
+                                        <a href="#page-{{@index}}">{{page}}</a>
+                                    </li>
+                                    {{/if}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{/grid_2006}}
                         <div class="wdn-grid-set">
                             <div class="bp2-wdn-col-three-fourths">
                             <h3>Site Information</h3>
