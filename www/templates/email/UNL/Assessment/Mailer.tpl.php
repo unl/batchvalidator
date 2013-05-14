@@ -23,7 +23,7 @@ $ok_class = 'margin-bottom: 20px; padding: 20px; background:#b7dd9b; border-styl
    
 </span>
 <span class="emailbodytext" style="margin-bottom: 30px; margin-left:30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
-    <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
+    Site Checked: <a href="<?php echo $context->assessment->baseUri; ?>"><?php echo ($stats['site_title'] == 'unknown')?$context->assessment->baseUri:$stats['site_title']; ?></a>
 </span>
 
 <?php
