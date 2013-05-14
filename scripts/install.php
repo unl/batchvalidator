@@ -75,3 +75,6 @@ exec_sql($db, $sql, 'adding ga_non_asyc to assessment table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/ga_setallowhash.sql");
 exec_sql($db, $sql, 'adding ga_setallowhash to assessment table');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/assessment_site_history.sql");
+exec_sql($db, $sql, 'adding assessment_site_history to db');

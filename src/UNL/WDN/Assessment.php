@@ -185,6 +185,10 @@ class UNL_WDN_Assessment
 
         $info = $this->getRunInformation();
         
+        if ($info['page_limit'] == 0) {
+            $this->addHistoricalRun();
+        }
+        
         if (isset($info['run_type']) && $info['run_type'] == 'auto') {
             $this->emailStats();
         }
@@ -336,6 +340,34 @@ class UNL_WDN_Assessment
         $result = $sth->fetch();
         
         return $result['queue_position'];
+    }
+    
+    function addHistoricalRun()
+    {
+        $stats = $this->getStats();
+
+        //Add a new run
+        $sth = $this->db->prepare('INSERT INTO assessment_site_history
+                                    (baseurl, date_added, total_pages, total_html_errors, total_accessibility_errors, total_current_template_html, total_current_template_dep, max_primary_nav_count, total_grid_2006_pages, total_ga_non_async_pages, total_ga_setallowhash_pages, total_links_404, total_links_301)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
+        
+        $sth->execute(
+            array(
+                $this->baseUri,
+                date('Y-m-d H:i:s'),
+                $stats['total_pages'],
+                $stats['total_html_errors'],
+                $stats['total_accessibility_errors'],
+                $stats['total_current_template_html'],
+                $stats['total_current_template_dep'],
+                $stats['max_primary_nav_count'],
+                $stats['total_grid_2006_pages'],
+                $stats['total_ga_non_async_pages'],
+                $stats['total_ga_setallowhash_pages'],
+                $stats['total_bad_links'][404],
+                $stats['total_bad_links'][301],
+            )
+        );
     }
     
     function getStats($url = null)
