@@ -50,11 +50,6 @@ if ($stats['total_grid_2006_pages']) {
 
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $ok_class?>">
     <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo $stats['total_pages'] ?> Pages Checked</span>
-    <p>
-        Grid columns with classes such as .one_col, .two_col are deprecated and will not be
-        supported in the 4.0 release of the UNLedu Framework. Please upgrade to the latest
-        <a href='http://wdn.unl.edu/resources/grid/'>grid system</a>.
-    </p>
 </span>
 
 <?php
