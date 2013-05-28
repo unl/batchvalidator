@@ -182,20 +182,6 @@ class UNL_WDN_Assessment
     function setCompleted()
     {
         $this->setRunStatus('complete', date('Y-m-d H:i:s'));
-
-        $info = $this->getRunInformation();
-        
-        if ($info['page_limit'] == 0) {
-            $this->addHistoricalRun();
-        }
-        
-        if (isset($info['run_type']) && $info['run_type'] == 'auto') {
-            $this->emailStats();
-        }
-        
-        if (isset($info['contact_email'])) {
-            $this->emailStats($info['contact_email']);
-        }
     }
     
     function setRunning()
@@ -210,6 +196,23 @@ class UNL_WDN_Assessment
         $sth = $this->db->prepare("UPDATE assessment_runs SET status=?, date_completed=? WHERE baseurl = ?");
 
         $sth->execute(array($status, $dateCompleted, $this->baseUri));
+        
+        //handle completion, even if it resulted in an error, timeout, or something...
+        if (!in_array($status, array('queued', 'running'))) {
+            $info = $this->getRunInformation();
+
+            if ($info['page_limit'] == 0) {
+                $this->addHistoricalRun();
+            }
+
+            if (isset($info['run_type']) && $info['run_type'] == 'auto') {
+                $this->emailStats();
+            }
+            
+            if (isset($info['contact_email'])) {
+                $this->emailStats($info['contact_email']);
+            }
+        }
     }
 
     function setRunContactEmail($email)
