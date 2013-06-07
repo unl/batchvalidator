@@ -67,10 +67,21 @@ class Spider_Filter_RobotsTxt extends Spider_UriFilterInterface
                     return true;
                 }
                 // Add rules that apply to array for testing
-                $rules[] = preg_quote(trim($regs[1]), '/');
+                $rule = preg_quote(trim($regs[1]), '/');
+                
+                //Replace with valid regex expressions
+                $search  = array(
+                    '\*' //Replace * expressions with .* (wildcard)
+                );
+                $replace = array(
+                    '.*' //Wildcard
+                );
+                $rule = str_replace($search, $replace, $rule);
+
+                $rules[] = $rule;
             }
         }
-
+        
         foreach ($rules as $rule) {
             // Check if page is disallowed to us
             if (preg_match("/^$rule/", $parsed['path'])) {
