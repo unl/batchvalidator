@@ -403,6 +403,7 @@ class UNL_WDN_Assessment
         $stats['total_grid_2006_pages'] = 0;
         $stats['total_ga_non_async_pages'] = 0;
         $stats['total_ga_setallowhash_pages'] = 0;
+        $stats['max_template_html_version'] = 0;
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
@@ -455,6 +456,10 @@ class UNL_WDN_Assessment
 
             if ($page['ga_setallowhash']) {
                 $stats['total_ga_setallowhash_pages']++;
+            }
+
+            if ($page['template_html'] != 'unknown' && $page['template_html'] > $stats['max_template_html_version']) {
+                $stats['max_template_html_version'] = $page['template_html'];
             }
             
             $htmlCurrent = false;
