@@ -78,3 +78,6 @@ exec_sql($db, $sql, 'adding ga_setallowhash to assessment table');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/assessment_site_history.sql");
 exec_sql($db, $sql, 'adding assessment_site_history to db');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/history.max_template_html_version.sql");
+exec_sql($db, $sql, 'adding assessment_site_history.max_template_html_version to db');

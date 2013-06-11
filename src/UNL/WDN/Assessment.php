@@ -351,7 +351,7 @@ class UNL_WDN_Assessment
 
         //Add a new run
         $sth = $this->db->prepare('INSERT INTO assessment_site_history
-                                    (baseurl, date_added, total_pages, total_html_errors, total_accessibility_errors, total_current_template_html, total_current_template_dep, max_primary_nav_count, total_grid_2006_pages, total_ga_non_async_pages, total_ga_setallowhash_pages, total_links_404, total_links_301)
+                                    (baseurl, date_added, total_pages, total_html_errors, total_accessibility_errors, total_current_template_html, total_current_template_dep, max_primary_nav_count, total_grid_2006_pages, total_ga_non_async_pages, total_ga_setallowhash_pages, total_links_404, total_links_301, max_template_html_version)
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
         
         $sth->execute(
@@ -369,6 +369,7 @@ class UNL_WDN_Assessment
                 $stats['total_ga_setallowhash_pages'],
                 $stats['total_bad_links'][404],
                 $stats['total_bad_links'][301],
+                $stats['max_template_html_version'],
             )
         );
     }
