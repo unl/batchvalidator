@@ -317,6 +317,12 @@ class UNL_WDN_Assessment
             throw new Exception("tmp/templateversions.json does not exist.  Please run scripts/getLatestTemplateVersions.php");
         }
         
+        //4.0 exists in master right now, but isn't supposed to be used yet
+        //TODO: Remove once 4.0 is live.
+        $versions['html'] = '3.1';
+        $versions['dep'] = '3.1.16';
+        return $versions;
+        
         return json_decode($json, true);
     }
 
