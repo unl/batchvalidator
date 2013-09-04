@@ -365,6 +365,49 @@ if (!isset($template_path)) {
                                 {{/each}}
                             </tbody>
                         </table>
+                        {{#has_logged_links logged_links}}
+                        <div id="logged-links">
+                            <table class="wdn_responsive_table">
+                                <caption>We found these links on your site</caption>
+                                <thead>
+                                <tr>
+                                    <th id="logged-links-url">Link URL</th>
+                                    <th id="logged-links-reason">Reason</th>
+                                    <th id="logged-links-found-on">Found On</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each logged_links}}
+                                <tr>
+                                    <td data-header="Link URL"><a href="{{link_url}}">{{strip_site link_url}}</a></td>
+                                    <td data-header="Reason"><a href="#reason_{{reason}}">{{human_reason}}</a></td>
+                                    <td data-header="Found On"><a href="{{url}}">{{strip_site url}}</a></td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                            <div id="logged-links-reasons">
+                                <h3>Why are we telling you about these links?</h3>
+                                <dl>
+                                    <dt id="reason_extension_pdf">Portable Document Format (PDF)</dt>
+                                    <dd>
+                                        PDFs should be used with caution and care by making sure that they are accessible.  We recommend not using PDFs unless you have to.  Why?
+                                        <ul>
+                                            <li>
+                                                PDFs can be hard to view on mobile devices.
+                                            </li>
+                                            <li>
+                                                Asking a visitor to download a PDF when the content could be easily displayed as a web page can cause frustration for the end user.
+                                            </li>
+                                            <li>
+                                                PDFs are not always accessible.  If you must link to a PDF, it is your responsibility to ensure that it is accessible.  <a href="http://www.howto.gov/web-content/accessibility/create-accessible-pdfs">Learn more about making PDFs accessible</a>.
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        {{/has_logged_links}}
                         <div class="footer">
                             <div class="wdn-grid-set">
                                 <div class="bp2-wdn-col-three-fourths">
