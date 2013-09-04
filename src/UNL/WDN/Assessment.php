@@ -256,6 +256,13 @@ class UNL_WDN_Assessment
         $sth->execute(array($url, $this->baseUri));
         return $sth->fetchAll();
     }
+
+    function getLoggedLinks()
+    {
+        $sth = $this->db->prepare('SELECT * FROM logged_links WHERE baseurl = ?;');
+        $sth->execute(array($this->baseUri));
+        return $sth->fetchAll();
+    }
     
     function pageWasValid($uri)
     {
@@ -412,6 +419,7 @@ class UNL_WDN_Assessment
         $stats['total_ga_non_async_pages'] = 0;
         $stats['total_ga_setallowhash_pages'] = 0;
         $stats['max_template_html_version'] = 0;
+        $stats['logged_urls'] = array();
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
@@ -514,6 +522,15 @@ class UNL_WDN_Assessment
             $stats['pages'][$i]['ga_non_async'] = (bool)$page['ga_setallowhash'];
             $stats['pages'][$i]['ga_setallowhash'] = (bool)$page['ga_setallowhash'];
             
+            $i++;
+        }
+
+        $i = 0;
+        foreach ($this->getLoggedLinks() as $link) {
+            $stats['logged_links'][$i]['link_url'] = $link['link_url'];
+            $stats['logged_links'][$i]['reason'] = $link['reason'];
+            $stats['logged_links'][$i]['human_reason'] = str_replace('_', ': ', $link['reason']);
+            $stats['logged_links'][$i]['url'] = $link['url'];
             $i++;
         }
         
