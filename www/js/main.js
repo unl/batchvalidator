@@ -344,6 +344,14 @@ Handlebars.registerHelper('grid_2006', function (count, options) {
     return options.inverse(this);
 });
 
+Handlebars.registerHelper('has_logged_links', function (logged_links, options) {
+    if (logged_links.length > 0) {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
 Handlebars.registerHelper('position', function (position) {
     if (position === 0) {
         return '<p class="indicator-bar its-on">Your Queue Placement: <span class="spot">Now Checking</span></p>';
