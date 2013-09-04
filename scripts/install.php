@@ -81,3 +81,6 @@ exec_sql($db, $sql, 'adding assessment_site_history to db');
 
 $sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/history.max_template_html_version.sql");
 exec_sql($db, $sql, 'adding assessment_site_history.max_template_html_version to db');
+
+$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/logged_links.sql");
+exec_sql($db, $sql, 'adding logged_links to db');
