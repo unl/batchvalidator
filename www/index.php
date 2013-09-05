@@ -368,7 +368,7 @@ if (!isset($template_path)) {
                         {{#has_logged_links logged_links}}
                         <div id="logged-links">
                             <table class="wdn_responsive_table">
-                                <caption>We found these links on your site</caption>
+                                <caption>Links for further review</caption>
                                 <thead>
                                 <tr>
                                     <th id="logged-links-url">Link URL</th>
@@ -391,7 +391,7 @@ if (!isset($template_path)) {
                                 <dl>
                                     <dt id="reason_extension_pdf">Portable Document Format (PDF)</dt>
                                     <dd>
-                                        PDFs should be used with caution and care by making sure that they are accessible.  We recommend not using PDFs unless you have to.  Why?
+                                        In an effort to make the UNL website accessible we recommend not using PDFs unless you have to.  Why?
                                         <ul>
                                             <li>
                                                 PDFs can be hard to view on mobile devices.
@@ -400,7 +400,7 @@ if (!isset($template_path)) {
                                                 Asking a visitor to download a PDF when the content could be easily displayed as a web page can cause frustration for the end user.
                                             </li>
                                             <li>
-                                                PDFs are not always accessible.  If you must link to a PDF, it is your responsibility to ensure that it is accessible.  <a href="http://www.howto.gov/web-content/accessibility/create-accessible-pdfs">Learn more about making PDFs accessible</a>.
+                                                PDFs are not always accessible.  Note that the above links may include PDFs that are not hosted on your website.  If you must link to a PDF, it is your responsibility to ensure that it is accessible.  <a href="http://www.howto.gov/web-content/accessibility/create-accessible-pdfs">Learn more about making PDFs accessible</a>.
                                             </li>
                                         </ul>
                                     </dd>
