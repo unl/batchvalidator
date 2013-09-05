@@ -345,7 +345,7 @@ Handlebars.registerHelper('grid_2006', function (count, options) {
 });
 
 Handlebars.registerHelper('has_logged_links', function (logged_links, options) {
-    if (logged_links.length > 0) {
+    if (typeof logged_links !== 'undefined' && logged_links.length > 0) {
         return options.fn(this);
     }
 
