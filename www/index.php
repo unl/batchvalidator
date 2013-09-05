@@ -394,13 +394,13 @@ if (!isset($template_path)) {
                                         In an effort to make the UNL website accessible we recommend not using PDFs unless you have to.  Why?
                                         <ul>
                                             <li>
+                                                PDFs are not always accessible.  Note that the above links may include PDFs that are not hosted on your website.  If you must link to a PDF, it is your responsibility to ensure that it meets section 508 accessibility requirements.  We can not machine test PDFs for accessibility, so it is important that you verify that these links are accessible.  <a href="http://www.howto.gov/web-content/accessibility/create-accessible-pdfs">Learn more about making PDFs accessible</a>.
+                                            </li>
+                                            <li>
                                                 PDFs can be hard to view on mobile devices.
                                             </li>
                                             <li>
                                                 Asking a visitor to download a PDF when the content could be easily displayed as a web page can cause frustration for the end user.
-                                            </li>
-                                            <li>
-                                                PDFs are not always accessible.  Note that the above links may include PDFs that are not hosted on your website.  If you must link to a PDF, it is your responsibility to ensure that it is accessible.  <a href="http://www.howto.gov/web-content/accessibility/create-accessible-pdfs">Learn more about making PDFs accessible</a>.
                                             </li>
                                         </ul>
                                     </dd>
