@@ -27,6 +27,24 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
         
         $this->checkLinks($uri, $links, $depth);
     }
+
+    /**
+     * Strip fragments for UIRIs
+     * 
+     * This is used when getting the status code for a URI.
+     * Some environments return 404 for every URI with a #fragment
+     * 
+     * @param $uri
+     * @return mixed
+     */
+    function stripURIFragment($uri) {
+        $parts = explode('#', $uri, 2);
+        if (isset($parts[0])) {
+            return $parts[0];
+        }
+    
+        return $uri;
+    }
     
     function checkLinks($uri, $links, $depth)
     {
@@ -53,7 +71,7 @@ class UNL_WDN_Assessment_LinkChecker extends Spider_LoggerAbstract
                     continue;
                 }
                 
-                $curl[$link] = curl_init($link);
+                $curl[$link] = curl_init($this->stripURIFragment($link));
                 curl_setopt($curl[$link], CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($curl[$link], CURLOPT_NOBODY, true);
                 curl_setopt($curl[$link], CURLOPT_CONNECTTIMEOUT, 5);
