@@ -50,7 +50,7 @@ class UNL_WDN_Assessment
      */
     protected function getSpider($loggers = array(), $filters = array(), $options = array())
     {
-        $downloader       = new Spider_Downloader();    
+        $downloader       = new UNL_WDN_Assessment_Downloader();    
         $parser           = new Spider_Parser();
         $spider           = new Spider($downloader, $parser, $options);
         
@@ -143,7 +143,7 @@ class UNL_WDN_Assessment
         $spider  = $this->getSpider(array($uriLogger, $loggedLink, $accessibility, $validationLogger, $templateHTMLLogger, $templateDEPLogger, $linkChecker, $navigationLogger, $grid2006, $gaAllowHash, $gaAsync), 
                                     array(),
                                     array('page_limit'=>$pageLimit,
-                                          'respect_robots_txt'=>true));
+                                          'respect_robots_txt'=>false));
 
         $spider->spider($url);
 
