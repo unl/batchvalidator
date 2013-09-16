@@ -122,6 +122,13 @@ foreach ($stats['total_bad_links'] as $code=>$total) {
 }
 ?>
 
+<span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block; <?php echo $ok_class?>">
+    <span class="h3" style="font-size:26px; font-weight:bold; font-family:Helvetica,Arial,sans-serif; display:block; color:#535353;"><?php echo count($stats['logged_links']) ?> Links for Further Review</span>
+    <p>
+        These are links that we think that you should review to ensure the best experience for your viewers.
+    </p>
+</span>
+
 <span class="emailbodytext" style="margin-bottom: 30px; font-size:22px; line-height:34px; font-family:Helvetica,Arial,sans-serif; display:block;">
     For more details on the scan, <a href='http://validator.unl.edu/site/?uri=<?php echo urlencode($context->assessment->baseUri)?>' class="emailmobbutton" style="font-size:14px; font-family:Helvetica,Arial,sans-serif;">View the complete results</a>.
 </span>
