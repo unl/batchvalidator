@@ -419,7 +419,7 @@ class UNL_WDN_Assessment
         $stats['total_ga_non_async_pages'] = 0;
         $stats['total_ga_setallowhash_pages'] = 0;
         $stats['max_template_html_version'] = 0;
-        $stats['logged_urls'] = array();
+        $stats['logged_links'] = array();
 
         $stats['total_bad_links'] = array();
         foreach (UNL_WDN_Assessment_LinkChecker::$loggedStatusCodes as $code) {
