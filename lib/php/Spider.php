@@ -328,6 +328,11 @@ class Spider
         if (strpos($relativeUri, '#') === 0) {
             return $currentUri;
         }
+        
+        //Return the current uri if the relativeURI is empty.
+        if ($relativeUri == '') {
+            return $currentUri;
+        }
 
         $relativeUri_parts = parse_url($relativeUri);
 
