@@ -361,13 +361,13 @@ class Spider
             $absoluteUri = substr($absoluteUri, 0, strlen($absoluteUri) - strlen($query));
         }
 
-        // Convert /dir/../ into /
-        while (preg_match('/\/[^\/]+\/\.\.\//', $absoluteUri)) {
-            $absoluteUri = preg_replace('/\/[^\/]+\/\.\.\//', '/', $absoluteUri);
-        }
+        //convert /./file to /file
+        $absoluteUri = str_replace('/./', '/', $absoluteUri);
 
-        //convert ./file to file
-        $absoluteUri = str_replace('./', '', $absoluteUri);
+        // Convert /dir1/../dir2/ into /dir2/
+        while (preg_match('/\/[^\/\.]+\/\.\.\//', $absoluteUri)) {
+            $absoluteUri = preg_replace('/\/[^\/\.]+\/\.\.\//', '/', $absoluteUri);
+        }
 
         //Re-attach the query and return the full url.
         return $absoluteUri . $query;
