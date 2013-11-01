@@ -328,7 +328,7 @@ class UNL_WDN_Assessment
         //4.0 exists in master right now, but isn't supposed to be used yet
         //TODO: Remove once 4.0 is live.
         $versions['html'] = '3.1';
-        $versions['dep'] = '3.1.16';
+        $versions['dep'] = '3.1.17';
         return $versions;
         
         return json_decode($json, true);
