@@ -96,6 +96,15 @@ if (!isset($template_path)) {
             <div id="maincontent">
                 <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
                 <!-- InstanceBeginEditable name="maincontentarea" -->
+                <div class="wdn_notice alert">
+                    <div class="message">
+                        <h4>We are moving!</h4>
+                        <p>
+                            This system is moving to the newer and better <a href="http://webaudit.unl.edu/">webaudit.unl.edu</a>.
+                            In a few weeks, we will be removing this site.  Automatic scans have been disabled for this site.
+                        </p>
+                    </div>
+                </div>
                 <form method="get" action="#" class="wdn-form single" id="validator-form">
                     <fieldset class="main-focus">
                         <legend class="intro-action">Scan your site for validation</legend>
